@@ -1,0 +1,15 @@
+body {
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+.Quote-container {
+  width: 60rem;
+  height: 40rem;
+  background-color: rgb(244, 0, 0);
+  display: flex;
+
+  justify-content: center;
+}
