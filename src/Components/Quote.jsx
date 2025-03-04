@@ -4,7 +4,7 @@ const Quote = () => {
   return (
     <div className="container d-flex justify-content-center align-items-center vh-100">
       <div className="w-100 p-4 border rounded bg-light">
-        <h1 className="text-center text-light mb-4">Solicitar Cotización</h1>
+        <h1 className="text-center text-dark mb-4">Solicitar Cotización</h1>
         <form>
           <div className="row">
             <div className="col-md-6">

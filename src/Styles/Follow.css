@@ -1,38 +1,29 @@
 hr {
-  background-color: rgb(232, 0, 0);
+  border: 1px solid gainsboro;
+  margin: 0 2px 0 2px;
 }
-.slick-slide {
+.instaImgContainer {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
-.slick-slider {
-  margin: 0 auto; /* Centrar el carrusel */
-}
-
-.slick-track {
-  display: flex;
-}
-
-.slick-slide h3 {
-  background-color: #60e22c; /* Fondo de prueba */
-  padding: 15vh;
+.instaImg1,
+.instaImg2,
+.instaImg3,
+.instaImg4 {
+  width: 40vh;
+  height: 40vh;
+  background-color: blueviolet;
+  margin-left: 15px;
   text-align: center;
   border-radius: 10px;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
-
-.slick-slide {
-  margin: 20px 20px;
-}
-.slick-slide {
-  width: 100px;
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.slick-slider {
-  max-width: 100%;
+.instaImg1:hover,
+.instaImg2:hover,
+.instaImg3:hover,
+.instaImg4:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
 }
