@@ -3,6 +3,7 @@ import Navbar from "./Components/Navbar";
 import Quote from "./Components/Quote";
 import Follow from "./Components/Follow";
 import About from "./Components/About";
+import Footer from "./Components/Footer";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Quote />
       <Follow />
       <About />
+      <Footer />
     </div>
   );
 }
