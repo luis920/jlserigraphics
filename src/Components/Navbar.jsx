@@ -1,9 +1,9 @@
 const Navbar = () => {
   return (
     <div>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className="navbar navbar-expand-lg bg-body-dark">
         <div className="container-fluid">
-          <a to={"/"} className="navbar-brand">
+          <a to={"/"} className="navbar-brand text-light">
             Navbar
           </a>
           <button
@@ -19,14 +19,18 @@ const Navbar = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div className="navbar-nav">
-              <a className="nav-link active" aria-current="page" href="#">
+              <a
+                className="nav-link active text-light"
+                aria-current="page"
+                href="#"
+              >
                 Inicio
               </a>
               <a className="nav-link" href="#"></a>
-              <a className="nav-link" href="#">
+              <a className="nav-link text-light" href="#">
                 Catalogo
               </a>
-              <a className="nav-link" href="#" aria-current="true">
+              <a className="nav-link text-light" href="#" aria-current="true">
                 Contactanos
               </a>
             </div>
