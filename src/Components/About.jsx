@@ -1,4 +1,5 @@
 import serigrafia from "../img/serigrafia1.jpg";
+import bordado from "../img/bordado1.jpg";
 import "../Styles/About.css";
 const About = () => {
   return (
@@ -17,6 +18,18 @@ const About = () => {
             escuelas, eventos, uniformes de trabajo, marcas de ropa o cualquier
             otro proyecto, ¡nos encargamos de todo
           </p>
+        </div>
+        <div className="col-12 col-md-6 d-flex flex-column justify-content-center mt-5">
+          <h3 className="text-light">𝗖 𝗔 𝗟 𝗜 𝗗 𝗔 𝗗 </h3>
+          <p className="text-light">
+            Con más de 5 años de experiencia, ofrecemos calidad y servicio
+            incomparables. Nos aseguramos de cuidar todos los detalles para que
+            tu proyecto no le falte nada. ¿Tienes alguna pregunta sobre tu
+            proyecto? Estaremos encantados de ayudarte en todo el proceso.
+          </p>
+        </div>
+        <div className="col-12 col-md-6 mt-5">
+          <img className="img-services w-100" src={bordado} alt="" />
         </div>
       </div>
     </div>
