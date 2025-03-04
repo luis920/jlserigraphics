@@ -1,3 +1,38 @@
 hr {
-  background-color: gray;
+  background-color: rgb(232, 0, 0);
+}
+.slick-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slick-slider {
+  margin: 0 auto; /* Centrar el carrusel */
+}
+
+.slick-track {
+  display: flex;
+}
+
+.slick-slide h3 {
+  background-color: #60e22c; /* Fondo de prueba */
+  padding: 15vh;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.slick-slide {
+  margin: 20px 20px;
+}
+.slick-slide {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slick-slider {
+  max-width: 100%;
 }
