@@ -48,8 +48,8 @@ const Follow = () => {
   };
   return (
     <div>
-      <hr />
-      <h1 className="text-light mx-5 my-5 py-5">Siguenos en Instagram</h1>
+      <h1 className="text-light mx-5  ">Siguenos en Instagram</h1>
+      <hr className="mb-5" />
       <div className="instaImgContainer flex">
         <div className="instaImg1">
           <h1>imagen 1</h1>
@@ -64,6 +64,12 @@ const Follow = () => {
           <h1>imagen 4</h1>
         </div>
       </div>
+      <a
+        href="https://www.instagram.com"
+        className="d-block text-center text-decoration-none text-light fs-2"
+      >
+        Visita nuestro Instagram{" "}
+      </a>
     </div>
   );
 };
