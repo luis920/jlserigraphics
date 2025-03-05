@@ -19,14 +19,14 @@ const Navbar = () => {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div className="navbar-nav">
+          <div className="collapse navbar-collapse " id="navbarNavAltMarkup">
+            <div className="navbar-nav  ">
               <a
-                className="nav-link active text-light"
+                className="nav-link active text-light "
                 aria-current="page"
                 href="#"
               >
-                Inicio
+                Guia de tallas
               </a>
               <a className="nav-link" href="#"></a>
               <Link className="nav-link text-light" to={"/ofertas"}>
