@@ -33,12 +33,16 @@ const Navbar = () => {
               <Link className="nav-link text-light" to={"/ofertas"}>
                 Ofertas
               </Link>
-              <a className="nav-link text-light" href="#">
+              <Link className="nav-link text-light" to={"/catalogo"}>
                 Catalogo
-              </a>
-              <a className="nav-link text-light" href="#" aria-current="true">
+              </Link>
+              <Link
+                className="nav-link text-light"
+                to={"/contactanos"}
+                aria-current="true"
+              >
                 Contactanos
-              </a>
+              </Link>
             </div>
           </div>
         </div>
