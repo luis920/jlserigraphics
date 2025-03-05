@@ -3,6 +3,7 @@ import algodon2 from "../img/algodon2.jpg";
 import dryfit from "../img/dry-fit.jpg";
 import polos from "../img/polos.jpg";
 import camisas from "../img/camisa.jpg";
+import sudadera from "../img/sudadera.jpg";
 import "../Styles/Size.css";
 
 const Size = () => {
@@ -34,7 +35,13 @@ const Size = () => {
       <h1 className="text-center text-light mt-3 fw-bold">Camisas </h1>
       <div className="d-flex flex-wrap justify-content-center">
         <div className="card-dama-caballero col-6 col-12">
-          <img src={polos} alt="dry-fit adulto" className="w-100" />
+          <img src={camisas} alt="dry-fit adulto" className="w-100" />
+        </div>
+      </div>
+      <h1 className="text-center text-light mt-3 fw-bold">Sudaderas </h1>
+      <div className="d-flex flex-wrap justify-content-center">
+        <div className="card-dama-caballero col-6 col-12">
+          <img src={sudadera} alt="dry-fit adulto" className="w-100" />
         </div>
       </div>
     </div>
