@@ -1,3 +1,4 @@
+import "../Styles/Navbar.css";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
@@ -9,26 +10,26 @@ const Navbar = () => {
             Navbar
           </Link>
           <button
-            className="navbar-toggler"
+            className="navbar-toggler bg-light"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup"
-            aria-expanded="false"
+            aria-expanded="true"
             aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse " id="navbarNavAltMarkup">
             <div className="navbar-nav  ">
-              <a
+              <Link
                 className="nav-link active text-light "
                 aria-current="page"
-                href="#"
+                to={"/tallas"}
               >
                 Guia de tallas
-              </a>
-              <a className="nav-link" href="#"></a>
+              </Link>
+
               <Link className="nav-link text-light" to={"/ofertas"}>
                 Ofertas
               </Link>
