@@ -13,34 +13,34 @@ const Size = () => {
         Playera de algodón{" "}
       </h1>
       <div className="d-flex flex-wrap justify-content-center">
-        <div className="card-infantil-juvenil col-6 col-12">
+        <div className="card-infantil-juvenil col-12 col-sm-6 col-md-4 col-lg-3">
           <img src={algodon2} alt="infantil-juvenil" className="w-100" />
         </div>
-        <div className="card-dama-caballero col-6 col-12">
+        <div className="card-dama-caballero col-12 col-sm-6 col-md-4 col-lg-3">
           <img src={algodon1} alt="dama-caballero" className="w-100" />
         </div>
       </div>
       <h1 className="text-center text-light mt-3 fw-bold">Playera Dry-fit </h1>
       <div className="d-flex flex-wrap justify-content-center">
-        <div className="card-dama-caballero col-6 col-12">
+        <div className="card-dama-caballero col-12 col-sm-6 col-md-4 col-lg-3">
           <img src={dryfit} alt="dry-fit adulto" className="w-100" />
         </div>
       </div>
       <h1 className="text-center text-light mt-3 fw-bold">Tipo polo </h1>
       <div className="d-flex flex-wrap justify-content-center">
-        <div className="card-dama-caballero col-6 col-12">
+        <div className="card-dama-caballero col-12 col-sm-6 col-md-4 col-lg-3">
           <img src={polos} alt="dry-fit adulto" className="w-100" />
         </div>
       </div>
       <h1 className="text-center text-light mt-3 fw-bold">Camisas </h1>
       <div className="d-flex flex-wrap justify-content-center">
-        <div className="card-dama-caballero col-6 col-12">
+        <div className="card-dama-caballero col-12 col-sm-6 col-md-4 col-lg-3">
           <img src={camisas} alt="dry-fit adulto" className="w-100" />
         </div>
       </div>
       <h1 className="text-center text-light mt-3 fw-bold">Sudaderas </h1>
       <div className="d-flex flex-wrap justify-content-center">
-        <div className="card-dama-caballero col-6 col-12">
+        <div className="card-dama-caballero col-12 col-sm-6 col-md-4 col-lg-3">
           <img src={sudadera} alt="dry-fit adulto" className="w-100" />
         </div>
       </div>

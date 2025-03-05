@@ -1,0 +1,13 @@
+.navbar-collapse {
+  border-radius: 10px;
+  padding-left: 10px;
+  width: 100%; /* Asegúrate de que el menú ocupe todo el ancho disponible */
+
+  justify-content: center;
+  align-items: center;
+}
+
+/* Si deseas que el menú tenga un pequeño margen desde el botón */
+.navbar-toggler {
+  margin-bottom: 5px;
+}

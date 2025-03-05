@@ -3,6 +3,7 @@
   width: 500px;
   height: 600px;
   margin: 30px;
+  padding: 5px;
   border: 1px solid gray;
   transition: all 0.5s;
   display: flex;
@@ -18,4 +19,18 @@
 .card-infantil-juvenil:active,
 .card-dama-caballero:active {
   transform: scale(0.95) rotateZ(1.7deg);
+}
+
+@media (max-width: 576px) {
+  .card-infantil-juvenil,
+  .card-dama-caballero {
+    width: 100%;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  .card-infantil-juvenil,
+  .card-dama-caballero {
+    width: 48%;
+  }
 }
