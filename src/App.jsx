@@ -3,6 +3,7 @@ import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import Home from "./Components/Home";
 import Deals from "./Pages/Deals";
+import Size from "./Pages/Size";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route index path="/" element={<Home />} />
         <Route index path="/ofertas" element={<Deals />} />
+        <Route index path="/tallas" element={<Size />} />
       </Routes>
       <Footer />
     </div>
