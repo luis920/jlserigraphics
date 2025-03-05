@@ -1,11 +1,13 @@
+import { Link } from "react-router-dom";
+
 const Navbar = () => {
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-body-dark">
         <div className="container-fluid">
-          <a to={"/"} className="navbar-brand text-light">
+          <Link to={"/"} className="navbar-brand text-light">
             Navbar
-          </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -27,6 +29,9 @@ const Navbar = () => {
                 Inicio
               </a>
               <a className="nav-link" href="#"></a>
+              <Link className="nav-link text-light" to={"/ofertas"}>
+                Ofertas
+              </Link>
               <a className="nav-link text-light" href="#">
                 Catalogo
               </a>
