@@ -21,13 +21,13 @@ const Navbar = () => {
           </button>
           <div className="collapse navbar-collapse " id="navbarNavAltMarkup">
             <div className="navbar-nav  ">
-              <a
+              <Link
                 className="nav-link active text-light "
                 aria-current="page"
-                href="#"
+                to={"/tallas"}
               >
                 Guia de tallas
-              </a>
+              </Link>
               <a className="nav-link" href="#"></a>
               <Link className="nav-link text-light" to={"/ofertas"}>
                 Ofertas
