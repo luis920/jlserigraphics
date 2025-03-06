@@ -1,6 +1,6 @@
 import { useState } from "react";
-import map from "../img/serigrafia1.jpg";
 import "../Styles/ContactUs.css";
+import Mapa from "../Components/Map.jsx";
 
 const ContactUs = () => {
   const [showModal, SetShowModal] = useState(false);
@@ -12,7 +12,7 @@ const ContactUs = () => {
   };
 
   return (
-    <div>
+    <div className="d-flex">
       <div className="contactanos-container">
         <h1 className="text-light text-center">Contactanos</h1>
         <hr className="hr-contactanos" />
@@ -75,6 +75,7 @@ const ContactUs = () => {
           </div>
         )}
       </div>
+      <Mapa />
     </div>
   );
 };
