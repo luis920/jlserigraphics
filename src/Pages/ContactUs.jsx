@@ -1,7 +1,16 @@
+import { useState } from "react";
 import map from "../img/serigrafia1.jpg";
 import "../Styles/ContactUs.css";
 
 const ContactUs = () => {
+  const [showModal, SetShowModal] = useState(false);
+  const handleOpenModal = () => {
+    SetShowModal(true);
+  };
+  const handleCloseModal = () => {
+    SetShowModal(false);
+  };
+
   return (
     <div>
       <div className="contactanos-container">
@@ -19,11 +28,40 @@ const ContactUs = () => {
           Lunes a viernes de 9 am a 6pm <br />
           Sabados de 9 am a 2pm{" "}
         </p>
-        <button className=" button mx-5">Enviar Email</button>
+        <button className=" button mx-5" onClick={() => handleOpenModal()}>
+          Enviar Email
+        </button>
       </div>
-      {/* <div className="justify-content-end">
-        <img className="contactUs-image" src={map} alt="" />
-      </div> */}
+      <div>
+        {showModal && (
+          <div>
+            <div>
+              <h2>Formulario de Contacto</h2>
+              <form>
+                <div>
+                  <label htmlFor="name">Nombre:</label>
+                  <input type="text" id="name" name="name" required />
+                </div>
+                <div>
+                  <label htmlFor="email">Correo electrónico:</label>
+                  <input type="email" id="email" name="email" required />
+                </div>
+                <div>
+                  <label htmlFor="message">Mensaje:</label>
+                  <textarea id="message" name="message" required></textarea>
+                </div>
+              </form>
+              <button className=" btn-primary">Enviar</button>
+              <button
+                className="btn-secondary"
+                onClick={() => handleCloseModal()}
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
