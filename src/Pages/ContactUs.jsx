@@ -1,6 +1,6 @@
 import { useState } from "react";
-import map from "../img/serigrafia1.jpg";
 import "../Styles/ContactUs.css";
+import Mapa from "../Components/Map.jsx";
 
 const ContactUs = () => {
   const [showModal, SetShowModal] = useState(false);
@@ -12,7 +12,7 @@ const ContactUs = () => {
   };
 
   return (
-    <div>
+    <div className="d-flex">
       <div className="contactanos-container">
         <h1 className="text-light text-center">Contactanos</h1>
         <hr className="hr-contactanos" />
@@ -34,26 +34,39 @@ const ContactUs = () => {
       </div>
       <div>
         {showModal && (
-          <div>
-            <div>
-              <h2>Formulario de Contacto</h2>
-              <form>
-                <div>
+          <div className={`modal-container ${showModal ? "show" : ""}`}>
+            <div className="modal-content">
+              <h2 className="">Formulario de Contacto</h2>
+              <form className="contacto-formulario ">
+                <div className="d-flex column ">
                   <label htmlFor="name">Nombre:</label>
                   <input type="text" id="name" name="name" required />
                 </div>
-                <div>
-                  <label htmlFor="email">Correo electrónico:</label>
-                  <input type="email" id="email" name="email" required />
+                <div className="d-flex column ">
+                  <label htmlFor="email ">Correo:</label>
+                  <input
+                    className="my-2"
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                  />
                 </div>
-                <div>
+                <div className="d-flex column  ">
                   <label htmlFor="message">Mensaje:</label>
-                  <textarea id="message" name="message" required></textarea>
+                  <textarea
+                    className=""
+                    id="message"
+                    name="message"
+                    required
+                  ></textarea>
                 </div>
               </form>
-              <button className=" btn-primary">Enviar</button>
+              <button className="button-form btn btn-primary mt-5">
+                Enviar
+              </button>
               <button
-                className="btn-secondary"
+                className=" button-form btn btn-secondary mt-2"
                 onClick={() => handleCloseModal()}
               >
                 Cancelar
@@ -62,6 +75,7 @@ const ContactUs = () => {
           </div>
         )}
       </div>
+      <Mapa />
     </div>
   );
 };
