@@ -68,7 +68,6 @@
   align-items: center;
   transition: left 0.5s ease-in-out;
   margin-bottom: 100px;
-  z-index: 9999;
 }
 
 .modal-container.show {
