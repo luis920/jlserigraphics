@@ -51,10 +51,11 @@ const Navbar = () => {
               <strong>Login</strong>
             </button>
           </Link>
-
-          <button className="btn-login">
-            <strong>Register </strong>
-          </button>
+          <Link to={"/registro"}>
+            <button className="btn-login">
+              <strong>Registro </strong>
+            </button>
+          </Link>
         </div>
       </nav>
     </div>
