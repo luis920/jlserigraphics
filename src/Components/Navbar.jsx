@@ -22,19 +22,18 @@ const Navbar = () => {
           </button>
           <div className="collapse navbar-collapse " id="navbarNavAltMarkup">
             <div className="navbar-nav  ">
+              <Link className="nav-link text-light" to={"/ofertas"}>
+                Ofertas
+              </Link>
+              <Link className="nav-link text-light" to={"/catalogo"}>
+                Catalogo
+              </Link>
               <Link
                 className="nav-link active text-light "
                 aria-current="page"
                 to={"/tallas"}
               >
                 Guia de tallas
-              </Link>
-
-              <Link className="nav-link text-light" to={"/ofertas"}>
-                Ofertas
-              </Link>
-              <Link className="nav-link text-light" to={"/catalogo"}>
-                Catalogo
               </Link>
               <Link
                 className="nav-link text-light"
@@ -45,6 +44,14 @@ const Navbar = () => {
               </Link>
             </div>
           </div>
+        </div>
+        <div className="d-flex">
+          <button className="btn-login">
+            <strong>Login</strong>
+          </button>
+          <button className="btn-login">
+            <strong>Register </strong>
+          </button>
         </div>
       </nav>
     </div>
