@@ -46,9 +46,12 @@ const Navbar = () => {
           </div>
         </div>
         <div className="d-flex">
-          <button className="btn-login">
-            <strong>Login</strong>
-          </button>
+          <Link to={"/iniciarsesion"}>
+            <button className="btn-login">
+              <strong>Login</strong>
+            </button>
+          </Link>
+
           <button className="btn-login">
             <strong>Register </strong>
           </button>
