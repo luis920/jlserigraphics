@@ -20,7 +20,7 @@ const Follow = () => {
         </div>
       </div>
       <a
-        href="https://www.instagram.com"
+        href="https://www.instagram.com/jlserigraphics"
         className="d-block text-center text-decoration-none text-light fs-2"
       >
         Visita nuestro Instagram{" "}
