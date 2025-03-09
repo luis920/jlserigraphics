@@ -1,14 +1,14 @@
-import "../src/Styles/Home.css";
-import Navbar from "./Components/Navbar";
-import Footer from "./Components/Footer";
-import Home from "./Components/Home";
-import Deals from "./Pages/Deals";
-import Size from "./Pages/Size";
-import Catalog from "./Pages/Catalog";
+import "../src/Frontend/Styles/Home.css";
+import Navbar from "./Frontend/Components/Navbar";
+import Footer from "./Frontend/Components/Footer";
+import Home from "./Frontend/Components/Home";
+import Deals from "./Frontend/Pages/Deals";
+import Size from "./Frontend/Pages/Size";
+import Catalog from "./Frontend/Pages/Catalog";
 import { Routes, Route } from "react-router-dom";
-import ContactUs from "./Pages/ContactUs";
-import Login from "./Pages/Login";
-import Register from "./Pages/Register";
+import ContactUs from "./Frontend/Pages/ContactUs";
+import Login from "./Frontend/Pages/Login";
+import Register from "./Frontend/Pages/Register";
 
 function App() {
   return (
