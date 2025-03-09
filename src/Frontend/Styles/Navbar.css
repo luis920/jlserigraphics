@@ -1,0 +1,20 @@
+.navbar-collapse {
+  border-radius: 10px;
+  padding-left: 10px;
+  width: 100%;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar-toggler {
+  margin-bottom: 5px;
+}
+
+.icon-sesion {
+  color: #00ff7f;
+  width: 25px;
+  height: 25px;
+  margin-top: 15px;
+  margin-right: 10px;
+}
