@@ -9,6 +9,8 @@ import { Routes, Route } from "react-router-dom";
 import ContactUs from "./Frontend/Pages/ContactUs";
 import Login from "./Frontend/Pages/Login";
 import Register from "./Frontend/Pages/Register";
+import Sidebar from "./Frontend/Components/Admin/Sidebar";
+import Admin from "./Frontend/Pages/Admin";
 
 function App() {
   return (
@@ -22,6 +24,9 @@ function App() {
         <Route index path="/contactanos" element={<ContactUs />} />
         <Route index path="/iniciarsesion" element={<Login />} />
         <Route index path="/registro" element={<Register />} />
+
+        {/* ADMIN DASHBOARD */}
+        <Route index path="/dashboard-admin" element={<Admin />} />
       </Routes>
       <Footer />
     </div>
