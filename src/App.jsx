@@ -5,29 +5,35 @@ import Home from "./Frontend/Components/Home";
 import Deals from "./Frontend/Pages/Deals";
 import Size from "./Frontend/Pages/Size";
 import Catalog from "./Frontend/Pages/Catalog";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import ContactUs from "./Frontend/Pages/ContactUs";
 import Login from "./Frontend/Pages/Login";
 import Register from "./Frontend/Pages/Register";
-import Sidebar from "./Frontend/Components/Admin/Sidebar";
-import Admin from "./Frontend/Pages/Admin";
+
+import Orders from "./Frontend/Components/Admin/Orders";
 
 function App() {
+  const location = useLocation();
+
+  const noNavbarRoutes = ["/pedidos", "/iniciarsesion", "/registro"];
+
   return (
     <div>
-      <Navbar />
+      {!noNavbarRoutes.includes(location.pathname) && <Navbar />}
+
       <Routes>
         <Route index path="/" element={<Home />} />
-        <Route index path="/ofertas" element={<Deals />} />
-        <Route index path="/tallas" element={<Size />} />
-        <Route index path="/catalogo" element={<Catalog />} />
-        <Route index path="/contactanos" element={<ContactUs />} />
-        <Route index path="/iniciarsesion" element={<Login />} />
-        <Route index path="/registro" element={<Register />} />
+        <Route path="/ofertas" element={<Deals />} />
+        <Route path="/tallas" element={<Size />} />
+        <Route path="/catalogo" element={<Catalog />} />
+        <Route path="/contactanos" element={<ContactUs />} />
+        <Route path="/iniciarsesion" element={<Login />} />
+        <Route path="/registro" element={<Register />} />
 
         {/* ADMIN DASHBOARD */}
-        <Route index path="/dashboard-admin" element={<Admin />} />
+        <Route path="/pedidos" element={<Orders />} />
       </Routes>
+
       <Footer />
     </div>
   );
