@@ -54,6 +54,7 @@ const Sidebar = () => {
   return (
     <>
       <div className="container-sidebar mx-1 d-flex flex-column">
+        <h1 className="text-light fs-bold">Administrador</h1>
         {/* Contenedor único */}
         {menuItems.map((item, index) => (
           <Link
