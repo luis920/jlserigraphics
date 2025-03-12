@@ -2,8 +2,11 @@ import Sidebar from "./Sidebar";
 import "../../Styles/Orders.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import React, { useState } from "react";
 
 const Orders = () => {
+  const [filtro, setFiltro] = useState("");
+
   const data = [
     {
       id: 1,
@@ -47,17 +50,32 @@ const Orders = () => {
     },
   ];
 
+  const pedidosFiltrados =
+    filtro === ""
+      ? data
+      : data.filter((pedido) =>
+          filtro === "pendientes"
+            ? pedido.estado_pedido !== "entregado"
+            : pedido.estado_pedido === "entregado"
+        );
+
   return (
     <div className="d-flex">
       <Sidebar />
       <div className="container mt-5 mx-4">
         <div className="d-flex  gap-2 mb-4">
-          <button className="order-btn w-50">
+          <button
+            className="order-btn w-50"
+            onClick={() => setFiltro("pendientes")}
+          >
             <span className="order-shadow"></span>
             <span className="order-edge"></span>
             <span className="order-front order-text">Pedidos pendientes</span>
           </button>
-          <button className="order-btn w-50">
+          <button
+            className="order-btn w-50"
+            onClick={() => setFiltro("entregados")}
+          >
             <span className="order-shadow"></span>
             <span className="order-edge"></span>
             <span className="order-front order-text">Pedidos entregados</span>
@@ -76,6 +94,7 @@ const Orders = () => {
 
         {/* Tabla de pedidos */}
         <div className="table-responsive">
+          <h1 className="text-light">Historial de pedidos</h1>
           <table className="table table-bordered bg-light">
             <thead className="table-dark">
               <tr>
@@ -89,20 +108,26 @@ const Orders = () => {
                 <th>Estado del Pedido</th>
               </tr>
             </thead>
-            <tbody>
-              {data.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.id}</td>
-                  <td>{item.nombre_cliente}</td>
-                  <td>{item.tipo_prenda}</td>
-                  <td>{item.cantidad_piezas}</td>
-                  <td>{item.fecha_entrega}</td>
-                  <td>${item.costo}</td>
-                  <td>${item.total}</td>
-                  <td>{item.estado_pedido}</td>
-                </tr>
-              ))}
-            </tbody>
+            {pedidosFiltrados.map((pedido) => (
+              <tr key={pedido.id}>
+                <td>{pedido.id}</td>
+                <td>{pedido.nombre_cliente}</td>
+                <td>{pedido.tipo_prenda}</td>
+                <td>{pedido.cantidad_piezas}</td>
+                <td>{pedido.fecha_entrega}</td>
+                <td>${pedido.costo}</td>
+                <td>${pedido.total}</td>
+                <td
+                  className={
+                    pedido.estado_pedido === "en proceso"
+                      ? "text-danger fw-bold"
+                      : "text-success fw-bold"
+                  }
+                >
+                  {pedido.estado_pedido}
+                </td>
+              </tr>
+            ))}
           </table>
         </div>
       </div>
