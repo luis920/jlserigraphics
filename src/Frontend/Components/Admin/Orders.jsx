@@ -137,6 +137,14 @@ const Orders = () => {
             ))}
           </table>
         </div>
+        {(filtro === "pendientes" || filtro === "entregados") && (
+          <button
+            className="btn btn-secondary mt-3"
+            onClick={() => setFiltro("")}
+          >
+            Mostrar todos los pedidos
+          </button>
+        )}
       </div>
     </div>
   );
