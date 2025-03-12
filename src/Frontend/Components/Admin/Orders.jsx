@@ -59,6 +59,13 @@ const Orders = () => {
             : pedido.estado_pedido === "entregado"
         );
 
+  const titulo =
+    filtro === "pendientes"
+      ? "pedidos pendientes"
+      : filtro === "entregados"
+      ? "Pedidos entregados"
+      : "Historial de pedidos";
+
   return (
     <div className="d-flex">
       <Sidebar />
@@ -94,7 +101,7 @@ const Orders = () => {
 
         {/* Tabla de pedidos */}
         <div className="table-responsive">
-          <h1 className="text-light">Historial de pedidos</h1>
+          <h1 className="text-light">{titulo}</h1>
           <table className="table table-bordered bg-light">
             <thead className="table-dark">
               <tr>
