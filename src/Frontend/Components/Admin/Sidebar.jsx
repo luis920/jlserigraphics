@@ -17,7 +17,7 @@ const Sidebar = () => {
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faShirt} />,
       label: "Gestion de pedidos",
-      path: "/admin-dashboard",
+      path: "/pedidos",
     },
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faUser} />,
