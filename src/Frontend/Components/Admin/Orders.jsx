@@ -3,10 +3,74 @@ import "../../Styles/Orders.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 
 const Orders = () => {
   const [filtro, setFiltro] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [nuevoPedido, setNuevoPedido] = useState({
+    cliente: "",
+    tipo_prenda: "",
+    cantidad: "",
+    fecha_entrega: "",
+    precio: "",
+    estado_pedido: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNuevoPedido({ ...nuevoPedido, [name]: value });
+  };
+  const handleAddOrder = async () => {
+    // Validación básica de los campos
+    if (
+      !nuevoPedido.cliente ||
+      !nuevoPedido.tipo_prenda ||
+      !nuevoPedido.cantidad ||
+      !nuevoPedido.fecha_entrega ||
+      !nuevoPedido.precio ||
+      !nuevoPedido.estado_pedido
+    ) {
+      Swal.fire("Error", "Por favor, completa todos los campos", "error");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://127.0.0.1:5000/pedido", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(nuevoPedido),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // Si la respuesta es exitosa, puedes mostrar una alerta
+        Swal.fire("Éxito", "Pedido agregado correctamente", "success");
+
+        // Cerrar el modal
+        setShowModal(false);
+
+        // Limpiar el formulario
+        setNuevoPedido({
+          cliente: "",
+          tipo_prenda: "",
+          cantidad: "",
+          fecha_entrega: "",
+          precio: "",
+          estado_pedido: "",
+        });
+      } else {
+        // Si la respuesta no es exitosa, mostrar un mensaje de error
+        Swal.fire("Error", "Hubo un problema al agregar el pedido", "error");
+      }
+    } catch (error) {
+      // Manejo de errores en caso de fallo en la solicitud
+      console.error("Error al agregar el pedido:", error);
+      Swal.fire("Error", "Hubo un error al conectar con el servidor", "error");
+    }
+  };
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -162,16 +226,27 @@ const Orders = () => {
               <form className="contacto-formulario ">
                 <div className="d-flex">
                   <div className="d-flex column ">
-                    <label htmlFor="nombre">Nombre del cliente</label>
-                    <input type="text" id="nombre" name="nombre" required />
+                    <label htmlFor="cliente">Nombre del cliente</label>
+                    <input
+                      onChange={handleInputChange}
+                      type="text"
+                      id="cliente"
+                      name="cliente"
+                      value={nuevoPedido.cliente}
+                      required
+                    />
                   </div>
                   <div className="d-flex column ">
-                    <label htmlFor="prenda ">Tipo de prenda</label>
+                    <label className="mx-2" htmlFor="tipo_prenda ">
+                      Tipo de prenda
+                    </label>
                     <input
+                      onChange={handleInputChange}
                       className="mx-2"
                       type="text"
-                      id="prenda"
-                      name="prenda"
+                      id="tipo_prenda"
+                      name="tipo_prenda"
+                      value={nuevoPedido.tipo_prenda}
                       required
                     />
                   </div>
@@ -180,30 +255,64 @@ const Orders = () => {
                   <div className="d-flex column ">
                     <label htmlFor="cantidad">Cantidad</label>
                     <input
+                      onChange={handleInputChange}
                       type="number"
                       id="cantidad"
                       name="cantidad"
+                      value={nuevoPedido.cantidad}
                       required
                     />
                   </div>
                   <div className="d-flex column ">
-                    <label htmlFor="entrega ">fecha de entrega</label>
+                    <label className="mx-2" htmlFor="fecha_entrega ">
+                      Fecha de entrega
+                    </label>
                     <input
+                      onChange={handleInputChange}
                       className="mx-2"
-                      type="text"
-                      id="entrega"
-                      name="entrega"
+                      type="date"
+                      id="fecha_entrega"
+                      name="fecha_entrega"
+                      value={nuevoPedido.fecha_entrega}
                       required
                     />
                   </div>
                 </div>
-
-                <div className="d-flex column  ">
-                  <label htmlFor="precio">Precio</label>
-                  <input className="" id="precio" name="precio" required />
+                <div className="d-flex">
+                  <div className="d-flex column ">
+                    <label htmlFor="precio">Precio</label>
+                    <input
+                      onChange={handleInputChange}
+                      type="number"
+                      id="precio"
+                      name="precio"
+                      value={nuevoPedido.precio}
+                      required
+                    />
+                  </div>
+                  <div className="d-flex column ">
+                    <label className="mx-2" htmlFor="estado_pedido ">
+                      Estado del pedido
+                    </label>
+                    <select
+                      onChange={handleInputChange}
+                      className="mx-2"
+                      type="text"
+                      id="estado_pedido"
+                      name="estado_pedido"
+                      value={nuevoPedido.estado_pedido}
+                      required
+                    >
+                      <option value="entregado">entregado</option>
+                      <option value="en proceso">en proceso</option>
+                    </select>
+                  </div>
                 </div>
               </form>
-              <button className="button-form btn btn-primary mt-5">
+              <button
+                onClick={() => handleAddOrder()}
+                className="button-form btn btn-primary mt-5"
+              >
                 Enviar
               </button>
               <button
