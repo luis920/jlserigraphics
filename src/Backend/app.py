@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from flask_cors import CORS
 
 # Inicialización de la aplicación Flask
 app = Flask(__name__)
+CORS(app)
 
 # Configuración de la base de datos
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root@localhost/flaskmysql'
@@ -43,7 +45,7 @@ class Pedidos(db.Model):
         self.cantidad= cantidad
         self.fecha_entrega= fecha_entrega
         self.precio = precio
-        self.total = precio*cantidad
+        self.total = float(precio)*int(cantidad)
         self.estado_pedido = estado_pedido
 
 # Esquema de Marshmallow para serializar y deserializar
@@ -55,7 +57,7 @@ class PlayeraSchema(ma.SQLAlchemyAutoSchema):
 class PedidosSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Pedidos
-        fields = ('id', 'cliente', 'tipo_prenda', 'cantidad', 'fecha_entrega', 'precio', 'total', 'estado_pedido')
+        fields = ('id', 'cliente', 'tipo_prenda', 'cantidad', 'fecha_entrega', 'precio','estado_pedido')
 
 
 # Crear una instancia del esquema
