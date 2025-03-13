@@ -36,14 +36,16 @@ class Pedidos(db.Model):
     cantidad = db.Column(db.Integer)
     fecha_entrega= db.Column(db.Date)
     precio = db.Column(db.Float)
+    total = db.Column(db.Float)
     estado_pedido = db.Column(db.String(100))
 
     def __init__(self, cliente, tipo_prenda, cantidad, fecha_entrega,precio,estado_pedido):
         self.cliente = cliente
         self.tipo_prenda = tipo_prenda
-        self.cantidad= int(cantidad)
+        self.cantidad= cantidad
         self.fecha_entrega= fecha_entrega
-        self.precio = float(precio)
+        self.precio = precio
+        self.total = float(precio)*int(cantidad)
         self.estado_pedido = estado_pedido
 
 # Esquema de Marshmallow para serializar y deserializar
