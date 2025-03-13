@@ -6,6 +6,14 @@ import React, { useState } from "react";
 
 const Orders = () => {
   const [filtro, setFiltro] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   const data = [
     {
@@ -61,7 +69,7 @@ const Orders = () => {
 
   const titulo =
     filtro === "pendientes"
-      ? "pedidos pendientes"
+      ? "Pedidos pendientes"
       : filtro === "entregados"
       ? "Pedidos entregados"
       : "Historial de pedidos";
@@ -90,7 +98,7 @@ const Orders = () => {
         </div>
 
         <div className="mb-4">
-          <button className="btn btn-primary">
+          <button className="btn btn-primary" onClick={() => handleOpenModal()}>
             <FontAwesomeIcon
               className="icon-sidebar text-light"
               icon={faPlus}
@@ -144,6 +152,68 @@ const Orders = () => {
           >
             Mostrar todos los pedidos
           </button>
+        )}
+      </div>
+      <div>
+        {showModal && (
+          <div className={`modal-container ${showModal ? "show" : ""}`}>
+            <div className="modal-content">
+              <h2 className="">Nuevo Pedido</h2>
+              <form className="contacto-formulario ">
+                <div className="d-flex">
+                  <div className="d-flex column ">
+                    <label htmlFor="nombre">Nombre del cliente</label>
+                    <input type="text" id="nombre" name="nombre" required />
+                  </div>
+                  <div className="d-flex column ">
+                    <label htmlFor="prenda ">Tipo de prenda</label>
+                    <input
+                      className="mx-2"
+                      type="text"
+                      id="prenda"
+                      name="prenda"
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="d-flex">
+                  <div className="d-flex column ">
+                    <label htmlFor="cantidad">Cantidad</label>
+                    <input
+                      type="number"
+                      id="cantidad"
+                      name="cantidad"
+                      required
+                    />
+                  </div>
+                  <div className="d-flex column ">
+                    <label htmlFor="entrega ">fecha de entrega</label>
+                    <input
+                      className="mx-2"
+                      type="text"
+                      id="entrega"
+                      name="entrega"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="d-flex column  ">
+                  <label htmlFor="precio">Precio</label>
+                  <input className="" id="precio" name="precio" required />
+                </div>
+              </form>
+              <button className="button-form btn btn-primary mt-5">
+                Enviar
+              </button>
+              <button
+                className=" button-form btn btn-secondary mt-2"
+                onClick={() => handleCloseModal()}
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
         )}
       </div>
     </div>
