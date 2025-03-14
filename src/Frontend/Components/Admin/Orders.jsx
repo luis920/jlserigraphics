@@ -217,26 +217,28 @@ const Orders = () => {
                 <th>Estado del Pedido</th>
               </tr>
             </thead>
-            {pedidosFiltrados.map((pedido) => (
-              <tr key={pedido.id}>
-                <td>{pedido.id}</td>
-                <td>{pedido.cliente}</td>
-                <td>{pedido.tipo_prenda}</td>
-                <td>{pedido.cantidad}</td>
-                <td>{pedido.fecha_entrega}</td>
-                <td>${pedido.precio}</td>
-                <td>${pedido.total}</td>
-                <td
-                  className={
-                    pedido.estado_pedido === "en proceso"
-                      ? "text-danger fw-bold"
-                      : "text-success fw-bold"
-                  }
-                >
-                  {pedido.estado_pedido}
-                </td>
-              </tr>
-            ))}
+            <tbody>
+              {pedidosFiltrados.map((pedido) => (
+                <tr key={pedido.id}>
+                  <td>{pedido.id}</td>
+                  <td>{pedido.cliente}</td>
+                  <td>{pedido.tipo_prenda}</td>
+                  <td>{pedido.cantidad}</td>
+                  <td>{pedido.fecha_entrega}</td>
+                  <td>${pedido.precio}</td>
+                  <td>${pedido.total}</td>
+                  <td
+                    className={
+                      pedido.estado_pedido === "en proceso"
+                        ? "text-danger fw-bold"
+                        : "text-success fw-bold"
+                    }
+                  >
+                    {pedido.estado_pedido}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
         {(filtro === "pendientes" || filtro === "entregados") && (
