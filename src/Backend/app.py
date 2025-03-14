@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_cors import CORS
 
+
+
 # Inicialización de la aplicación Flask
 app = Flask(__name__)
 CORS(app)
@@ -34,10 +36,12 @@ class Pedidos(db.Model):
     cliente = db.Column(db.String(100))
     tipo_prenda = db.Column(db.String(100))
     cantidad = db.Column(db.Integer)
-    fecha_entrega= db.Column(db.Date)
+    fecha_entrega= db.Column(db.String)
     precio = db.Column(db.Float)
     total = db.Column(db.Float)
     estado_pedido = db.Column(db.String(100))
+
+    
 
     def __init__(self, cliente, tipo_prenda, cantidad, fecha_entrega,precio,estado_pedido):
         self.cliente = cliente
@@ -57,7 +61,10 @@ class PlayeraSchema(ma.SQLAlchemyAutoSchema):
 class PedidosSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Pedidos
-        fields = ('id', 'cliente', 'tipo_prenda', 'cantidad', 'fecha_entrega', 'precio','estado_pedido')
+        fields = ('id', 'cliente', 'tipo_prenda', 'cantidad', 'fecha_entrega', 'precio', 'total', 'estado_pedido')
+
+        
+
 
 
 # Crear una instancia del esquema
@@ -90,7 +97,7 @@ def crear_playera():
     # Serializar la nueva playera y devolverla en la respuesta
     return jsonify(playera_schema.dump(nueva_playera)), 201
 
-# Endpoint para crear un nuevo pedido
+# PEDIDOS
 @app.route('/pedido', methods=['POST'])
 def crear_pedido():
     # Obtener los datos del JSON
@@ -101,6 +108,7 @@ def crear_pedido():
     precio= request.json['precio']
     estado_pedido= request.json['estado_pedido']
 
+    
     # Crear una nueva instancia de Pedidos
     nuevo_pedido = Pedidos(cliente, tipo_prenda, cantidad, fecha_entrega,precio,estado_pedido)
 
@@ -109,7 +117,18 @@ def crear_pedido():
     db.session.commit()
 
     # Serializar el nuevo pedido
-    return jsonify(playera_schema.dump(nuevo_pedido)), 201
+    return jsonify(pedido_schema.dump(nuevo_pedido)), 201
+
+@app.route('/pedidos', methods=['GET'])
+def obtener_pedidos():
+    
+    pedidos = Pedidos.query.all()
+
+    return jsonify(pedidos_schema.dump(pedidos)), 200
+
+
+
+
 
 
 
