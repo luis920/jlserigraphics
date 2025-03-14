@@ -2,12 +2,13 @@ import Sidebar from "./Sidebar";
 import "../../Styles/Orders.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 
 const Orders = () => {
   const [filtro, setFiltro] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [pedidos, setPedidos] = useState([]);
   const [nuevoPedido, setNuevoPedido] = useState({
     cliente: "",
     tipo_prenda: "",
@@ -19,6 +20,7 @@ const Orders = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    console.log(name, value);
     setNuevoPedido({ ...nuevoPedido, [name]: value });
   };
   const handleAddOrder = async () => {
@@ -72,6 +74,31 @@ const Orders = () => {
     }
   };
 
+  const obtenerPedidos = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:5000/pedidos", {});
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        return data;
+      } else {
+        console.error("Error al obtener pedidos:", response.status);
+      }
+    } catch (error) {
+      console.error("Error al obtener pedidos:", error);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    const fetchPedidos = async () => {
+      const data = await obtenerPedidos();
+      if (data) setPedidos(data);
+    };
+
+    fetchPedidos();
+  }, []);
+
   const handleOpenModal = () => {
     setShowModal(true);
   };
@@ -79,56 +106,59 @@ const Orders = () => {
     setShowModal(false);
   };
 
-  const data = [
-    {
-      id: 1,
-      nombre_cliente: "Juan Garcia",
-      tipo_prenda: "Playera algodon",
-      cantidad_piezas: 35,
-      fecha_entrega: "12-Abril-2025",
-      costo: 130,
-      total: 4550,
-      estado_pedido: "entregado",
-    },
-    {
-      id: 2,
-      nombre_cliente: "Mario Perez",
-      tipo_prenda: "Playera dryfit",
-      cantidad_piezas: 20,
-      fecha_entrega: "13-Abril-2025",
-      costo: 150,
-      total: 3000,
-      estado_pedido: "en proceso",
-    },
-    {
-      id: 3,
-      nombre_cliente: "David Garcia",
-      tipo_prenda: "Camisa manga larga",
-      cantidad_piezas: 15,
-      fecha_entrega: "14-Abril-2025",
-      costo: 450,
-      total: 6750,
-      estado_pedido: "en proceso",
-    },
-    {
-      id: 4,
-      nombre_cliente: "Antonio Gaytan",
-      tipo_prenda: "Playera de algodon",
-      cantidad_piezas: 50,
-      fecha_entrega: "15-Abril-2025",
-      costo: 125,
-      total: 6250,
-      estado_pedido: "en proceso",
-    },
-  ];
+  // const data = [
+  //   {
+  //     id: 1,
+  //     nombre_cliente: "Juan Garcia",
+  //     tipo_prenda: "Playera algodon",
+  //     cantidad_piezas: 35,
+  //     fecha_entrega: "12-Abril-2025",
+  //     costo: 130,
+  //     total: 4550,
+  //     estado_pedido: "entregado",
+  //   },
+  //   {
+  //     id: 2,
+  //     nombre_cliente: "Mario Perez",
+  //     tipo_prenda: "Playera dryfit",
+  //     cantidad_piezas: 20,
+  //     fecha_entrega: "13-Abril-2025",
+  //     costo: 150,
+  //     total: 3000,
+  //     estado_pedido: "en proceso",
+  //   },
+  //   {
+  //     id: 3,
+  //     nombre_cliente: "David Garcia",
+  //     tipo_prenda: "Camisa manga larga",
+  //     cantidad_piezas: 15,
+  //     fecha_entrega: "14-Abril-2025",
+  //     costo: 450,
+  //     total: 6750,
+  //     estado_pedido: "en proceso",
+  //   },
+  //   {
+  //     id: 4,
+  //     nombre_cliente: "Antonio Gaytan",
+  //     tipo_prenda: "Playera de algodon",
+  //     cantidad_piezas: 50,
+  //     fecha_entrega: "15-Abril-2025",
+  //     costo: 125,
+  //     total: 6250,
+  //     estado_pedido: "en proceso",
+  //   },
+  // ];
 
   const pedidosFiltrados =
     filtro === ""
-      ? data
-      : data.filter((pedido) =>
-          filtro === "pendientes"
-            ? pedido.estado_pedido !== "entregado"
-            : pedido.estado_pedido === "entregado"
+      ? pedidos
+      : pedidos.filter(
+          (
+            pedido // Aquí usas "pedido", no "pedidos"
+          ) =>
+            filtro === "pendientes"
+              ? pedido.estado_pedido !== "entregado" // Aquí también debe ser "pedido"
+              : pedido.estado_pedido === "entregado"
         );
 
   const titulo =
@@ -190,11 +220,11 @@ const Orders = () => {
             {pedidosFiltrados.map((pedido) => (
               <tr key={pedido.id}>
                 <td>{pedido.id}</td>
-                <td>{pedido.nombre_cliente}</td>
+                <td>{pedido.cliente}</td>
                 <td>{pedido.tipo_prenda}</td>
-                <td>{pedido.cantidad_piezas}</td>
+                <td>{pedido.cantidad}</td>
                 <td>{pedido.fecha_entrega}</td>
-                <td>${pedido.costo}</td>
+                <td>${pedido.precio}</td>
                 <td>${pedido.total}</td>
                 <td
                   className={
