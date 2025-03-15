@@ -9,8 +9,8 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import ContactUs from "./Frontend/Pages/ContactUs";
 import Login from "./Frontend/Pages/Login";
 import Register from "./Frontend/Pages/Register";
-
 import Orders from "./Frontend/Components/Admin/Orders";
+import injectContext from "./Frontend/Store/appContext";
 
 function App() {
   const location = useLocation();
@@ -39,4 +39,4 @@ function App() {
   );
 }
 
-export default App;
+export default injectContext(App);
