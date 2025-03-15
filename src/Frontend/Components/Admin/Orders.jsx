@@ -2,10 +2,12 @@ import Sidebar from "./Sidebar";
 import "../../Styles/Orders.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Swal from "sweetalert2";
+import { Context } from "../../Store/appContext.jsx";
 
 const Orders = () => {
+  const { store, actions } = useContext(Context);
   const [filtro, setFiltro] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [pedidos, setPedidos] = useState([]);
@@ -18,13 +20,15 @@ const Orders = () => {
     estado_pedido: "",
   });
 
+  useEffect(() => {
+    actions.obtenerPedidos();
+  }, []);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
     setNuevoPedido({ ...nuevoPedido, [name]: value });
   };
-  const handleAddOrder = async () => {
-    // Validación básica de los campos
+  const handleAddOrder = async (e) => {
     if (
       !nuevoPedido.cliente ||
       !nuevoPedido.tipo_prenda ||
@@ -37,24 +41,29 @@ const Orders = () => {
       return;
     }
 
+    const confirmSubmit = await Swal.fire({
+      title: "Estas seguro?",
+      text: "Quieres agregar un nuevo pedido?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Si, agregar!",
+      cancelButtonText: "No, cancelar",
+    });
+
+    if (!confirmSubmit.isConfirmed) {
+      return;
+    }
+
     try {
-      const response = await fetch("http://127.0.0.1:5000/pedido", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(nuevoPedido),
-      });
+      const result = await actions.agregarPedido(nuevoPedido);
 
-      if (response.ok) {
-        const data = await response.json();
-        // Si la respuesta es exitosa, puedes mostrar una alerta
-        Swal.fire("Éxito", "Pedido agregado correctamente", "success");
-
-        // Cerrar el modal
-        setShowModal(false);
-
-        // Limpiar el formulario
+      if (result) {
+        Swal.fire({
+          icon: "success",
+          title: "Pedido Agregado",
+          text: "Un nuevo pedido a sido agregado!",
+        });
+        actions.obtenerPedidos();
         setNuevoPedido({
           cliente: "",
           tipo_prenda: "",
@@ -63,41 +72,23 @@ const Orders = () => {
           precio: "",
           estado_pedido: "",
         });
+        setShowModal(false);
       } else {
-        // Si la respuesta no es exitosa, mostrar un mensaje de error
-        Swal.fire("Error", "Hubo un problema al agregar el pedido", "error");
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: `ah ocurrido un error: ${result.error}`,
+        });
       }
     } catch (error) {
-      // Manejo de errores en caso de fallo en la solicitud
-      console.error("Error al agregar el pedido:", error);
-      Swal.fire("Error", "Hubo un error al conectar con el servidor", "error");
+      console.error("Error en handleAddOrder:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Submission Error",
+        text: "ah ocurrido un error al enviar el formulario,porfavor intente de nuevo.",
+      });
     }
   };
-
-  const obtenerPedidos = async () => {
-    try {
-      const response = await fetch("http://127.0.0.1:5000/pedidos", {});
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        return data;
-      } else {
-        console.error("Error al obtener pedidos:", response.status);
-      }
-    } catch (error) {
-      console.error("Error al obtener pedidos:", error);
-      return null;
-    }
-  };
-
-  useEffect(() => {
-    const fetchPedidos = async () => {
-      const data = await obtenerPedidos();
-      if (data) setPedidos(data);
-    };
-
-    fetchPedidos();
-  }, []);
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -106,59 +97,13 @@ const Orders = () => {
     setShowModal(false);
   };
 
-  // const data = [
-  //   {
-  //     id: 1,
-  //     nombre_cliente: "Juan Garcia",
-  //     tipo_prenda: "Playera algodon",
-  //     cantidad_piezas: 35,
-  //     fecha_entrega: "12-Abril-2025",
-  //     costo: 130,
-  //     total: 4550,
-  //     estado_pedido: "entregado",
-  //   },
-  //   {
-  //     id: 2,
-  //     nombre_cliente: "Mario Perez",
-  //     tipo_prenda: "Playera dryfit",
-  //     cantidad_piezas: 20,
-  //     fecha_entrega: "13-Abril-2025",
-  //     costo: 150,
-  //     total: 3000,
-  //     estado_pedido: "en proceso",
-  //   },
-  //   {
-  //     id: 3,
-  //     nombre_cliente: "David Garcia",
-  //     tipo_prenda: "Camisa manga larga",
-  //     cantidad_piezas: 15,
-  //     fecha_entrega: "14-Abril-2025",
-  //     costo: 450,
-  //     total: 6750,
-  //     estado_pedido: "en proceso",
-  //   },
-  //   {
-  //     id: 4,
-  //     nombre_cliente: "Antonio Gaytan",
-  //     tipo_prenda: "Playera de algodon",
-  //     cantidad_piezas: 50,
-  //     fecha_entrega: "15-Abril-2025",
-  //     costo: 125,
-  //     total: 6250,
-  //     estado_pedido: "en proceso",
-  //   },
-  // ];
-
   const pedidosFiltrados =
     filtro === ""
-      ? pedidos
-      : pedidos.filter(
-          (
-            pedido // Aquí usas "pedido", no "pedidos"
-          ) =>
-            filtro === "pendientes"
-              ? pedido.estado_pedido !== "entregado" // Aquí también debe ser "pedido"
-              : pedido.estado_pedido === "entregado"
+      ? store.pedidos
+      : store.pedidos.filter((pedido) =>
+          filtro === "pendientes"
+            ? pedido.estado_pedido !== "entregado"
+            : pedido.estado_pedido === "entregado"
         );
 
   const titulo =
