@@ -20,12 +20,15 @@ const Orders = () => {
     estado_pedido: "",
   });
 
+  useEffect(() => {
+    actions.obtenerPedidos();
+  }, []);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
     setNuevoPedido({ ...nuevoPedido, [name]: value });
   };
-  const handleAddOrder = async () => {
+  const handleAddOrder = async (e) => {
     if (
       !nuevoPedido.cliente ||
       !nuevoPedido.tipo_prenda ||
@@ -38,22 +41,29 @@ const Orders = () => {
       return;
     }
 
+    const confirmSubmit = await Swal.fire({
+      title: "Estas seguro?",
+      text: "Quieres agregar un nuevo pedido?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Si, agregar!",
+      cancelButtonText: "No, cancelar",
+    });
+
+    if (!confirmSubmit.isConfirmed) {
+      return;
+    }
+
     try {
-      const response = await fetch("http://127.0.0.1:5000/pedido", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(nuevoPedido),
-      });
+      const result = await actions.agregarPedido(nuevoPedido);
 
-      if (response.ok) {
-        const data = await response.json();
-
-        Swal.fire("Éxito", "Pedido agregado correctamente", "success");
-
-        setShowModal(false);
-
+      if (result) {
+        Swal.fire({
+          icon: "success",
+          title: "Pedido Agregado",
+          text: "Un nuevo pedido a sido agregado!",
+        });
+        actions.obtenerPedidos();
         setNuevoPedido({
           cliente: "",
           tipo_prenda: "",
@@ -62,20 +72,23 @@ const Orders = () => {
           precio: "",
           estado_pedido: "",
         });
+        setShowModal(false);
       } else {
-        // Si la respuesta no es exitosa, mostrar un mensaje de error
-        Swal.fire("Error", "Hubo un problema al agregar el pedido", "error");
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: `ah ocurrido un error: ${result.error}`,
+        });
       }
     } catch (error) {
-      // Manejo de errores en caso de fallo en la solicitud
-      console.error("Error al agregar el pedido:", error);
-      Swal.fire("Error", "Hubo un error al conectar con el servidor", "error");
+      console.error("Error en handleAddOrder:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Submission Error",
+        text: "ah ocurrido un error al enviar el formulario,porfavor intente de nuevo.",
+      });
     }
   };
-
-  useEffect(() => {
-    actions.obtenerPedidos();
-  }, []);
 
   const handleOpenModal = () => {
     setShowModal(true);
