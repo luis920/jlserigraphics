@@ -22,7 +22,7 @@ const Sidebar = () => {
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faUser} />,
       label: "Clientes",
-      path: "/admin-dashboard",
+      path: "/clientes",
     },
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faCartFlatbed} />,

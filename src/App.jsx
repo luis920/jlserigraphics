@@ -11,11 +11,17 @@ import Login from "./Frontend/Pages/Login";
 import Register from "./Frontend/Pages/Register";
 import Orders from "./Frontend/Components/Admin/Orders";
 import injectContext from "./Frontend/Store/appContext";
+import Clients from "./Frontend/Components/Admin/Clients";
 
 function App() {
   const location = useLocation();
 
-  const noNavbarRoutes = ["/pedidos", "/iniciarsesion", "/registro"];
+  const noNavbarRoutes = [
+    "/pedidos",
+    "/iniciarsesion",
+    "/registro",
+    "/clientes",
+  ];
 
   return (
     <div>
@@ -32,6 +38,7 @@ function App() {
 
         {/* ADMIN DASHBOARD */}
         <Route path="/pedidos" element={<Orders />} />
+        <Route path="/clientes" element={<Clients />} />
       </Routes>
 
       <Footer />
