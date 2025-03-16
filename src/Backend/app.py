@@ -91,8 +91,8 @@ playeras_schema = PlayeraSchema(many=True)
 pedido_schema = PedidosSchema()
 pedidos_schema = PedidosSchema(many=True)
 
-cliente_schema = PedidosSchema()
-clientes_schema = PedidosSchema(many=True)
+cliente_schema = ClientesSchema()
+clientes_schema = ClientesSchema(many=True)
 
 # Crear las tablas de la base de datos (mejor hacerlo solo una vez)
 with app.app_context():
@@ -120,7 +120,7 @@ def crear_playera():
 # PEDIDOS
 @app.route('/pedido', methods=['POST'])
 def crear_pedido():
-    # Obtener los datos del JSON
+    
     cliente = request.json['cliente']
     tipo_prenda = request.json['tipo_prenda']
     cantidad = request.json['cantidad']
@@ -128,15 +128,11 @@ def crear_pedido():
     precio= request.json['precio']
     estado_pedido= request.json['estado_pedido']
 
-    
-    # Crear una nueva instancia de Pedidos
     nuevo_pedido = Pedidos(cliente, tipo_prenda, cantidad, fecha_entrega,precio,estado_pedido)
 
-    # Agregar el nuevo pedido a la base de datos
     db.session.add(nuevo_pedido)
     db.session.commit()
 
-    # Serializar el nuevo pedido
     return jsonify(pedido_schema.dump(nuevo_pedido)), 201
 
 @app.route('/pedidos', methods=['GET'])
@@ -155,17 +151,20 @@ def crear_cliente():
     direccion = request.json['direccion']
     telefono = request.json['telefono']
     
-
-    # Crear una nueva instancia de Playera
     nuevo_cliente = Clientes(nombre, direccion, telefono,)
 
-    # Agregar la nueva playera a la base de datos
     db.session.add(nuevo_cliente)
     db.session.commit()
 
-    # Serializar la nueva playera y devolverla en la respuesta
     return jsonify(cliente_schema.dump(nuevo_cliente)), 201
 
+@app.route('/clientes', methods=['GET'])
+
+def obtener_clientes():
+
+    clientes = Clientes.query.all()
+
+    return jsonify(clientes_schema.dump(clientes)),200
 
 
 
