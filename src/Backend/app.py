@@ -146,6 +146,26 @@ def obtener_pedidos():
 
     return jsonify(pedidos_schema.dump(pedidos)), 200
 
+#CLIENTES
+
+@app.route('/cliente', methods=['POST'])
+def crear_cliente():
+    # Obtener los datos del JSON
+    nombre = request.json['nombre']
+    direccion = request.json['direccion']
+    telefono = request.json['telefono']
+    
+
+    # Crear una nueva instancia de Playera
+    nuevo_cliente = Clientes(nombre, direccion, telefono,)
+
+    # Agregar la nueva playera a la base de datos
+    db.session.add(nuevo_cliente)
+    db.session.commit()
+
+    # Serializar la nueva playera y devolverla en la respuesta
+    return jsonify(cliente_schema.dump(nuevo_cliente)), 201
+
 
 
 
