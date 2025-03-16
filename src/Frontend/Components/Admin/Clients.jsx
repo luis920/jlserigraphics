@@ -15,16 +15,16 @@ const Clients = () => {
     telefono: "",
   });
 
-  const Clients = [
-    {
-      nombre: "Juan Ramirez",
-      direccion: "calle 1 entre 2 y3 #200",
-      telefono: "866-260-53-20",
-    },
-  ];
+  // const Clients = [
+  //   {
+  //     nombre: "Juan Ramirez",
+  //     direccion: "calle 1 entre 2 y3 #200",
+  //     telefono: "866-260-53-20",
+  //   },
+  // ];
 
   useEffect(() => {
-    actions.obtenerPedidos();
+    actions.obtenerClientes();
   }, []);
 
   const handleInputChange = (e) => {
@@ -55,7 +55,7 @@ const Clients = () => {
     }
 
     try {
-      const result = await actions.agregarPedido(nuevoCliente);
+      const result = await actions.agregarCliente(nuevoCliente);
 
       if (result) {
         Swal.fire({
@@ -63,7 +63,7 @@ const Clients = () => {
           title: "Cliente Agregado",
           text: "Un nuevo cliente a sido agregado!",
         });
-        actions.obtenerPedidos();
+        actions.obtenerClientes();
         setNuevoCliente({
           nombre: "",
           direccion: "",
@@ -122,7 +122,7 @@ const Clients = () => {
               </tr>
             </thead>
             <tbody>
-              {Clients.map((cliente) => (
+              {store.clientes.map((cliente) => (
                 <tr key={cliente.id}>
                   <td>{cliente.id}</td>
                   <td>{cliente.nombre}</td>
