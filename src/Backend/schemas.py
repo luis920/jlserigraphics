@@ -1,12 +1,9 @@
 from flask_marshmallow import Marshmallow
-from Backend.models import Playera, Pedidos, Clientes
+from Backend.models import  Pedidos, Clientes
 
 ma = Marshmallow()
 
-class PlayeraSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = Playera
-        fields = ('id', 'titulo', 'descripcion', 'precio', 'imagen')
+
 
 class PedidosSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
@@ -19,8 +16,6 @@ class ClientesSchema(ma.SQLAlchemyAutoSchema):
         fields = ('id', 'nombre', 'direccion', 'telefono')
 
 # Crear instancias para usar en otros archivos
-playera_schema = PlayeraSchema()
-playeras_schema = PlayeraSchema(many=True)
 
 pedido_schema = PedidosSchema()
 pedidos_schema = PedidosSchema(many=True)
