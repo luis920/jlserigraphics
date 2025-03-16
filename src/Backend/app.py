@@ -62,6 +62,22 @@ class Clientes(db.Model):
         self.nombre= nombre
         self.direccion = direccion
         self.telefono= telefono
+
+class Cotizaciones(db.Model):  
+    id = db.Column(db.Integer, primary_key=True)
+    nombre_del_cliente = db.Column(db.String(100))
+    direccion_cliente = db.Column(db.String(100))
+    telefono_cliente = db.Column(db.String(100))
+    tipo_de_prenda= db.Column(db.String(100))
+    cantidad_piezas = db.Column(db.String(100))
+   
+
+    def __init__(self, nombre_del_cliente,direccion_cliente,telefono_cliente,tipo_de_prenda,cantidad_piezas):
+        self.nombre_del_cliente= nombre_del_cliente
+        self.direccion_cliente = direccion_cliente
+        self.telefono_cliente= telefono_cliente
+        self.tipo_de_prenda= tipo_de_prenda
+        self.cantidad_piezas= cantidad_piezas
     
 
 # Esquema de Marshmallow para serializar y deserializar
