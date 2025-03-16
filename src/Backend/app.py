@@ -52,6 +52,18 @@ class Pedidos(db.Model):
         self.total = float(precio)*int(cantidad)
         self.estado_pedido = estado_pedido
 
+class Clientes(db.Model):  
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(100))
+    direccion = db.Column(db.String(100))
+    telefono = db.Column(db.String(100))
+
+    def __init__(self, nombre,direccion,telefono):
+        self.nombre= nombre
+        self.direccion = direccion
+        self.telefono= telefono
+    
+
 # Esquema de Marshmallow para serializar y deserializar
 class PlayeraSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
@@ -63,6 +75,11 @@ class PedidosSchema(ma.SQLAlchemyAutoSchema):
         model = Pedidos
         fields = ('id', 'cliente', 'tipo_prenda', 'cantidad', 'fecha_entrega', 'precio', 'total', 'estado_pedido')
 
+class ClientesSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Clientes
+        fields = ('id','nombre','direccion','telefono')
+
         
 
 
@@ -73,6 +90,9 @@ playeras_schema = PlayeraSchema(many=True)
 
 pedido_schema = PedidosSchema()
 pedidos_schema = PedidosSchema(many=True)
+
+cliente_schema = ClientesSchema()
+clientes_schema = ClientesSchema(many=True)
 
 # Crear las tablas de la base de datos (mejor hacerlo solo una vez)
 with app.app_context():
@@ -100,7 +120,7 @@ def crear_playera():
 # PEDIDOS
 @app.route('/pedido', methods=['POST'])
 def crear_pedido():
-    # Obtener los datos del JSON
+    
     cliente = request.json['cliente']
     tipo_prenda = request.json['tipo_prenda']
     cantidad = request.json['cantidad']
@@ -108,15 +128,11 @@ def crear_pedido():
     precio= request.json['precio']
     estado_pedido= request.json['estado_pedido']
 
-    
-    # Crear una nueva instancia de Pedidos
     nuevo_pedido = Pedidos(cliente, tipo_prenda, cantidad, fecha_entrega,precio,estado_pedido)
 
-    # Agregar el nuevo pedido a la base de datos
     db.session.add(nuevo_pedido)
     db.session.commit()
 
-    # Serializar el nuevo pedido
     return jsonify(pedido_schema.dump(nuevo_pedido)), 201
 
 @app.route('/pedidos', methods=['GET'])
@@ -126,6 +142,29 @@ def obtener_pedidos():
 
     return jsonify(pedidos_schema.dump(pedidos)), 200
 
+#CLIENTES
+
+@app.route('/cliente', methods=['POST'])
+def crear_cliente():
+    # Obtener los datos del JSON
+    nombre = request.json['nombre']
+    direccion = request.json['direccion']
+    telefono = request.json['telefono']
+    
+    nuevo_cliente = Clientes(nombre, direccion, telefono,)
+
+    db.session.add(nuevo_cliente)
+    db.session.commit()
+
+    return jsonify(cliente_schema.dump(nuevo_cliente)), 201
+
+@app.route('/clientes', methods=['GET'])
+
+def obtener_clientes():
+
+    clientes = Clientes.query.all()
+
+    return jsonify(clientes_schema.dump(clientes)),200
 
 
 

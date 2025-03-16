@@ -11,23 +11,31 @@ const Clients = () => {
   const [showModal, setShowModal] = useState(false);
   const [nuevoCliente, setNuevoCliente] = useState({
     nombre: "",
-    telefono: "",
     direccion: "",
+    telefono: "",
   });
 
+  // const Clients = [
+  //   {
+  //     nombre: "Juan Ramirez",
+  //     direccion: "calle 1 entre 2 y3 #200",
+  //     telefono: "866-260-53-20",
+  //   },
+  // ];
+
   useEffect(() => {
-    actions.obtenerPedidos();
+    actions.obtenerClientes();
   }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNuevoPedido({ ...nuevoPedido, [name]: value });
+    setNuevoCliente({ ...nuevoCliente, [name]: value });
   };
   const handleAddClient = async (e) => {
     if (
-      !nuevoPedido.nombre ||
-      !nuevoPedido.telefono ||
-      !nuevoPedido.direccion
+      !nuevoCliente.nombre ||
+      !nuevoCliente.direccion ||
+      !nuevoCliente.telefono
     ) {
       Swal.fire("Error", "Por favor, completa todos los campos", "error");
       return;
@@ -47,7 +55,7 @@ const Clients = () => {
     }
 
     try {
-      const result = await actions.agregarPedido(nuevoPedido);
+      const result = await actions.agregarCliente(nuevoCliente);
 
       if (result) {
         Swal.fire({
@@ -55,11 +63,11 @@ const Clients = () => {
           title: "Cliente Agregado",
           text: "Un nuevo cliente a sido agregado!",
         });
-        actions.obtenerPedidos();
-        setNuevoPedido({
+        actions.obtenerClientes();
+        setNuevoCliente({
           nombre: "",
-          telefono: "",
           direccion: "",
+          telefono: "",
         });
         setShowModal(false);
       } else {
@@ -108,9 +116,8 @@ const Clients = () => {
               <tr>
                 <th>ID</th>
                 <th>Nombre del Cliente</th>
-                <th>Telefono</th>
                 <th>Direccion</th>
-                <th>Historial de pedidos</th>
+                <th>Telefono</th>
               </tr>
             </thead>
             <tbody>
@@ -118,11 +125,8 @@ const Clients = () => {
                 <tr key={cliente.id}>
                   <td>{cliente.id}</td>
                   <td>{cliente.nombre}</td>
-                  <td>{cliente.telefono}</td>
                   <td>{cliente.direccion}</td>
-                  <td>
-                    <button>ver</button>
-                  </td>
+                  <td>{cliente.telefono}</td>
                 </tr>
               ))}
             </tbody>
@@ -136,39 +140,38 @@ const Clients = () => {
               <h2 className="">Nuevo Cliente</h2>
               <form className="contacto-formulario ">
                 <div className="d-flex column ">
-                  <label htmlFor="cliente">Nombre del cliente</label>
+                  <label htmlFor="nombre">Nombre del cliente</label>
                   <input
                     onChange={handleInputChange}
                     type="text"
-                    id="cliente"
-                    name="cliente"
-                    value={nuevoPedido.cliente}
+                    id="nombre"
+                    name="nombre"
+                    value={nuevoCliente.nombre}
                     required
                   />
                 </div>
                 <div className="d-flex column ">
                   <label className="mx-2" htmlFor="tipo_prenda ">
-                    Tipo de prenda
+                    Direccion
                   </label>
                   <input
                     onChange={handleInputChange}
-                    className="mx-2"
                     type="text"
-                    id="tipo_prenda"
-                    name="tipo_prenda"
-                    value={nuevoPedido.tipo_prenda}
+                    id="direccion"
+                    name="direccion"
+                    value={nuevoCliente.direccion}
                     required
                   />
                 </div>
 
                 <div className="d-flex column ">
-                  <label htmlFor="cantidad">Cantidad</label>
+                  <label htmlFor="telefono">Telefono</label>
                   <input
                     onChange={handleInputChange}
-                    type="number"
-                    id="cantidad"
-                    name="cantidad"
-                    value={nuevoPedido.cantidad}
+                    type="text"
+                    id="telefono"
+                    name="telefono"
+                    value={nuevoCliente.telefono}
                     required
                   />
                 </div>
