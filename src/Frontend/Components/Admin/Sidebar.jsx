@@ -26,8 +26,8 @@ const Sidebar = () => {
     },
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faCartFlatbed} />,
-      label: "Inventario",
-      path: "/admin-dashboard",
+      label: "Cotizaciones",
+      path: "/cotizaciones",
     },
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faFileLines} />,

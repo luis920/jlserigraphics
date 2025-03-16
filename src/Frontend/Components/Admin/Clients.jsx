@@ -118,7 +118,6 @@ const Clients = () => {
                 <th>Nombre del Cliente</th>
                 <th>Direccion</th>
                 <th>Telefono</th>
-                <th>Historial de pedidos</th>
               </tr>
             </thead>
             <tbody>
@@ -128,9 +127,6 @@ const Clients = () => {
                   <td>{cliente.nombre}</td>
                   <td>{cliente.direccion}</td>
                   <td>{cliente.telefono}</td>
-                  <td>
-                    <button>ver</button>
-                  </td>
                 </tr>
               ))}
             </tbody>

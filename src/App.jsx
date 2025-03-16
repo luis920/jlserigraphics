@@ -12,6 +12,7 @@ import Register from "./Frontend/Pages/Register";
 import Orders from "./Frontend/Components/Admin/Orders";
 import injectContext from "./Frontend/Store/appContext";
 import Clients from "./Frontend/Components/Admin/Clients";
+import Quote from "./Frontend/Components/Admin/QuoteAdmin";
 
 function App() {
   const location = useLocation();
@@ -21,6 +22,7 @@ function App() {
     "/iniciarsesion",
     "/registro",
     "/clientes",
+    "/cotizaciones",
   ];
 
   return (
@@ -39,6 +41,7 @@ function App() {
         {/* ADMIN DASHBOARD */}
         <Route path="/pedidos" element={<Orders />} />
         <Route path="/clientes" element={<Clients />} />
+        <Route path="/cotizaciones" element={<Quote />} />
       </Routes>
 
       <Footer />
