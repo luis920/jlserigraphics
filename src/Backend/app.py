@@ -52,6 +52,18 @@ class Pedidos(db.Model):
         self.total = float(precio)*int(cantidad)
         self.estado_pedido = estado_pedido
 
+class Clientes(db.Model):  
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(100))
+    direccion = db.Column(db.String(100))
+    telefono = db.Column(db.String(100))
+
+    def __init__(self, nombre,direccion,telefono):
+        self.nombre= nombre
+        self.direccion = direccion
+        self.telefono= telefono
+    
+
 # Esquema de Marshmallow para serializar y deserializar
 class PlayeraSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
@@ -63,6 +75,11 @@ class PedidosSchema(ma.SQLAlchemyAutoSchema):
         model = Pedidos
         fields = ('id', 'cliente', 'tipo_prenda', 'cantidad', 'fecha_entrega', 'precio', 'total', 'estado_pedido')
 
+class ClientesSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Clientes
+        fields = ('id','nombre','direccion','telefono')
+
         
 
 
@@ -73,6 +90,9 @@ playeras_schema = PlayeraSchema(many=True)
 
 pedido_schema = PedidosSchema()
 pedidos_schema = PedidosSchema(many=True)
+
+cliente_schema = PedidosSchema()
+clientes_schema = PedidosSchema(many=True)
 
 # Crear las tablas de la base de datos (mejor hacerlo solo una vez)
 with app.app_context():
