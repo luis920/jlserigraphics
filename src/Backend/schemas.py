@@ -1,5 +1,5 @@
 from flask_marshmallow import Marshmallow
-from .models import Playera, Pedidos, Clientes
+from Backend.models import Playera, Pedidos, Clientes
 
 ma = Marshmallow()
 

@@ -19,6 +19,15 @@ class Pedidos(db.Model):
     total = db.Column(db.Float)
     estado_pedido = db.Column(db.String(100))
 
+    def __init__(self, cliente, tipo_prenda, cantidad, fecha_entrega,precio,estado_pedido):
+        self.cliente = cliente
+        self.tipo_prenda = tipo_prenda
+        self.cantidad= cantidad
+        self.fecha_entrega= fecha_entrega
+        self.precio = precio
+        self.total = float(precio)*int(cantidad)
+        self.estado_pedido = estado_pedido
+
 class Clientes(db.Model):  
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100))
