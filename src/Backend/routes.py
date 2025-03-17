@@ -45,7 +45,8 @@ def obtener_clientes():
   return jsonify(clientes_schema.dump(clientes)),200
 
 #ENDPOINTS COTIZACIONES 
-
+  
+  #Generar cotizacion
 @routes.route('/cotizacion', methods=['POST'])
 def generar_cotizacion():
     data = request.json
@@ -53,3 +54,10 @@ def generar_cotizacion():
     db.session.add(nueva_cotizacion)
     db.session.commit()
     return jsonify(cotizacion_schema.dump(nueva_cotizacion)),201
+   
+   #obtener cotizaciones
+@routes.route('/cotizaciones', methods=['GET'])
+def obtener_cotizaciones():
+
+  cotizaciones = Cotizaciones.query.all()
+  return jsonify(cotizaciones_schema.dump(cotizaciones))
