@@ -2,6 +2,20 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+class Usuarios(db.Model):  
+    id = db.Column(db.Integer, primary_key=True)
+    nombre_completo = db.Column(db.String(100), nullable=False)
+    telefono = db.Column(db.String(15), nullable=False, unique=True) 
+    email = db.Column(db.String(100), nullable=False, unique=True)
+    password = db.Column(db.String(200), nullable=False) 
+
+
+    def __init__(self, nombre_completo,telefono,email,password,):
+        self.nombre_completo= nombre_completo
+        self.telefono = telefono
+        self.email= email
+        self.password= password
+        
 
 class Pedidos(db.Model):  
     id = db.Column(db.Integer, primary_key=True)
