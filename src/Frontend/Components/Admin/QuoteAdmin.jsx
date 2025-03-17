@@ -16,6 +16,7 @@ const Quote = () => {
     telefono_cliente: "",
     tipo_de_prenda: "",
     cantidad_piezas: "",
+    precio: "",
   });
   const pdfRef = useRef(); // Referencia para el PDF
 
@@ -31,7 +32,7 @@ const Quote = () => {
   ];
 
   useEffect(() => {
-    actions.obtenerClientes();
+    actions.obtenerCotizaciones();
   }, []);
 
   const handleInputChange = (e) => {
@@ -65,7 +66,7 @@ const Quote = () => {
     }
 
     try {
-      const result = await actions.agregarCliente(nuevaCotizacion);
+      const result = await actions.agregarCotizacion(nuevaCotizacion);
 
       if (result) {
         Swal.fire({
@@ -73,7 +74,7 @@ const Quote = () => {
           title: "Cotización Generada",
           text: "¡Una nueva cotización ha sido generada!",
         });
-        actions.obtenerClientes();
+        actions.obtenerCotizaciones();
         setNuevaCotizacion({
           nombre_del_cliente: "",
           direccion_cliente: "",
@@ -155,17 +156,20 @@ const Quote = () => {
                   <td>{cotizacion.tipo_de_prenda}</td>
                   <td>{cotizacion.cantidad_piezas}</td>
                   <td>
-                    <button class="Btn" onClick={() => generatePDF(cotizacion)}>
+                    <button
+                      className="Btn"
+                      onClick={() => generatePDF(cotizacion)}
+                    >
                       <svg
-                        class="svgIcon"
+                        className="svgIcon"
                         viewBox="0 0 384 512"
                         height="1em"
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"></path>
                       </svg>
-                      <span class="icon2"></span>
-                      <span class="tooltip">Download</span>
+                      <span className="icon2"></span>
+                      <span className="tooltip">Download</span>
                     </button>
                   </td>
                 </tr>
@@ -221,6 +225,14 @@ const Quote = () => {
                 type="number"
                 name="cantidad_piezas"
                 value={nuevaCotizacion.cantidad_piezas}
+                onChange={handleInputChange}
+                required
+              />
+              <label>Precio</label>
+              <input
+                type="text"
+                name="precio"
+                value={nuevaCotizacion.precio}
                 onChange={handleInputChange}
                 required
               />
