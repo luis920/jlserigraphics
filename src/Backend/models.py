@@ -43,9 +43,10 @@ class Cotizaciones(db.Model):
     precio= db.Column(db.Float)
     subtotal = db.Column(db.Float)
     total = db.Column(db.Float)
+    pdf_url = db.Column(db.String(255))
    
 
-    def __init__(self, nombre_del_cliente,direccion_cliente,telefono_cliente,tipo_de_prenda,cantidad_piezas,precio):
+    def __init__(self, nombre_del_cliente,direccion_cliente,telefono_cliente,tipo_de_prenda,cantidad_piezas,precio,pdf_url):
         self.nombre_del_cliente= nombre_del_cliente
         self.direccion_cliente = direccion_cliente
         self.telefono_cliente= telefono_cliente
@@ -54,3 +55,4 @@ class Cotizaciones(db.Model):
         self.precio=float(precio)
         self.subtotal= self.cantidad_piezas*self.precio
         self.total= self.subtotal*1.16
+        self.pdf_url=pdf_url

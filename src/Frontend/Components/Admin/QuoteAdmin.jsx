@@ -18,18 +18,7 @@ const Quote = () => {
     cantidad_piezas: "",
     precio: "",
   });
-  const pdfRef = useRef(); // Referencia para el PDF
-
-  const Quote = [
-    {
-      id: 1,
-      nombre_del_cliente: "Juan Ramirez",
-      direccion_cliente: "Calle 30 #1200",
-      telefono_cliente: "123-456-789",
-      tipo_de_prenda: "Algodón",
-      cantidad_piezas: "120",
-    },
-  ];
+  const pdfRef = useRef();
 
   useEffect(() => {
     actions.obtenerCotizaciones();
@@ -100,18 +89,46 @@ const Quote = () => {
     }
   };
 
-  const generatePDF = (cotizacion) => {
+  const generatePDF = async () => {
     const content = pdfRef.current;
-    html2pdf()
+    const pdfBlob = await html2pdf()
       .set({
         margin: 10,
-        filename: `Cotizacion-${cotizacion.nombre_del_cliente}.pdf`,
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: { scale: 2 },
         jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
       })
       .from(content)
-      .save();
+      .outputPdf("blob");
+
+    const formData = new FormData();
+    formData.append("nombre_del_cliente", nuevaCotizacion.nombre_del_cliente);
+    formData.append("direccion_cliente", nuevaCotizacion.direccion_cliente);
+    formData.append("telefono_cliente", nuevaCotizacion.telefono_cliente);
+    formData.append("tipo_de_prenda", nuevaCotizacion.tipo_de_prenda);
+    formData.append("cantidad_piezas", nuevaCotizacion.cantidad_piezas);
+    formData.append("precio", nuevaCotizacion.precio);
+    formData.append(
+      "pdf",
+      pdfBlob,
+      `Cotizacion-${nuevaCotizacion.nombre_del_cliente}.pdf`
+    );
+
+    try {
+      const response = await fetch("http://localhost:5000/guardar_cotizacion", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        Swal.fire("Éxito", "Cotización guardada correctamente", "success");
+      } else {
+        Swal.fire("Error", "No se pudo guardar la cotización", "error");
+      }
+    } catch (error) {
+      console.error("Error al guardar la cotización:", error);
+      Swal.fire("Error", "Hubo un problema al guardar la cotización", "error");
+    }
   };
 
   return (
@@ -139,22 +156,15 @@ const Quote = () => {
               <tr>
                 <th>ID</th>
                 <th>Nombre del Cliente</th>
-                <th>Dirección</th>
-                <th>Teléfono</th>
-                <th>Tipo de prenda</th>
-                <th>Cantidad de piezas</th>
                 <th>Descargar</th>
               </tr>
             </thead>
             <tbody>
-              {Quote.map((cotizacion) => (
+              {store.cotizaciones.map((cotizacion) => (
                 <tr key={cotizacion.id}>
                   <td>{cotizacion.id}</td>
                   <td>{cotizacion.nombre_del_cliente}</td>
-                  <td>{cotizacion.direccion_cliente}</td>
-                  <td>{cotizacion.telefono_cliente}</td>
-                  <td>{cotizacion.tipo_de_prenda}</td>
-                  <td>{cotizacion.cantidad_piezas}</td>
+
                   <td>
                     <button
                       className="Btn"
@@ -254,17 +264,19 @@ const Quote = () => {
         </div>
       )}
 
-      {/* Contenedor oculto para generar el PDF */}
-      {/* <div style={{ display: "none" }}>
+      <div style={{ display: "none" }}>
         <div ref={pdfRef}>
           <h2>Cotización</h2>
-          <p>Nombre del Cliente: {Quote[0]?.nombre_del_cliente}</p>
-          <p>Dirección: {Quote[0]?.direccion_cliente}</p>
-          <p>Teléfono: {Quote[0]?.telefono_cliente}</p>
-          <p>Tipo de Prenda: {Quote[0]?.tipo_de_prenda}</p>
-          <p>Cantidad de Piezas: {Quote[0]?.cantidad_piezas}</p>
+          <p>Nombre del Cliente: {store.nombre_del_cliente}</p>
+          <p>Dirección: {store.direccion_cliente}</p>
+          <p>Teléfono: {store.telefono_cliente}</p>
+          <p>Tipo de Prenda: {store.tipo_de_prenda}</p>
+          <p>Cantidad de Piezas: {store.cantidad_piezas}</p>
+          <p>Precio: {store.precio}</p>
+          <p>Subtotal: {store.subtotal}</p>
+          <p>Total: {store.total}</p>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };
