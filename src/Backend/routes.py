@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
-from Backend.models import db, Pedidos, Clientes
-from Backend.schemas import  pedido_schema, pedidos_schema, cliente_schema, clientes_schema
+from Backend.models import db, Pedidos, Clientes,Cotizaciones
+from Backend.schemas import  pedido_schema, pedidos_schema, cliente_schema, clientes_schema,cotizacion_schema,cotizaciones_schema
 
 routes = Blueprint('routes', __name__)
 
@@ -44,3 +44,12 @@ def obtener_clientes():
   clientes = Clientes.query.all()
   return jsonify(clientes_schema.dump(clientes)),200
 
+#ENDPOINTS COTIZACIONES 
+
+@routes.route('/cotizacion', methods=['POST'])
+def generar_cotizacion():
+    data = request.json
+    nueva_cotizacion= Cotizaciones(**data)
+    db.session.add(nueva_cotizacion)
+    db.session.commit()
+    return jsonify(cotizacion_schema.dump(nueva_cotizacion)),201

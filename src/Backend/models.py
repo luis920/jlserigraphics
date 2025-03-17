@@ -8,7 +8,7 @@ class Pedidos(db.Model):
     cliente = db.Column(db.String(100))
     tipo_prenda = db.Column(db.String(100))
     cantidad = db.Column(db.Integer)
-    fecha_entrega = db.Column(db.String)
+    fecha_entrega = db.Column(db.String(100))
     precio = db.Column(db.Float)
     total = db.Column(db.Float)
     estado_pedido = db.Column(db.String(100))
@@ -45,7 +45,7 @@ class Cotizaciones(db.Model):
     total = db.Column(db.Float)
    
 
-    def __init__(self, nombre_del_cliente,direccion_cliente,telefono_cliente,tipo_de_prenda,cantidad_piezas,precio,subtotal):
+    def __init__(self, nombre_del_cliente,direccion_cliente,telefono_cliente,tipo_de_prenda,cantidad_piezas,precio,subtotal,total):
         self.nombre_del_cliente= nombre_del_cliente
         self.direccion_cliente = direccion_cliente
         self.telefono_cliente= telefono_cliente

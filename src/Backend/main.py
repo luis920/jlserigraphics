@@ -4,6 +4,7 @@ from Backend.models import db
 from Backend.schemas import ma
 from Backend.routes import routes
 from Backend.config import Config
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -11,6 +12,8 @@ app.config.from_object(Config)
 CORS(app)
 db.init_app(app)
 ma.init_app(app)
+
+migrate = Migrate(app, db)
 
 app.register_blueprint(routes)
 
