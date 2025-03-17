@@ -8,7 +8,7 @@ class Pedidos(db.Model):
     cliente = db.Column(db.String(100))
     tipo_prenda = db.Column(db.String(100))
     cantidad = db.Column(db.Integer)
-    fecha_entrega = db.Column(db.String)
+    fecha_entrega = db.Column(db.String(100))
     precio = db.Column(db.Float)
     total = db.Column(db.Float)
     estado_pedido = db.Column(db.String(100))
@@ -40,11 +40,19 @@ class Cotizaciones(db.Model):
     telefono_cliente = db.Column(db.String(100))
     tipo_de_prenda= db.Column(db.String(100))
     cantidad_piezas = db.Column(db.String(100))
+    precio= db.Column(db.Float)
+    subtotal = db.Column(db.Float)
+    total = db.Column(db.Float)
+    pdf_url = db.Column(db.String(255))
    
 
-    def __init__(self, nombre_del_cliente,direccion_cliente,telefono_cliente,tipo_de_prenda,cantidad_piezas):
+    def __init__(self, nombre_del_cliente,direccion_cliente,telefono_cliente,tipo_de_prenda,cantidad_piezas,precio,pdf_url):
         self.nombre_del_cliente= nombre_del_cliente
         self.direccion_cliente = direccion_cliente
         self.telefono_cliente= telefono_cliente
         self.tipo_de_prenda= tipo_de_prenda
-        self.cantidad_piezas= cantidad_piezas
+        self.cantidad_piezas= int(cantidad_piezas)
+        self.precio=float(precio)
+        self.subtotal= self.cantidad_piezas*self.precio
+        self.total= self.subtotal*1.16
+        self.pdf_url=pdf_url

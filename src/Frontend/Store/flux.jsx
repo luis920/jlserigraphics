@@ -6,6 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       clientes: [],
       pedidos: [],
+      cotizaciones: [],
     },
     actions: {
       GetClients: async () => {
@@ -199,6 +200,47 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         } catch (error) {
           console.error("Error al agregar cliente:", error);
+        }
+      },
+      obtenerCotizaciones: async () => {
+        try {
+          const response = await fetch(
+            "http://127.0.0.1:5000/cotizaciones",
+            {}
+          );
+          if (response.ok) {
+            const data = await response.json();
+            setStore({ cotizaciones: data });
+          } else {
+            console.error("Error al obtener cotizaciones:", response.status);
+          }
+        } catch (error) {
+          console.error("Error al obtener cotizaciones:", error);
+          return null;
+        }
+      },
+      agregarCotizacion: async (nuevaCotizacion) => {
+        try {
+          const response = await fetch("http://127.0.0.1:5000/cotizacion", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(nuevaCotizacion),
+          });
+
+          if (response.ok) {
+            const nuevaCotizacion = await response.json();
+            const store = getStore();
+            setStore({
+              cotizaciones: [...store.cotizaciones, nuevaCotizacion],
+            });
+            return nuevaCotizacion;
+          } else {
+            console.error("Error al generar cotizacion:", response.status);
+          }
+        } catch (error) {
+          console.error("Error al generar cotizacion:", error);
         }
       },
     },
