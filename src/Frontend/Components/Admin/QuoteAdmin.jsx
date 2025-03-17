@@ -2,9 +2,10 @@ import Sidebar from "./Sidebar.jsx";
 import "../../Styles/QuoteAdmin.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import Swal from "sweetalert2";
 import { Context } from "../../Store/appContext.jsx";
+import html2pdf from "html2pdf.js";
 
 const Quote = () => {
   const { store, actions } = useContext(Context);
@@ -16,15 +17,19 @@ const Quote = () => {
     tipo_de_prenda: "",
     cantidad_piezas: "",
   });
+  const pdfRef = useRef(); // Referencia para el PDF
+
   const Quote = [
     {
+      id: 1,
       nombre_del_cliente: "Juan Ramirez",
       direccion_cliente: "Calle 30 #1200",
       telefono_cliente: "123-456-789",
-      tipo_de_prenda: "algodon",
+      tipo_de_prenda: "Algodón",
       cantidad_piezas: "120",
     },
   ];
+
   useEffect(() => {
     actions.obtenerClientes();
   }, []);
@@ -33,6 +38,7 @@ const Quote = () => {
     const { name, value } = e.target;
     setNuevaCotizacion({ ...nuevaCotizacion, [name]: value });
   };
+
   const handleGenerateQuote = async (e) => {
     if (
       !nuevaCotizacion.nombre_del_cliente ||
@@ -46,11 +52,11 @@ const Quote = () => {
     }
 
     const confirmSubmit = await Swal.fire({
-      title: "Estas seguro?",
-      text: "Quieres generar una nueva cotizacion?",
+      title: "¿Estás seguro?",
+      text: "¿Quieres generar una nueva cotización?",
       icon: "question",
       showCancelButton: true,
-      confirmButtonText: "Si, generar!",
+      confirmButtonText: "Sí, generar!",
       cancelButtonText: "No, cancelar",
     });
 
@@ -64,11 +70,11 @@ const Quote = () => {
       if (result) {
         Swal.fire({
           icon: "success",
-          title: "Cotizacion Generada",
-          text: "Una nueva cotizacion ah sido generada!",
+          title: "Cotización Generada",
+          text: "¡Una nueva cotización ha sido generada!",
         });
         actions.obtenerClientes();
-        setNuevoCliente({
+        setNuevaCotizacion({
           nombre_del_cliente: "",
           direccion_cliente: "",
           telefono_cliente: "",
@@ -80,24 +86,31 @@ const Quote = () => {
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: `ah ocurrido un error: ${result.error}`,
+          text: `Ha ocurrido un error: ${result.error}`,
         });
       }
     } catch (error) {
       console.error("Error en handleGenerateQuote:", error);
       Swal.fire({
         icon: "error",
-        title: "Submission Error",
-        text: "ah ocurrido un error al enviar el formulario,porfavor intente de nuevo.",
+        title: "Error de Envío",
+        text: "Ha ocurrido un error al enviar el formulario. Intente de nuevo.",
       });
     }
   };
 
-  const handleOpenModal = () => {
-    setShowModal(true);
-  };
-  const handleCloseModal = () => {
-    setShowModal(false);
+  const generatePDF = (cotizacion) => {
+    const content = pdfRef.current;
+    html2pdf()
+      .set({
+        margin: 10,
+        filename: `Cotizacion-${cotizacion.nombre_del_cliente}.pdf`,
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+      })
+      .from(content)
+      .save();
   };
 
   return (
@@ -105,12 +118,15 @@ const Quote = () => {
       <Sidebar />
       <div className="container mt-5 mx-4">
         <div className="mb-4">
-          <button className="btn btn-primary" onClick={() => handleOpenModal()}>
+          <button
+            className="btn btn-primary"
+            onClick={() => setShowModal(true)}
+          >
             <FontAwesomeIcon
               className="icon-sidebar text-light"
               icon={faPlus}
             />
-            Generar nueva cotizacion
+            Generar nueva cotización
           </button>
         </div>
 
@@ -122,8 +138,8 @@ const Quote = () => {
               <tr>
                 <th>ID</th>
                 <th>Nombre del Cliente</th>
-                <th>Direccion</th>
-                <th>Telefono</th>
+                <th>Dirección</th>
+                <th>Teléfono</th>
                 <th>Tipo de prenda</th>
                 <th>Cantidad de piezas</th>
                 <th>Descargar</th>
@@ -139,7 +155,7 @@ const Quote = () => {
                   <td>{cotizacion.tipo_de_prenda}</td>
                   <td>{cotizacion.cantidad_piezas}</td>
                   <td>
-                    <button class="Btn">
+                    <button class="Btn" onClick={() => generatePDF(cotizacion)}>
                       <svg
                         class="svgIcon"
                         viewBox="0 0 384 512"
@@ -158,86 +174,85 @@ const Quote = () => {
           </table>
         </div>
       </div>
-      <div>
-        {showModal && (
-          <div className={`modal-container ${showModal ? "show" : ""}`}>
-            <div className="modal-content">
-              <h2 className="">Nueva Cotizacion</h2>
-              <form className="contacto-formulario ">
-                <div className="d-flex column ">
-                  <label htmlFor="nombre_del_cliente">Nombre del cliente</label>
-                  <input
-                    onChange={handleInputChange}
-                    type="text"
-                    id="nombre_del_cliente"
-                    name="nombre_del_cliente"
-                    value={nuevaCotizacion.nombre_del_cliente}
-                    required
-                  />
-                </div>
-                <div className="d-flex column ">
-                  <label className="mx-2" htmlFor="direccion_cliente ">
-                    Direccion
-                  </label>
-                  <input
-                    onChange={handleInputChange}
-                    type="text"
-                    id="direccion_cliente"
-                    name="direccion_cliente"
-                    value={nuevaCotizacion.direccion_cliente}
-                  />
-                </div>
 
-                <div className="d-flex column ">
-                  <label htmlFor="telefono_cliente">Telefono</label>
-                  <input
-                    onChange={handleInputChange}
-                    type="text"
-                    id="telefono_cliente"
-                    name="telefono_cliente"
-                    value={nuevaCotizacion.telefono_cliente}
-                    required
-                  />
-                </div>
-                <div className="d-flex column ">
-                  <label htmlFor="tipo_de_prenda">Tipo de prenda</label>
-                  <input
-                    onChange={handleInputChange}
-                    type="text"
-                    id="tipo_de_prenda"
-                    name="tipo_de_prenda"
-                    value={nuevaCotizacion.tipo_de_prenda}
-                    required
-                  />
-                </div>
-                <div className="d-flex column ">
-                  <label htmlFor="cantidad_piezas">Cantidad de piezas</label>
-                  <input
-                    onChange={handleInputChange}
-                    type="number"
-                    id="cantidad_piezas"
-                    name="cantidad_piezas"
-                    value={nuevaCotizacion.cantidad_piezas}
-                    required
-                  />
-                </div>
-              </form>
-              <button
-                onClick={() => handleAddClient()}
-                className="button-form btn btn-primary mt-5"
-              >
-                Enviar
-              </button>
-              <button
-                className=" button-form btn btn-secondary mt-2"
-                onClick={() => handleCloseModal()}
-              >
-                Cancelar
-              </button>
-            </div>
+      {/* Modal para crear nueva cotización */}
+      {showModal && (
+        <div className="modal-container show">
+          <div className="modal-content">
+            <h2>Nueva Cotización</h2>
+            <form className="contacto-formulario">
+              <label>Nombre del cliente</label>
+              <input
+                type="text"
+                name="nombre_del_cliente"
+                value={nuevaCotizacion.nombre_del_cliente}
+                onChange={handleInputChange}
+                required
+              />
+
+              <label>Dirección</label>
+              <input
+                type="text"
+                name="direccion_cliente"
+                value={nuevaCotizacion.direccion_cliente}
+                onChange={handleInputChange}
+              />
+
+              <label>Teléfono</label>
+              <input
+                type="text"
+                name="telefono_cliente"
+                value={nuevaCotizacion.telefono_cliente}
+                onChange={handleInputChange}
+                required
+              />
+
+              <label>Tipo de prenda</label>
+              <input
+                type="text"
+                name="tipo_de_prenda"
+                value={nuevaCotizacion.tipo_de_prenda}
+                onChange={handleInputChange}
+                required
+              />
+
+              <label>Cantidad de piezas</label>
+              <input
+                type="number"
+                name="cantidad_piezas"
+                value={nuevaCotizacion.cantidad_piezas}
+                onChange={handleInputChange}
+                required
+              />
+            </form>
+
+            <button
+              className="btn btn-primary mt-5"
+              onClick={handleGenerateQuote}
+            >
+              Enviar
+            </button>
+            <button
+              className="btn btn-secondary mt-2"
+              onClick={() => setShowModal(false)}
+            >
+              Cancelar
+            </button>
           </div>
-        )}
-      </div>
+        </div>
+      )}
+
+      {/* Contenedor oculto para generar el PDF */}
+      {/* <div style={{ display: "none" }}>
+        <div ref={pdfRef}>
+          <h2>Cotización</h2>
+          <p>Nombre del Cliente: {Quote[0]?.nombre_del_cliente}</p>
+          <p>Dirección: {Quote[0]?.direccion_cliente}</p>
+          <p>Teléfono: {Quote[0]?.telefono_cliente}</p>
+          <p>Tipo de Prenda: {Quote[0]?.tipo_de_prenda}</p>
+          <p>Cantidad de Piezas: {Quote[0]?.cantidad_piezas}</p>
+        </div>
+      </div> */}
     </div>
   );
 };

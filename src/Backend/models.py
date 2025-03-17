@@ -40,11 +40,17 @@ class Cotizaciones(db.Model):
     telefono_cliente = db.Column(db.String(100))
     tipo_de_prenda= db.Column(db.String(100))
     cantidad_piezas = db.Column(db.String(100))
+    precio= db.Column(db.Float)
+    subtotal = db.Column(db.Float)
+    total = db.Column(db.Float)
    
 
-    def __init__(self, nombre_del_cliente,direccion_cliente,telefono_cliente,tipo_de_prenda,cantidad_piezas):
+    def __init__(self, nombre_del_cliente,direccion_cliente,telefono_cliente,tipo_de_prenda,cantidad_piezas,precio,subtotal):
         self.nombre_del_cliente= nombre_del_cliente
         self.direccion_cliente = direccion_cliente
         self.telefono_cliente= telefono_cliente
         self.tipo_de_prenda= tipo_de_prenda
         self.cantidad_piezas= cantidad_piezas
+        self.precio=precio
+        self.subtotal= int(cantidad_piezas)*float(precio)
+        self.total= float(subtotal)*1.16
