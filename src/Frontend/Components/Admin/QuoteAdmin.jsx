@@ -89,11 +89,12 @@ const Quote = () => {
     }
   };
 
-  const generatePDF = async () => {
+  const generatePDF = async (cotizacion) => {
     const content = pdfRef.current;
     const pdfBlob = await html2pdf()
       .set({
         margin: 10,
+        filename: `Cotizacion-${cotizacion.nombre_del_cliente}.pdf`,
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: { scale: 2 },
         jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
@@ -102,32 +103,37 @@ const Quote = () => {
       .outputPdf("blob");
 
     const formData = new FormData();
-    formData.append("nombre_del_cliente", nuevaCotizacion.nombre_del_cliente);
-    formData.append("direccion_cliente", nuevaCotizacion.direccion_cliente);
-    formData.append("telefono_cliente", nuevaCotizacion.telefono_cliente);
-    formData.append("tipo_de_prenda", nuevaCotizacion.tipo_de_prenda);
-    formData.append("cantidad_piezas", nuevaCotizacion.cantidad_piezas);
-    formData.append("precio", nuevaCotizacion.precio);
     formData.append(
       "pdf",
       pdfBlob,
-      `Cotizacion-${nuevaCotizacion.nombre_del_cliente}.pdf`
+      `Cotizacion-${cotizacion.nombre_del_cliente}.pdf`
     );
 
     try {
-      const response = await fetch("http://localhost:5000/guardar_cotizacion", {
+      // Subir el PDF al servidor
+      const response = await fetch("http://localhost:5000/upload_pdf", {
         method: "POST",
         body: formData,
       });
 
+      const data = await response.json();
       if (response.ok) {
-        Swal.fire("Éxito", "Cotización guardada correctamente", "success");
+        const pdfUrl = data.url; // El servidor debe devolver la URL del PDF
+
+        // Aquí llamas a una función que guarda la URL en la base de datos
+        await actions.saveCotizacionUrl(cotizacion.id, pdfUrl);
+
+        Swal.fire(
+          "Éxito",
+          "PDF subido y URL guardada correctamente",
+          "success"
+        );
       } else {
-        Swal.fire("Error", "No se pudo guardar la cotización", "error");
+        Swal.fire("Error", "No se pudo subir el archivo PDF", "error");
       }
     } catch (error) {
-      console.error("Error al guardar la cotización:", error);
-      Swal.fire("Error", "Hubo un problema al guardar la cotización", "error");
+      console.error("Error al subir el PDF:", error);
+      Swal.fire("Error", "Hubo un problema al subir el PDF", "error");
     }
   };
 
@@ -164,23 +170,18 @@ const Quote = () => {
                 <tr key={cotizacion.id}>
                   <td>{cotizacion.id}</td>
                   <td>{cotizacion.nombre_del_cliente}</td>
-
                   <td>
-                    <button
-                      className="Btn"
-                      onClick={() => generatePDF(cotizacion)}
-                    >
-                      <svg
-                        className="svgIcon"
-                        viewBox="0 0 384 512"
-                        height="1em"
-                        xmlns="http://www.w3.org/2000/svg"
+                    {cotizacion.pdfUrl ? (
+                      <a
+                        href={cotizacion.pdfUrl}
+                        target="_blank"
+                        className="Btn"
                       >
-                        <path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"></path>
-                      </svg>
-                      <span className="icon2"></span>
-                      <span className="tooltip">Download</span>
-                    </button>
+                        Descargar PDF
+                      </a>
+                    ) : (
+                      <span>No disponible</span>
+                    )}
                   </td>
                 </tr>
               ))}
