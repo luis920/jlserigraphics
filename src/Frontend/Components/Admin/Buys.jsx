@@ -108,7 +108,7 @@ const Buys = () => {
             title: "Compra eliminada",
             text: "La compra ha sido eliminada con éxito.",
           });
-          actions.fetchClasses();
+          actions.obtenerCompras();
         } else {
           Swal.fire({
             icon: "error",
@@ -177,14 +177,14 @@ const Buys = () => {
                   <td>${compra.total}</td>
                   <td>{compra.factura}</td>
                   <td>
-                    <button class="Btn">
+                    <button className="Btn">
                       <FontAwesomeIcon
                         className="icon-actions-pen"
                         icon={faPencil}
                       />
                     </button>
                     <button
-                      class="Btn"
+                      className="Btn"
                       onClick={() => handleDeleteBuy(compra.id)}
                     >
                       <FontAwesomeIcon

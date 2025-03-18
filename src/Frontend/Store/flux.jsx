@@ -283,6 +283,32 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error al agregar compra:", error);
         }
       },
+      eliminarCompra: async (id) => {
+        try {
+          const response = await fetch(`http://127.0.0.1:5000/compras/${id}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (response.ok) {
+            setStore((prevStore) => ({
+              compras: prevStore.compras.filter((compra) => compra.id !== id),
+            }));
+            return true; // ✅ Devuelve `true` si se eliminó correctamente
+          } else {
+            console.error(
+              "Error en la respuesta del servidor:",
+              response.status
+            );
+            return false; // ✅ Devuelve `false` si falló
+          }
+        } catch (error) {
+          console.error("Error al eliminar compra:", error);
+          return false; // ✅ Devuelve `false` si hubo un error
+        }
+      },
     },
   };
 };
