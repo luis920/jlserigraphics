@@ -121,6 +121,7 @@ const Buys = () => {
                 <th>Producto</th>
                 <th>Precio unitario</th>
                 <th>Cantidad</th>
+                <th>Total</th>
                 <th>Factura</th>
               </tr>
             </thead>
@@ -131,10 +132,10 @@ const Buys = () => {
                   <td>{compra.proveedor}</td>
                   <td>{compra.fecha}</td>
                   <td>{compra.producto}</td>
-                  <td>{compra.precio_unitario}</td>
-                  <td>${compra.cantidad}</td>
+                  <td>${compra.precio_unitario}</td>
+                  <td>{compra.cantidad}</td>
                   <td>${compra.total}</td>
-                  <td>${compra.factura}</td>
+                  <td>{compra.factura}</td>
                 </tr>
               ))}
             </tbody>
