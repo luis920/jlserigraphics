@@ -8,7 +8,6 @@ import { Context } from "../../Store/appContext.jsx";
 
 const Buys = () => {
   const { store, actions } = useContext(Context);
-  const [filtro, setFiltro] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [nuevaCompra, setNuevaCompra] = useState({
     proveedor: "",
@@ -20,7 +19,7 @@ const Buys = () => {
   });
 
   useEffect(() => {
-    actions.obtenercompras();
+    actions.obtenerCompras();
   }, []);
 
   const handleInputChange = (e) => {
@@ -106,7 +105,7 @@ const Buys = () => {
               className="icon-sidebar text-light"
               icon={faPlus}
             />
-            Agregar nuevo pedido
+            Agregar nueva compra
           </button>
         </div>
 
@@ -227,7 +226,9 @@ const Buys = () => {
                       value={nuevaCompra.factura}
                       required
                     >
-                      <option value="entregado">Selecciona una opcion</option>
+                      <option value="Selecciona una opcion">
+                        Selecciona una opcion
+                      </option>
                       <option value="entregado">entregado</option>
                       <option value="en proceso">en proceso</option>
                     </select>

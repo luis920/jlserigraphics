@@ -26,7 +26,7 @@ class Compras(db.Model):
     total = db.Column(db.Float)
     factura = db.Column(db.String(100))
 
-    def __init__(self, proveedor, fecha, producto, precio_unitario,cantidad,total,factura):
+    def __init__(self, proveedor, fecha, producto, precio_unitario,cantidad,factura):
         self.proveedor = proveedor
         self.fecha = fecha
         self.producto= producto
