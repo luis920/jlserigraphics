@@ -131,4 +131,46 @@ def eliminar_compra(id):
     db.session.commit()
     return jsonify(compra_schema.dump(compras)), 200
 
+@routes.route('/compra/<int:id>', methods=['PUT'])
+def editar_compra(id):
+    compra = Compras.query.get(id) 
+    if not compra:
+        return jsonify({"error": "Compra no encontrada"}), 404
+
+    data = request.json
+
+   
+    compra.proveedor = data.get("proveedor", compra.proveedor)
+    compra.fecha = data.get("fecha", compra.fecha)
+    compra.producto = data.get("producto", compra.producto)
+    compra.precio_unitario = data.get("precio_unitario", compra.precio_unitario)
+    compra.cantidad = data.get("cantidad", compra.cantidad)
+    compra.total = float(compra.precio_unitario) * int(compra.cantidad)  
+    compra.factura = data.get("factura", compra.factura)
+
+    db.session.commit()  
+
+    return jsonify(compra_schema.dump(compra)), 200  
+
+
+# @api.route('/classes/<int:id>', methods=['PUT'])
+# @jwt_required()
+# def update_class(id):
+#     classes = Class.query.get(id)
+#     if classes is None:
+#         return jsonify({"error": "Class not found"}), 404
+    
+#     data = request.json
+#     classes.teacher_id = data.get('teacher_id', classes.teacher_id)
+#     classes.name = data.get('name', classes.name)
+#     classes.description = data.get('description', classes.description)
+#     classes.capacity = data.get('capacity', classes.capacity)
+#     classes.price = data.get('price', classes.price)
+#     classes.age = data.get('age', classes.age)
+#     classes.time = data.get('time', classes.time)
+#     classes.image = data.get('image', classes.image)
+    
+#     db.session.commit()
+#     return jsonify(classes.serialize()), 200
+
 
