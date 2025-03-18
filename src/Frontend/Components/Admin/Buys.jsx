@@ -9,6 +9,7 @@ import { Context } from "../../Store/appContext.jsx";
 const Buys = () => {
   const { store, actions } = useContext(Context);
   const [showModal, setShowModal] = useState(false);
+  const [editingBuy, setEditingBuy] = useState(null);
   const [nuevaCompra, setNuevaCompra] = useState({
     proveedor: "",
     fecha: "",
@@ -127,6 +128,18 @@ const Buys = () => {
     }
   };
 
+  const handleEditBuy = (compras) => {
+    setEditingBuy(compras);
+    setShowModal(true);
+  };
+
+  const handleUpdateBuy = async (e) => {
+    e.preventDefault();
+    await actions.updateBuy(editingBuy.id, editingBuy);
+    setShowModal(false);
+    setEditingBuy(null);
+  };
+
   const handleOpenModal = () => {
     setShowModal(true);
   };
@@ -177,7 +190,10 @@ const Buys = () => {
                   <td>${compra.total}</td>
                   <td>{compra.factura}</td>
                   <td>
-                    <button className="Btn">
+                    <button
+                      className="Btn"
+                      onClick={() => handleEditBuy(compra)}
+                    >
                       <FontAwesomeIcon
                         className="icon-actions-pen"
                         icon={faPencil}
@@ -204,7 +220,7 @@ const Buys = () => {
           <div className={`modal-container ${showModal ? "show" : ""}`}>
             <div className="modal-content">
               <h2 className="">Nueva Compra</h2>
-              <form className="contacto-formulario ">
+              <form className="contacto-formulario " onSubmit={handleUpdateBuy}>
                 <div className="d-flex">
                   <div className="d-flex column ">
                     <label htmlFor="proveedor">Proveedor</label>
