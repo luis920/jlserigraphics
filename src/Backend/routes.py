@@ -121,4 +121,14 @@ def obtener_compras():
    compras= Compras.query.all()
    return jsonify(compras_schema.dump(compras)),200
 
+@routes.route('/compras/<int:id>', methods=['DELETE'])
+def eliminar_compra(id):
+    compras = Compras.query.get(id)
+    if not compras:
+        return jsonify({"error": "no se encontr el id de la compra"}), 404
+
+    db.session.delete(compras)
+    db.session.commit()
+    return jsonify(compra_schema.dump(compras)), 200
+
 
