@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify ,send_from_directory,current_app
 from werkzeug.utils import secure_filename
 from Backend.models import db, Pedidos, Clientes,Cotizaciones
 from Backend.schemas import  pedido_schema, pedidos_schema, cliente_schema, clientes_schema,cotizacion_schema,cotizaciones_schema
+import os
 
 routes = Blueprint('routes', __name__)
 

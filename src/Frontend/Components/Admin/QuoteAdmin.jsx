@@ -118,9 +118,8 @@ const Quote = () => {
 
       const data = await response.json();
       if (response.ok) {
-        const pdfUrl = data.url; // El servidor debe devolver la URL del PDF
+        const pdfUrl = data.url;
 
-        // Aquí llamas a una función que guarda la URL en la base de datos
         await actions.saveCotizacionUrl(cotizacion.id, pdfUrl);
 
         Swal.fire(
