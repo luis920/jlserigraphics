@@ -20,7 +20,7 @@ const Buys = () => {
   });
 
   useEffect(() => {
-    actions.obtenerPedidos();
+    actions.obtenercompras();
   }, []);
 
   const handleInputChange = (e) => {
@@ -235,7 +235,7 @@ const Buys = () => {
                 </div>
               </form>
               <button
-                onClick={() => handleAddOrder()}
+                onClick={() => handleAddBuy()}
                 className="button-form btn btn-primary mt-5"
               >
                 Enviar
