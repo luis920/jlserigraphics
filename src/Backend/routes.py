@@ -1,7 +1,8 @@
 from flask import Blueprint, request, jsonify ,send_from_directory,current_app
 from werkzeug.utils import secure_filename
-from Backend.models import db, Pedidos, Clientes,Cotizaciones
-from Backend.schemas import  pedido_schema, pedidos_schema, cliente_schema, clientes_schema,cotizacion_schema,cotizaciones_schema
+from Backend.models import db, Pedidos, Clientes,Cotizaciones,Compras
+from Backend.schemas import  pedido_schema, pedidos_schema, cliente_schema, clientes_schema,cotizacion_schema,cotizaciones_schema,compra_schema,compras_schema
+import os
 
 routes = Blueprint('routes', __name__)
 
@@ -48,57 +49,76 @@ def obtener_clientes():
 #ENDPOINTS COTIZACIONES 
   
   #Generar cotizacion
-@routes.route('/cotizacion', methods=['POST'])
-def generar_cotizacion():
-    data = request.json
-    nueva_cotizacion= Cotizaciones(**data)
-    db.session.add(nueva_cotizacion)
-    db.session.commit()
-    return jsonify(cotizacion_schema.dump(nueva_cotizacion)),201
+# @routes.route('/cotizacion', methods=['POST'])
+# def generar_cotizacion():
+#     data = request.json
+#     nueva_cotizacion= Cotizaciones(**data)
+#     db.session.add(nueva_cotizacion)
+#     db.session.commit()
+#     return jsonify(cotizacion_schema.dump(nueva_cotizacion)),201
    
    #obtener cotizaciones
-@routes.route('/cotizaciones', methods=['GET'])
-def obtener_cotizaciones():
+# @routes.route('/cotizaciones', methods=['GET'])
+# def obtener_cotizaciones():
 
-  cotizaciones = Cotizaciones.query.all()
-  return jsonify(cotizaciones_schema.dump(cotizaciones))
+#   cotizaciones = Cotizaciones.query.all()
+#   return jsonify(cotizaciones_schema.dump(cotizaciones))
 
-#DESCARGAR Y GUARDAR PDF DE COTIZACIONES
-@routes.route("/guardar_cotizacion", methods=["POST"])
-def guardar_cotizacion():
-    try:
-        nombre = request.form.get("nombre_del_cliente")
-        direccion = request.form.get("direccion_cliente")
-        telefono = request.form.get("telefono_cliente")
-        tipo_prenda = request.form.get("tipo_de_prenda")
-        cantidad = int(request.form.get("cantidad_piezas"))
-        precio = float(request.form.get("precio"))
-        pdf_file = request.files["pdf"]
+# #DESCARGAR Y GUARDAR PDF DE COTIZACIONES
+# @routes.route("/guardar_cotizacion", methods=["POST"])
+# def guardar_cotizacion():
+#     try:
+#         nombre = request.form.get("nombre_del_cliente")
+#         direccion = request.form.get("direccion_cliente")
+#         telefono = request.form.get("telefono_cliente")
+#         tipo_prenda = request.form.get("tipo_de_prenda")
+#         cantidad = int(request.form.get("cantidad_piezas"))
+#         precio = float(request.form.get("precio"))
+#         pdf_file = request.files["pdf"]
 
-        if pdf_file:
-            filename = secure_filename(f"Cotizacion-{nombre}.pdf")
-            filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
-            pdf_file.save(filepath)
-            pdf_url = f"http://localhost:5000/uploads/{filename}"
+#         if pdf_file:
+#             filename = secure_filename(f"Cotizacion-{nombre}.pdf")
+#             filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+#             pdf_file.save(filepath)
+#             pdf_url = f"http://localhost:5000/uploads/{filename}"
 
-            nueva_cotizacion = Cotizaciones(
-                nombre_del_cliente=nombre,
-                direccion_cliente=direccion,
-                telefono_cliente=telefono,
-                tipo_de_prenda=tipo_prenda,
-                cantidad_piezas=cantidad,
-                precio=precio,
-                pdf_url=pdf_url,
-            )
+#             nueva_cotizacion = Cotizaciones(
+#                 nombre_del_cliente=nombre,
+#                 direccion_cliente=direccion,
+#                 telefono_cliente=telefono,
+#                 tipo_de_prenda=tipo_prenda,
+#                 cantidad_piezas=cantidad,
+#                 precio=precio,
+#                 pdf_url=pdf_url,
+#             )
 
-            db.session.add(nueva_cotizacion)
-            db.session.commit()
+#             db.session.add(nueva_cotizacion)
+#             db.session.commit()
 
-            return jsonify({"message": "Cotización guardada correctamente", "pdf_url": pdf_url}), 201
+#             return jsonify({"message": "Cotización guardada correctamente", "pdf_url": pdf_url}), 201
 
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+#     except Exception as e:
+#         return jsonify({"error": str(e)}), 500
 
-@routes.route("/uploads/<filename>")
-def descargar_pdf(filename):
-    return send_from_directory(current_app.config["UPLOAD_FOLDER"], filename)
+# @routes.route("/uploads/<filename>")
+# def descargar_pdf(filename):
+#     return send_from_directory(current_app.config["UPLOAD_FOLDER"], filename)
+
+#ENDPOINTS COMPRAS
+
+@routes.route('/compra', methods=['POST'])
+def crear_compra():
+    data = request.json
+    nueva_compra = Compras(**data)
+    db.session.add(nueva_compra)
+    db.session.commit()
+
+    return jsonify(compra_schema.dump(nueva_compra)),201
+
+@routes.route('/compras',methods=['GET'])
+def obtener_compras():
+   
+   compras= Compras.query.all()
+   return jsonify(compras_schema.dump(compras)),200
+
+

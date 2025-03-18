@@ -16,6 +16,24 @@ class Usuarios(db.Model):
         self.email= email
         self.password= password
         
+class Compras(db.Model):  
+    id = db.Column(db.Integer, primary_key=True)
+    proveedor = db.Column(db.String(100))
+    fecha = db.Column(db.String(100))
+    producto = db.Column(db.String(100))
+    precio_unitario = db.Column(db.Float)
+    cantidad = db.Column(db.Integer)
+    total = db.Column(db.Float)
+    factura = db.Column(db.String(100))
+
+    def __init__(self, proveedor, fecha, producto, precio_unitario,cantidad,factura):
+        self.proveedor = proveedor
+        self.fecha = fecha
+        self.producto= producto
+        self.precio_unitario= precio_unitario
+        self.cantidad = cantidad
+        self.total = float(precio_unitario)*int(cantidad)
+        self.factura = factura
 
 class Pedidos(db.Model):  
     id = db.Column(db.Integer, primary_key=True)

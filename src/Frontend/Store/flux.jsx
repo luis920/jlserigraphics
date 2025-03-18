@@ -7,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       clientes: [],
       pedidos: [],
       cotizaciones: [],
+      compras: [],
     },
     actions: {
       GetClients: async () => {
@@ -241,6 +242,45 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         } catch (error) {
           console.error("Error al generar cotizacion:", error);
+        }
+      },
+      obtenerCompras: async () => {
+        try {
+          const response = await fetch("http://127.0.0.1:5000/compras", {});
+          if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+            setStore({ compras: data });
+          } else {
+            console.error("Error al obtener cotizaciones:", response.status);
+          }
+        } catch (error) {
+          console.error("Error al obtener cotizaciones:", error);
+          return null;
+        }
+      },
+      agregarCompra: async (nuevaCompra) => {
+        try {
+          const response = await fetch("http://127.0.0.1:5000/compra", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(nuevaCompra),
+          });
+
+          if (response.ok) {
+            const nuevaCompra = await response.json();
+            const store = getStore();
+            setStore({
+              compras: [...store.cotizaciones, nuevaCompra],
+            });
+            return nuevaCompra;
+          } else {
+            console.error("Error al agregar compra:", response.status);
+          }
+        } catch (error) {
+          console.error("Error al agregar compra:", error);
         }
       },
     },
