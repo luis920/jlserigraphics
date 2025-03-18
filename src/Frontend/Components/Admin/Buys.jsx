@@ -125,16 +125,16 @@ const Buys = () => {
               </tr>
             </thead>
             <tbody>
-              {store.compras.map((pedido) => (
-                <tr key={pedido.id}>
-                  <td>{pedido.id}</td>
-                  <td>{pedido.proveedor}</td>
-                  <td>{pedido.fecha}</td>
-                  <td>{pedido.producto}</td>
-                  <td>{pedido.precio_unitario}</td>
-                  <td>${pedido.cantidad}</td>
-                  <td>${pedido.total}</td>
-                  <td>${pedido.factura}</td>
+              {store.compras.map((compra) => (
+                <tr key={compra.id}>
+                  <td>{compra.id}</td>
+                  <td>{compra.proveedor}</td>
+                  <td>{compra.fecha}</td>
+                  <td>{compra.producto}</td>
+                  <td>{compra.precio_unitario}</td>
+                  <td>${compra.cantidad}</td>
+                  <td>${compra.total}</td>
+                  <td>${compra.factura}</td>
                 </tr>
               ))}
             </tbody>

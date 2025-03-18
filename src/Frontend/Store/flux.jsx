@@ -249,6 +249,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           const response = await fetch("http://127.0.0.1:5000/compras", {});
           if (response.ok) {
             const data = await response.json();
+            console.log(data);
             setStore({ compras: data });
           } else {
             console.error("Error al obtener cotizaciones:", response.status);

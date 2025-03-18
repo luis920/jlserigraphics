@@ -115,10 +115,10 @@ def crear_compra():
 
     return jsonify(compra_schema.dump(nueva_compra)),201
 
-@routes('/compras',methods=['GET'])
+@routes.route('/compras',methods=['GET'])
 def obtener_compras():
    
    compras= Compras.query.all()
-   return jsonify(compras_schema.dump(compras))
+   return jsonify(compras_schema.dump(compras)),200
 
 
