@@ -1,7 +1,7 @@
 import Sidebar from "./Sidebar";
-import "../../Styles/Orders.css";
+import "../../Styles/Buys.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useEffect, useContext } from "react";
 import Swal from "sweetalert2";
 import { Context } from "../../Store/appContext.jsx";
@@ -88,6 +88,45 @@ const Buys = () => {
     }
   };
 
+  const handleDeleteBuy = async (id) => {
+    const confirmDelete = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Esta acción no se puede deshacer.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    });
+
+    if (confirmDelete.isConfirmed) {
+      try {
+        const result = await actions.eliminarCompra(id);
+
+        if (result) {
+          Swal.fire({
+            icon: "success",
+            title: "Compra eliminada",
+            text: "La compra ha sido eliminada con éxito.",
+          });
+          actions.fetchClasses();
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Hubo un error al eliminar la compra.",
+          });
+        }
+      } catch (error) {
+        console.error("Error en handleDeleteBuy:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Hubo un error al intentar eliminar la compra. Intenta nuevamente.",
+        });
+      }
+    }
+  };
+
   const handleOpenModal = () => {
     setShowModal(true);
   };
@@ -123,6 +162,7 @@ const Buys = () => {
                 <th>Cantidad</th>
                 <th>Total</th>
                 <th>Factura</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -136,6 +176,23 @@ const Buys = () => {
                   <td>{compra.cantidad}</td>
                   <td>${compra.total}</td>
                   <td>{compra.factura}</td>
+                  <td>
+                    <button class="Btn">
+                      <FontAwesomeIcon
+                        className="icon-actions-pen"
+                        icon={faPencil}
+                      />
+                    </button>
+                    <button
+                      class="Btn"
+                      onClick={() => handleDeleteBuy(compra.id)}
+                    >
+                      <FontAwesomeIcon
+                        className="icon-actions-trash"
+                        icon={faTrash}
+                      />
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
