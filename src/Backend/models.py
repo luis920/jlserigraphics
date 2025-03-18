@@ -20,9 +20,9 @@ class Compras(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     proveedor = db.Column(db.String(100))
     fecha = db.Column(db.String(100))
-    producto = db.Column(db.Integer)
-    precio_unitario = db.Column(db.String(100))
-    cantidad = db.Column(db.Float)
+    producto = db.Column(db.String(100))
+    precio_unitario = db.Column(db.Float)
+    cantidad = db.Column(db.Integer)
     total = db.Column(db.Float)
     factura = db.Column(db.String(100))
 

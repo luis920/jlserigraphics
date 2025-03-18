@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify ,send_from_directory,current_app
 from werkzeug.utils import secure_filename
-from Backend.models import db, Pedidos, Clientes,Cotizaciones
+from Backend.models import db, Pedidos, Clientes,Cotizaciones,Compras
 from Backend.schemas import  pedido_schema, pedidos_schema, cliente_schema, clientes_schema,cotizacion_schema,cotizaciones_schema
 import os
 
@@ -103,3 +103,15 @@ def guardar_cotizacion():
 @routes.route("/uploads/<filename>")
 def descargar_pdf(filename):
     return send_from_directory(current_app.config["UPLOAD_FOLDER"], filename)
+
+#ENDPOINTS COMPRAS
+
+routes.route('/compra', methods=['POST'])
+def crear_compra():
+    data = request.json
+
+    nueva_compra = Compras(**data)
+    db.session.add(nueva_compra)
+    db.session.commit()
+
+    jsonify(compras_schema.dump(nueva_compra)),201

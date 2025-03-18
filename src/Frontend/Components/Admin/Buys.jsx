@@ -6,7 +6,7 @@ import React, { useState, useEffect, useContext } from "react";
 import Swal from "sweetalert2";
 import { Context } from "../../Store/appContext.jsx";
 
-const Orders = () => {
+const Buys = () => {
   const { store, actions } = useContext(Context);
   const [filtro, setFiltro] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -254,4 +254,4 @@ const Orders = () => {
   );
 };
 
-export default Orders;
+export default Buys;
