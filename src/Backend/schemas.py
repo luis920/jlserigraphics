@@ -36,5 +36,5 @@ clientes_schema = ClientesSchema(many=True)
 cotizacion_schema = CotizacionesSchema()
 cotizaciones_schema = CotizacionesSchema(many=True)
 
-compra_schema = CotizacionesSchema()
-compras_schema = CotizacionesSchema(many=True)
+compra_schema = ComprasSchema()
+compras_schema = ComprasSchema(many=True)

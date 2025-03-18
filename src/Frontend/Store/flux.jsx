@@ -1,6 +1,3 @@
-// import { se } from "date-fns/locale/se";
-// import { set } from "date-fns/set";
-
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
@@ -281,6 +278,32 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         } catch (error) {
           console.error("Error al agregar compra:", error);
+        }
+      },
+      eliminarCompra: async (id) => {
+        try {
+          const response = await fetch(`http://127.0.0.1:5000/compras/${id}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (response.ok) {
+            setStore((prevStore) => ({
+              compras: prevStore.compras.filter((compra) => compra.id !== id),
+            }));
+            return true;
+          } else {
+            console.error(
+              "Error en la respuesta del servidor:",
+              response.status
+            );
+            return false;
+          }
+        } catch (error) {
+          console.error("Error al eliminar compra:", error);
+          return false;
         }
       },
     },

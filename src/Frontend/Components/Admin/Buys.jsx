@@ -1,7 +1,7 @@
 import Sidebar from "./Sidebar";
-import "../../Styles/Orders.css";
+import "../../Styles/Buys.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useEffect, useContext } from "react";
 import Swal from "sweetalert2";
 import { Context } from "../../Store/appContext.jsx";
@@ -9,6 +9,7 @@ import { Context } from "../../Store/appContext.jsx";
 const Buys = () => {
   const { store, actions } = useContext(Context);
   const [showModal, setShowModal] = useState(false);
+  const [editingBuy, setEditingBuy] = useState(null);
   const [nuevaCompra, setNuevaCompra] = useState({
     proveedor: "",
     fecha: "",
@@ -88,6 +89,57 @@ const Buys = () => {
     }
   };
 
+  const handleDeleteBuy = async (id) => {
+    const confirmDelete = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Esta acción no se puede deshacer.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    });
+
+    if (confirmDelete.isConfirmed) {
+      try {
+        const result = await actions.eliminarCompra(id);
+
+        if (result) {
+          Swal.fire({
+            icon: "success",
+            title: "Compra eliminada",
+            text: "La compra ha sido eliminada con éxito.",
+          });
+          actions.obtenerCompras();
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Hubo un error al eliminar la compra.",
+          });
+        }
+      } catch (error) {
+        console.error("Error en handleDeleteBuy:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Hubo un error al intentar eliminar la compra. Intenta nuevamente.",
+        });
+      }
+    }
+  };
+
+  const handleEditBuy = (compras) => {
+    setEditingBuy(compras);
+    setShowModal(true);
+  };
+
+  const handleUpdateBuy = async (e) => {
+    e.preventDefault();
+    await actions.updateBuy(editingBuy.id, editingBuy);
+    setShowModal(false);
+    setEditingBuy(null);
+  };
+
   const handleOpenModal = () => {
     setShowModal(true);
   };
@@ -121,7 +173,9 @@ const Buys = () => {
                 <th>Producto</th>
                 <th>Precio unitario</th>
                 <th>Cantidad</th>
+                <th>Total</th>
                 <th>Factura</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -131,10 +185,30 @@ const Buys = () => {
                   <td>{compra.proveedor}</td>
                   <td>{compra.fecha}</td>
                   <td>{compra.producto}</td>
-                  <td>{compra.precio_unitario}</td>
-                  <td>${compra.cantidad}</td>
+                  <td>${compra.precio_unitario}</td>
+                  <td>{compra.cantidad}</td>
                   <td>${compra.total}</td>
-                  <td>${compra.factura}</td>
+                  <td>{compra.factura}</td>
+                  <td>
+                    <button
+                      className="Btn"
+                      onClick={() => handleEditBuy(compra)}
+                    >
+                      <FontAwesomeIcon
+                        className="icon-actions-pen"
+                        icon={faPencil}
+                      />
+                    </button>
+                    <button
+                      className="Btn"
+                      onClick={() => handleDeleteBuy(compra.id)}
+                    >
+                      <FontAwesomeIcon
+                        className="icon-actions-trash"
+                        icon={faTrash}
+                      />
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -146,7 +220,7 @@ const Buys = () => {
           <div className={`modal-container ${showModal ? "show" : ""}`}>
             <div className="modal-content">
               <h2 className="">Nueva Compra</h2>
-              <form className="contacto-formulario ">
+              <form className="contacto-formulario " onSubmit={handleUpdateBuy}>
                 <div className="d-flex">
                   <div className="d-flex column ">
                     <label htmlFor="proveedor">Proveedor</label>
