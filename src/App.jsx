@@ -14,6 +14,7 @@ import injectContext from "./Frontend/Store/appContext";
 import Clients from "./Frontend/Components/Admin/Clients";
 import Quote from "./Frontend/Components/Admin/QuoteAdmin";
 import Buys from "./Frontend/Components/Admin/Buys";
+import Supplier from "./Frontend/Components/Admin/Supplier";
 
 function App() {
   const location = useLocation();
@@ -25,6 +26,7 @@ function App() {
     "/clientes",
     "/cotizaciones",
     "/compras",
+    "/proveedores",
   ];
 
   return (
@@ -45,6 +47,7 @@ function App() {
         <Route path="/clientes" element={<Clients />} />
         <Route path="/cotizaciones" element={<Quote />} />
         <Route path="/compras" element={<Buys />} />
+        <Route path="/proveedores" element={<Supplier />} />
       </Routes>
 
       <Footer />

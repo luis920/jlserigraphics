@@ -6,7 +6,7 @@ import React, { useState, useEffect, useContext } from "react";
 import Swal from "sweetalert2";
 import { Context } from "../../Store/appContext.jsx";
 
-const Buys = () => {
+const Supplier = () => {
   const { store, actions } = useContext(Context);
   const [showModal, setShowModal] = useState(false);
   const [editarProveedor, setEditarProveedor] = useState(null);
@@ -313,4 +313,4 @@ const Buys = () => {
   );
 };
 
-export default Buys;
+export default Supplier;
