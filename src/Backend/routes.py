@@ -163,4 +163,10 @@ def crear_proveedor():
 
     return jsonify(proveedor_schema.dump(nuevo_proveedor)),201
 
+@routes.route('/proveedores',methods=['GET'])
+def obtener_proveedores():
+    proveedores= Proveedores.query.all()
+
+    return jsonify(proveedores_schema.dump(proveedores)),200
+
 
