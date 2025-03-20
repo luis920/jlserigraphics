@@ -376,6 +376,37 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error al agregar proveedor:", error);
         }
       },
+      eliminarProveedor: async (id) => {
+        try {
+          const response = await fetch(
+            `http://127.0.0.1:5000/cproveedor/${id}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (response.ok) {
+            setStore((prevStore) => ({
+              proveedores: prevStore.proveedores.filter(
+                (proveedor) => proveedor.id !== id
+              ),
+            }));
+            return true;
+          } else {
+            console.error(
+              "Error en la respuesta del servidor:",
+              response.status
+            );
+            return false;
+          }
+        } catch (error) {
+          console.error("Error al eliminar proveedor:", error);
+          return false;
+        }
+      },
     },
   };
 };
