@@ -169,4 +169,14 @@ def obtener_proveedores():
 
     return jsonify(proveedores_schema.dump(proveedores)),200
 
+@routes.route('/proveedor/<int:id>', methods=['DELETE'])
+def eliminar_proveedor(id):
+    proveedor = Proveedores.query.get(id)
+    if not proveedor:
+        return jsonify({"error": "no se encontro el id del proveedor"}), 404
+
+    db.session.delete(proveedor)
+    db.session.commit()
+    return jsonify(proveedor_schema.dump(proveedor)), 200
+
 
