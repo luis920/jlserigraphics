@@ -10,6 +10,7 @@ import {
   faMessage,
   faGear,
   faCreditCard,
+  faTruckFieldUn,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import "../../Styles/Sidebar.css";
@@ -29,6 +30,11 @@ const Sidebar = () => {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faUser} />,
       label: "Clientes",
       path: "/clientes",
+    },
+    {
+      icon: <FontAwesomeIcon className="icon-sidebar" icon={faTruckFieldUn} />,
+      label: "Proveedores",
+      path: "/provedores",
     },
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faCartFlatbed} />,
