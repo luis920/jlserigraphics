@@ -34,7 +34,7 @@ const Sidebar = () => {
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faTruckFieldUn} />,
       label: "Proveedores",
-      path: "/provedores",
+      path: "/proveedores",
     },
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faCartFlatbed} />,
