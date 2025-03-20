@@ -88,3 +88,17 @@ class Cotizaciones(db.Model):
         self.subtotal= self.cantidad_piezas*self.precio
         self.total= self.subtotal*1.16
         self.pdf_url=pdf_url
+
+
+class Proveedores(db.Model):  
+    id = db.Column(db.Integer, primary_key=True)
+    nombre_del_proveedor = db.Column(db.String(100))
+    telefono = db.Column(db.String(100))
+    correo_electronico = db.Column(db.String(100))
+    suministros_otorgados = db.Column(db.String(100))
+
+    def __init__(self, nombre_del_proveedor,telefono,correo_electronico,suministros_otorgados):
+        self.nombre_del_proveedor= nombre_del_proveedor
+        self.telefono = telefono
+        self.correo_electronico= correo_electronico
+        self.suministros_otorgados= suministros_otorgados

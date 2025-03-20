@@ -1,5 +1,5 @@
 from flask_marshmallow import Marshmallow
-from Backend.models import  Pedidos, Clientes,Compras
+from Backend.models import  Pedidos, Clientes,Compras,Proveedores
 
 ma = Marshmallow()
 
@@ -25,6 +25,11 @@ class ComprasSchema(ma.SQLAlchemyAutoSchema):
         model = Compras
         fields = ('id', 'proveedor', 'fecha', 'producto','precio_unitario','cantidad','total','factura')
 
+class ProveedorSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Proveedores
+        fields = ('id', 'nombre_del_proveedor', 'telefono', 'correo_electronico','suministros_otorgados')
+
 # Crear instancias para usar en otros archivos
 
 pedido_schema = PedidosSchema()
@@ -38,3 +43,6 @@ cotizaciones_schema = CotizacionesSchema(many=True)
 
 compra_schema = ComprasSchema()
 compras_schema = ComprasSchema(many=True)
+
+proveedor_schema = ProveedorSchema()
+proveedores_schema = ProveedorSchema(many=True)

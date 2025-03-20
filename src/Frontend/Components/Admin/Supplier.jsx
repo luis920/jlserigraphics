@@ -6,55 +6,51 @@ import React, { useState, useEffect, useContext } from "react";
 import Swal from "sweetalert2";
 import { Context } from "../../Store/appContext.jsx";
 
-const Buys = () => {
+const Supplier = () => {
   const { store, actions } = useContext(Context);
   const [showModal, setShowModal] = useState(false);
-  const [editingBuy, setEditingBuy] = useState(null);
-  const [nuevaCompra, setNuevaCompra] = useState({
-    proveedor: "",
-    fecha: "",
-    producto: "",
-    precio_unitario: "",
-    cantidad: "",
-    factura: "",
+  const [editarProveedor, setEditarProveedor] = useState(null);
+  const [nuevoProveedor, setNuevoProveedor] = useState({
+    nombre_del_proveedor: "",
+    telefono: "",
+    correo_electronico: "",
+    suministros_otorgados: "",
   });
 
   useEffect(() => {
-    actions.obtenerCompras();
+    actions.obtenerProveedores();
   }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    if (editingBuy) {
-      setNuevaCompra({ ...nuevaCompra, [name]: value });
+    if (editarProveedor) {
+      setNuevoProveedor({ ...nuevoProveedor, [name]: value });
     } else {
-      setNuevaCompra({ ...nuevaCompra, [name]: value });
+      setNuevoProveedor({ ...nuevoProveedor, [name]: value });
     }
   };
 
-  const handleSaveBuy = async (e) => {
+  const handleProveedor = async (e) => {
     e.preventDefault();
 
     if (
-      !nuevaCompra.proveedor ||
-      !nuevaCompra.fecha ||
-      !nuevaCompra.producto ||
-      !nuevaCompra.precio_unitario ||
-      !nuevaCompra.cantidad ||
-      !nuevaCompra.factura
+      !nuevoProveedor.nombre_del_proveedor ||
+      !nuevoProveedor.telefono ||
+      !nuevoProveedor.correo_electronico ||
+      !nuevoProveedor.suministros_otorgados
     ) {
       Swal.fire("Error", "Por favor, completa todos los campos", "error");
       return;
     }
 
     const confirmSubmit = await Swal.fire({
-      title: editingBuy ? "¿Actualizar compra?" : "¿Agregar compra?",
-      text: editingBuy
-        ? "Se actualizarán los datos de la compra."
-        : "Se agregará una nueva compra.",
+      title: editarProveedor ? "¿Actualizar proveedor?" : "¿Agregar proveedor?",
+      text: editarProveedor
+        ? "Se actualizarán los datos del proveedor."
+        : "Se agregará un nuevo proveedor.",
       icon: "question",
       showCancelButton: true,
-      confirmButtonText: editingBuy ? "Sí, actualizar" : "Sí, agregar",
+      confirmButtonText: editarProveedor ? "Sí, actualizar" : "Sí, agregar",
       cancelButtonText: "Cancelar",
     });
 
@@ -62,10 +58,13 @@ const Buys = () => {
 
     try {
       let result;
-      if (editingBuy) {
-        result = await actions.actualizarCompra(editingBuy.id, nuevaCompra);
+      if (editarProveedor) {
+        result = await actions.actualizarProveedor(
+          editarProveedor.id,
+          nuevoProveedor
+        );
       } else {
-        result = await actions.agregarCompra(nuevaCompra);
+        result = await actions.agregarProveedor(nuevoProveedor);
       }
 
       if (result?.error) {
@@ -77,26 +76,26 @@ const Buys = () => {
       } else {
         Swal.fire({
           icon: "success",
-          title: editingBuy ? "Compra actualizada" : "Compra agregada",
-          text: editingBuy
+          title: editarProveedor
+            ? "Proveedor actualizado"
+            : "Proveedor agregado",
+          text: editarProveedor
             ? "Los datos se han actualizado correctamente."
-            : "¡Una nueva compra ha sido agregada!",
+            : "¡Un nuevo proveedor ha sido agregado!",
         });
 
-        actions.obtenerCompras();
-        setNuevaCompra({
-          proveedor: "",
-          fecha: "",
-          producto: "",
-          precio_unitario: "",
-          cantidad: "",
-          factura: "",
+        actions.obtenerProveedores();
+        setNuevoProveedor({
+          nombre_del_proveedor: "",
+          telefono: "",
+          correo_electronico: "",
+          suministros_otorgados: "",
         });
-        setEditingBuy(null);
+        setEditarProveedor(null);
         setShowModal(false);
       }
     } catch (error) {
-      console.error("Error en handleSaveBuy:", error);
+      console.error("Error en handleCompras:", error);
       Swal.fire({
         icon: "error",
         title: "Error",
@@ -105,7 +104,7 @@ const Buys = () => {
     }
   };
 
-  const handleDeleteBuy = async (id) => {
+  const handleEliminarProveedor = async (id) => {
     const confirmDelete = await Swal.fire({
       title: "¿Estás seguro?",
       text: "Esta acción no se puede deshacer.",
@@ -117,48 +116,46 @@ const Buys = () => {
 
     if (confirmDelete.isConfirmed) {
       try {
-        const result = await actions.eliminarCompra(id);
+        const result = await actions.eliminarProveedor(id);
 
         if (result) {
           Swal.fire({
             icon: "success",
-            title: "Compra eliminada",
-            text: "La compra ha sido eliminada con éxito.",
+            title: "Proveedor eliminada",
+            text: "El proveedor ha sido eliminada con éxito.",
           });
-          actions.obtenerCompras();
+          actions.obtenerProveedores();
         } else {
           Swal.fire({
             icon: "error",
             title: "Error",
-            text: "Hubo un error al eliminar la compra.",
+            text: "Hubo un error al eliminar el proveedor.",
           });
         }
       } catch (error) {
-        console.error("Error en handleDeleteBuy:", error);
+        console.error("Error en EliminarProveedor:", error);
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: "Hubo un error al intentar eliminar la compra. Intenta nuevamente.",
+          text: "Hubo un error al intentar eliminar el proveedor. Intenta nuevamente.",
         });
       }
     }
   };
 
-  const handleEditBuy = (compra) => {
-    setEditingBuy(compra);
-    setNuevaCompra(compra);
+  const handleEditarProveedor = (proveedor) => {
+    setEditarProveedor(proveedor);
+    setNuevoProveedor(proveedor);
     setShowModal(true);
   };
 
   const handleOpenModal = () => {
-    setEditingBuy(null);
-    setNuevaCompra({
-      proveedor: "",
-      fecha: "",
-      producto: "",
-      precio_unitario: "",
-      cantidad: "",
-      factura: "",
+    setEditarProveedor(null);
+    setNuevoProveedor({
+      nombre_del_proveedor: "",
+      telefono: "",
+      correo_electronico: "",
+      suministros_otorgados: "",
     });
     setShowModal(true);
   };
@@ -176,42 +173,37 @@ const Buys = () => {
               className="icon-sidebar text-light"
               icon={faPlus}
             />
-            Agregar nueva compra
+            Agregar nuevo Proveedor
           </button>
         </div>
 
         {/* Tabla de pedidos */}
         <div className="table-responsive">
-          <h1 className="text-light">Historial de compras</h1>
+          <h1 className="text-light">Proveedores disponibles</h1>
           <table className="table table-bordered bg-light">
             <thead className="table-dark">
               <tr>
                 <th>ID</th>
                 <th>Proveedor</th>
-                <th>Fecha</th>
-                <th>Producto</th>
-                <th>Precio unitario</th>
-                <th>Cantidad</th>
-                <th>Total</th>
-                <th>Factura</th>
+                <th>Telefono</th>
+                <th>Correo</th>
+                <th>Productos que suministra</th>
                 <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
-              {store.compras.map((compra) => (
-                <tr key={compra.id}>
-                  <td>{compra.id}</td>
-                  <td>{compra.proveedor}</td>
-                  <td>{compra.fecha}</td>
-                  <td>{compra.producto}</td>
-                  <td>${compra.precio_unitario}</td>
-                  <td>{compra.cantidad}</td>
-                  <td>${compra.total}</td>
-                  <td>{compra.factura}</td>
+              {store.proveedores.map((proveedor) => (
+                <tr key={proveedor.id}>
+                  <td>{proveedor.id}</td>
+                  <td>{proveedor.nombre_del_proveedor}</td>
+                  <td>{proveedor.telefono}</td>
+                  <td>{proveedor.correo}</td>
+                  <td>${proveedor.suministros_otorgados}</td>
+
                   <td>
                     <button
                       className="Btn"
-                      onClick={() => handleEditBuy(compra)}
+                      onClick={() => handleEditarProveedor(proveedor)}
                     >
                       <FontAwesomeIcon
                         className="icon-actions-pen"
@@ -220,7 +212,7 @@ const Buys = () => {
                     </button>
                     <button
                       className="Btn"
-                      onClick={() => handleDeleteBuy(compra.id)}
+                      onClick={() => handleEliminarProveedor(proveedor.id)}
                     >
                       <FontAwesomeIcon
                         className="icon-actions-trash"
@@ -238,101 +230,71 @@ const Buys = () => {
         {showModal && (
           <div className={`modal-container ${showModal ? "show" : ""}`}>
             <div className="modal-content">
-              <h2 className="">Nueva Compra</h2>
-              <form className="contacto-formulario " onSubmit={handleSaveBuy}>
+              <h2 className="">Nuevo Proveedor</h2>
+              <form className="contacto-formulario " onSubmit={handleProveedor}>
                 <div className="d-flex">
                   <div className="d-flex column ">
-                    <label htmlFor="proveedor">Proveedor</label>
+                    <label htmlFor="nombre_del_proveedor">
+                      nombre del proveedor
+                    </label>
                     <input
                       onChange={handleInputChange}
                       type="text"
-                      id="proveedor"
-                      name="proveedor"
-                      value={nuevaCompra.proveedor}
+                      id="nombre_del_proveedor"
+                      name="nombre_del_proveedor"
+                      value={nuevoProveedor.nombre_del_proveedor}
                       required
                     />
                   </div>
                   <div className="d-flex column ">
-                    <label className="mx-2" htmlFor="fecha ">
-                      Fecha
+                    <label className="mx-2" htmlFor="telefono ">
+                      Telefono
                     </label>
                     <input
                       onChange={handleInputChange}
                       className="mx-2"
-                      type="date"
-                      id="fecha"
-                      name="fecha"
-                      value={nuevaCompra.fecha}
+                      type="text"
+                      id="telefono"
+                      name="telefono"
+                      value={nuevoProveedor.telefono}
                       required
                     />
                   </div>
                 </div>
                 <div className="d-flex">
                   <div className="d-flex column ">
-                    <label htmlFor="producto">Producto</label>
+                    <label htmlFor="correo_electronico">Correo</label>
                     <input
                       onChange={handleInputChange}
-                      type="text"
-                      id="producto"
-                      name="producto"
-                      value={nuevaCompra.producto}
+                      type="mail"
+                      id="correo_electronico"
+                      name="correo_electronico"
+                      value={nuevoProveedor.correo_electronico}
                       required
                     />
                   </div>
                   <div className="d-flex column ">
-                    <label className="mx-2" htmlFor="precio_unitario ">
-                      Precio unitario
+                    <label className="mx-2" htmlFor="suministros_otorgados ">
+                      Producto suministrado
                     </label>
                     <input
                       onChange={handleInputChange}
                       className="mx-2"
-                      type="number"
-                      id="precio_unitario"
-                      name="precio_unitario"
-                      value={nuevaCompra.precio_unitario}
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="d-flex">
-                  <div className="d-flex column ">
-                    <label htmlFor="cantidad">Cantidad</label>
-                    <input
-                      onChange={handleInputChange}
-                      type="number"
-                      id="cantidad"
-                      name="cantidad"
-                      value={nuevaCompra.cantidad}
-                      required
-                    />
-                  </div>
-                  <div className="d-flex column ">
-                    <label className="mx-2" htmlFor="factura ">
-                      Factura
-                    </label>
-                    <select
-                      onChange={handleInputChange}
-                      className="mx-2"
                       type="text"
-                      id="factura"
-                      name="factura"
-                      value={nuevaCompra.factura}
+                      id="suministros_otorgados"
+                      name="suministros_otorgados"
+                      value={nuevoProveedor.suministros_otorgados}
                       required
-                    >
-                      <option value="Selecciona una opcion">
-                        Selecciona una opcion
-                      </option>
-                      <option value="entregado">entregado</option>
-                      <option value="en proceso">en proceso</option>
-                    </select>
+                    />
                   </div>
                 </div>
+
                 <div className="d-flex">
                   <button
                     type="submit"
                     className="button-form btn btn-primary w-50 "
                   >
-                    {editingBuy ? "Actualizar" : "Agregar"}
+                    {editarProveedor ? "Actualizar" : "Agregar"}
                   </button>
                   <button
                     type="button"
@@ -351,4 +313,4 @@ const Buys = () => {
   );
 };
 
-export default Buys;
+export default Supplier;

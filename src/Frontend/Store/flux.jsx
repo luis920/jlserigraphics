@@ -5,6 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       pedidos: [],
       cotizaciones: [],
       compras: [],
+      proveedores: [],
     },
     actions: {
       GetClients: async () => {
@@ -304,6 +305,139 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.error("Error al eliminar compra:", error);
           return false;
+        }
+      },
+      actualizarCompra: async (id, compraActualizada) => {
+        try {
+          const response = await fetch(`http://127.0.0.1:5000/compra/${id}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(compraActualizada),
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            console.error("Error al actualizar:", errorData);
+            return {
+              error: errorData.message || "Error al actualizar la compra",
+            };
+          }
+
+          const actualizarCompra = await response.json();
+          const store = getStore();
+          const actualizarCompras = store.compras.map((compra) =>
+            compra.id === id ? actualizarCompra : compra
+          );
+          setStore({ compras: actualizarCompras });
+          return actualizarCompra;
+        } catch (error) {
+          console.error("Error actualizando compra:", error);
+          return { error: "Error de conexión con el servidor" };
+        }
+      },
+      obtenerProveedores: async () => {
+        try {
+          const response = await fetch("http://127.0.0.1:5000/proveedores", {});
+          if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+            setStore({ proveedores: data });
+          } else {
+            console.error("Error al obtener proveedores:", response.status);
+          }
+        } catch (error) {
+          console.error("Error al obtener proveedores:", error);
+          return null;
+        }
+      },
+      agregarProveedor: async (nuevoProveedor) => {
+        try {
+          const response = await fetch("http://127.0.0.1:5000/proveedor", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(nuevoProveedor),
+          });
+
+          if (response.ok) {
+            const nuevoProveedor = await response.json();
+            const store = getStore();
+            setStore({
+              proveedores: [...store.proveedores, nuevoProveedor],
+            });
+            return nuevoProveedor;
+          } else {
+            console.error("Error al agregar proveedor:", response.status);
+          }
+        } catch (error) {
+          console.error("Error al agregar proveedor:", error);
+        }
+      },
+      eliminarProveedor: async (id) => {
+        try {
+          const response = await fetch(
+            `http://127.0.0.1:5000/proveedor/${id}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (response.ok) {
+            setStore((prevStore) => ({
+              proveedores: prevStore.proveedores.filter(
+                (proveedor) => proveedor.id !== id
+              ),
+            }));
+            return true;
+          } else {
+            console.error(
+              "Error en la respuesta del servidor:",
+              response.status
+            );
+            return false;
+          }
+        } catch (error) {
+          console.error("Error al eliminar proveedor:", error);
+          return false;
+        }
+      },
+      actualizarProveedor: async (id, proveedorActualizado) => {
+        try {
+          const response = await fetch(
+            `http://127.0.0.1:5000/proveedor/${id}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(proveedorActualizado),
+            }
+          );
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            console.error("Error al actualizar:", errorData);
+            return {
+              error: errorData.message || "Error al actualizar el proveedor",
+            };
+          }
+
+          const actualizarProveedor = await response.json();
+          const store = getStore();
+          const actualizarProveedores = store.proveedores.map((proveedor) =>
+            proveedor.id === id ? actualizarProveedor : proveedor
+          );
+          setStore({ proveedores: actualizarProveedores });
+          return actualizarProveedor;
+        } catch (error) {
+          console.error("Error actualizando proveedor:", error);
+          return { error: "Error de conexión con el servidor" };
         }
       },
     },

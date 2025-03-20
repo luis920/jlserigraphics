@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify ,send_from_directory,current_app
 from werkzeug.utils import secure_filename
-from Backend.models import db, Pedidos, Clientes,Cotizaciones,Compras
-from Backend.schemas import  pedido_schema, pedidos_schema, cliente_schema, clientes_schema,cotizacion_schema,cotizaciones_schema,compra_schema,compras_schema
+from Backend.models import db, Pedidos, Clientes,Cotizaciones,Compras,Proveedores
+from Backend.schemas import  pedido_schema, pedidos_schema, cliente_schema, clientes_schema,cotizacion_schema,cotizaciones_schema,compra_schema,compras_schema,proveedor_schema,proveedores_schema
 import os
 
 routes = Blueprint('routes', __name__)
@@ -152,25 +152,50 @@ def editar_compra(id):
 
     return jsonify(compra_schema.dump(compra)), 200  
 
+#ENDPOINT PROVEEDORES
 
-# @api.route('/classes/<int:id>', methods=['PUT'])
-# @jwt_required()
-# def update_class(id):
-#     classes = Class.query.get(id)
-#     if classes is None:
-#         return jsonify({"error": "Class not found"}), 404
-    
-#     data = request.json
-#     classes.teacher_id = data.get('teacher_id', classes.teacher_id)
-#     classes.name = data.get('name', classes.name)
-#     classes.description = data.get('description', classes.description)
-#     classes.capacity = data.get('capacity', classes.capacity)
-#     classes.price = data.get('price', classes.price)
-#     classes.age = data.get('age', classes.age)
-#     classes.time = data.get('time', classes.time)
-#     classes.image = data.get('image', classes.image)
-    
-#     db.session.commit()
-#     return jsonify(classes.serialize()), 200
+@routes.route('/proveedor', methods=['POST'])
+def crear_proveedor():
+    data = request.json
+    nuevo_proveedor = Proveedores(**data)
+    db.session.add(nuevo_proveedor)
+    db.session.commit()
+
+    return jsonify(proveedor_schema.dump(nuevo_proveedor)),201
+
+@routes.route('/proveedores',methods=['GET'])
+def obtener_proveedores():
+    proveedores= Proveedores.query.all()
+
+    return jsonify(proveedores_schema.dump(proveedores)),200
+
+@routes.route('/proveedor/<int:id>', methods=['DELETE'])
+def eliminar_proveedor(id):
+    proveedor = Proveedores.query.get(id)
+    if not proveedor:
+        return jsonify({"error": "no se encontro el id del proveedor"}), 404
+
+    db.session.delete(proveedor)
+    db.session.commit()
+    return jsonify(proveedor_schema.dump(proveedor)), 200
+
+@routes.route('/proveedor/<int:id>', methods=['PUT'])
+def editar_proveedor(id):
+    proveedor = Proveedores.query.get(id) 
+    if not proveedor:
+        return jsonify({"error": "proveedor no encontrada"}), 404
+
+    data = request.json
+
+   
+    proveedor.nombre_del_proveedor = data.get("nombre_del_proveedor", proveedor.nombre_del_proveedor)
+    proveedor.telefono = data.get("telefono", proveedor.telefono)
+    proveedor.correo_electronico = data.get("correo_electronico", proveedor.correo_electronico)
+    proveedor.suministros_otorgados = data.get("suministros_otorgados", proveedor.suministros_otorgados)
+   
+
+    db.session.commit()  
+
+    return jsonify(proveedor_schema.dump(proveedor)), 200  
 
 
