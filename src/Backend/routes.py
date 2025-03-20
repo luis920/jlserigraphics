@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify ,send_from_directory,current_app
 from werkzeug.utils import secure_filename
-from Backend.models import db, Pedidos, Clientes,Cotizaciones,Compras
-from Backend.schemas import  pedido_schema, pedidos_schema, cliente_schema, clientes_schema,cotizacion_schema,cotizaciones_schema,compra_schema,compras_schema
+from Backend.models import db, Pedidos, Clientes,Cotizaciones,Compras,Proveedores
+from Backend.schemas import  pedido_schema, pedidos_schema, cliente_schema, clientes_schema,cotizacion_schema,cotizaciones_schema,compra_schema,compras_schema,proveedor_schema,proveedores_schema
 import os
 
 routes = Blueprint('routes', __name__)
@@ -157,7 +157,7 @@ def editar_compra(id):
 @routes.route('/proveedor', methods=['POST'])
 def crear_proveedor():
     data = request.json
-    nuevo_proveedor = Proveedor(**data)
+    nuevo_proveedor = Proveedores(**data)
     db.session.add(nuevo_proveedor)
     db.session.commit()
 

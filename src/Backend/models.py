@@ -97,8 +97,8 @@ class Proveedores(db.Model):
     correo_electronico = db.Column(db.String(100))
     suministros_otorgados = db.Column(db.String(100))
 
-    def __init__(self, nombre,direccion,telefono,suministros_otorgados):
-        self.nombre= nombre
-        self.direccion = direccion
-        self.telefono= telefono
+    def __init__(self, nombre_del_proveedor,telefono,correo_electronico,suministros_otorgados):
+        self.nombre_del_proveedor= nombre_del_proveedor
+        self.telefono = telefono
+        self.correo_electronico= correo_electronico
         self.suministros_otorgados= suministros_otorgados

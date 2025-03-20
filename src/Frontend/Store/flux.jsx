@@ -5,6 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       pedidos: [],
       cotizaciones: [],
       compras: [],
+      proveedores: [],
     },
     actions: {
       GetClients: async () => {
@@ -334,6 +335,21 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.error("Error actualizando compra:", error);
           return { error: "Error de conexión con el servidor" };
+        }
+      },
+      obtenerProveedores: async () => {
+        try {
+          const response = await fetch("http://127.0.0.1:5000/proveedores", {});
+          if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+            setStore({ proveedores: data });
+          } else {
+            console.error("Error al obtener proveedores:", response.status);
+          }
+        } catch (error) {
+          console.error("Error al obtener proveedores:", error);
+          return null;
         }
       },
     },

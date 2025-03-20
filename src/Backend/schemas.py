@@ -45,4 +45,4 @@ compra_schema = ComprasSchema()
 compras_schema = ComprasSchema(many=True)
 
 proveedor_schema = ProveedorSchema()
-provedores_schema = ProveedorSchema(many=True)
+proveedores_schema = ProveedorSchema(many=True)
