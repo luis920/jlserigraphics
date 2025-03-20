@@ -85,7 +85,7 @@ const Supplier = () => {
         });
 
         actions.obtenerProveedores();
-        setNuevaCompra({
+        setNuevoProveedor({
           nombre_del_proveedor: "",
           telefono: "",
           correo_electronico: "",

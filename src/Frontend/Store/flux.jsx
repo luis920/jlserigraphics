@@ -352,6 +352,30 @@ const getState = ({ getStore, getActions, setStore }) => {
           return null;
         }
       },
+      agregarProveedor: async (nuevoProveedor) => {
+        try {
+          const response = await fetch("http://127.0.0.1:5000/proveedor", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(nuevoProveedor),
+          });
+
+          if (response.ok) {
+            const nuevoProveedor = await response.json();
+            const store = getStore();
+            setStore({
+              proveedores: [...store.proveedores, nuevoProveedor],
+            });
+            return nuevoProveedor;
+          } else {
+            console.error("Error al agregar proveedor:", response.status);
+          }
+        } catch (error) {
+          console.error("Error al agregar proveedor:", error);
+        }
+      },
     },
   };
 };

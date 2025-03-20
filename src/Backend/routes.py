@@ -191,7 +191,6 @@ def editar_proveedor(id):
     proveedor.nombre_del_proveedor = data.get("nombre_del_proveedor", proveedor.nombre_del_proveedor)
     proveedor.telefono = data.get("telefono", proveedor.telefono)
     proveedor.correo_electronico = data.get("correo_electronico", proveedor.correo_electronico)
-    proveedor.precio_unitario = data.get("precio_unitario", proveedor.precio_unitario)
     proveedor.suministros_otorgados = data.get("suministros_otorgados", proveedor.suministros_otorgados)
    
 
