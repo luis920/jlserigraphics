@@ -152,7 +152,15 @@ def editar_compra(id):
 
     return jsonify(compra_schema.dump(compra)), 200  
 
+#ENDPOINT PROVEEDORES
 
+@routes.route('/proveedor', methods=['POST'])
+def crear_proveedor():
+    data = request.json
+    nuevo_proveedor = Proveedor(**data)
+    db.session.add(nuevo_proveedor)
+    db.session.commit()
 
+    return jsonify(proveedor_schema.dump(nuevo_proveedor)),201
 
 
