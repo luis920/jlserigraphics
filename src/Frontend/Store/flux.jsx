@@ -379,7 +379,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       eliminarProveedor: async (id) => {
         try {
           const response = await fetch(
-            `http://127.0.0.1:5000/cproveedor/${id}`,
+            `http://127.0.0.1:5000/proveedor/${id}`,
             {
               method: "DELETE",
               headers: {
@@ -405,6 +405,39 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.error("Error al eliminar proveedor:", error);
           return false;
+        }
+      },
+      actualizarProveedor: async (id, proveedorActualizado) => {
+        try {
+          const response = await fetch(
+            `http://127.0.0.1:5000/proveedor/${id}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(proveedorActualizado),
+            }
+          );
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            console.error("Error al actualizar:", errorData);
+            return {
+              error: errorData.message || "Error al actualizar el proveedor",
+            };
+          }
+
+          const actualizarProveedor = await response.json();
+          const store = getStore();
+          const actualizarProveedores = store.proveedores.map((proveedor) =>
+            proveedor.id === id ? actualizarProveedor : proveedor
+          );
+          setStore({ proveedores: actualizarProveedores });
+          return actualizarProveedor;
+        } catch (error) {
+          console.error("Error actualizando proveedor:", error);
+          return { error: "Error de conexión con el servidor" };
         }
       },
     },

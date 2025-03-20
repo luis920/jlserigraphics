@@ -203,7 +203,7 @@ const Supplier = () => {
                   <td>
                     <button
                       className="Btn"
-                      onClick={() => handleEditarProveedor(proveedor.id)}
+                      onClick={() => handleEditarProveedor(proveedor)}
                     >
                       <FontAwesomeIcon
                         className="icon-actions-pen"
