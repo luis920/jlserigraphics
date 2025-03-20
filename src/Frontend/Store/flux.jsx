@@ -306,6 +306,36 @@ const getState = ({ getStore, getActions, setStore }) => {
           return false;
         }
       },
+      actualizarCompra: async (id, compraActualizada) => {
+        try {
+          const response = await fetch(`http://127.0.0.1:5000/compra/${id}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(compraActualizada),
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            console.error("Error al actualizar:", errorData);
+            return {
+              error: errorData.message || "Error al actualizar la compra",
+            };
+          }
+
+          const actualizarCompra = await response.json();
+          const store = getStore();
+          const actualizarCompras = store.compras.map((compra) =>
+            compra.id === id ? actualizarCompra : compra
+          );
+          setStore({ compras: actualizarCompras });
+          return actualizarCompra;
+        } catch (error) {
+          console.error("Error actualizando compra:", error);
+          return { error: "Error de conexión con el servidor" };
+        }
+      },
     },
   };
 };

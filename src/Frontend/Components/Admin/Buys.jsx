@@ -23,11 +23,82 @@ const Buys = () => {
     actions.obtenerCompras();
   }, []);
 
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setNuevaCompra({ ...nuevaCompra, [name]: value });
+  // };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNuevaCompra({ ...nuevaCompra, [name]: value });
+    if (editingBuy) {
+      setNuevaCompra({ ...nuevaCompra, [name]: value });
+    } else {
+      setNuevaCompra({ ...nuevaCompra, [name]: value });
+    }
   };
-  const handleAddBuy = async (e) => {
+  // const handleAddBuy = async (e) => {
+  //   if (
+  //     !nuevaCompra.proveedor ||
+  //     !nuevaCompra.fecha ||
+  //     !nuevaCompra.producto ||
+  //     !nuevaCompra.precio_unitario ||
+  //     !nuevaCompra.cantidad ||
+  //     !nuevaCompra.factura
+  //   ) {
+  //     Swal.fire("Error", "Por favor, completa todos los campos", "error");
+  //     return;
+  //   }
+
+  //   const confirmSubmit = await Swal.fire({
+  //     title: "Estas seguro?",
+  //     text: "Quieres agregar una nueva compra?",
+  //     icon: "question",
+  //     showCancelButton: true,
+  //     confirmButtonText: "Si, agregar!",
+  //     cancelButtonText: "No, cancelar",
+  //   });
+
+  //   if (!confirmSubmit.isConfirmed) {
+  //     return;
+  //   }
+
+  //   try {
+  //     const result = await actions.agregarCompra(nuevaCompra);
+
+  //     if (result) {
+  //       Swal.fire({
+  //         icon: "success",
+  //         title: "Compra Agregado",
+  //         text: "Una nuevoa compra a sido agregado!",
+  //       });
+  //       actions.obtenerCompras();
+  //       setNuevaCompra({
+  //         proveedor: "",
+  //         fecha: "",
+  //         producto: "",
+  //         precio_unitario: "",
+  //         cantidad: "",
+  //         factura: "",
+  //       });
+  //       setShowModal(false);
+  //     } else {
+  //       Swal.fire({
+  //         icon: "error",
+  //         title: "Error",
+  //         text: `ah ocurrido un error: ${result.error}`,
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error("Error en handleAddBuy:", error);
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "Submission Error",
+  //       text: "ah ocurrido un error al enviar el formulario,porfavor intente de nuevo.",
+  //     });
+  //   }
+  // };
+  const handleSaveBuy = async (e) => {
+    e.preventDefault();
+
     if (
       !nuevaCompra.proveedor ||
       !nuevaCompra.fecha ||
@@ -41,27 +112,41 @@ const Buys = () => {
     }
 
     const confirmSubmit = await Swal.fire({
-      title: "Estas seguro?",
-      text: "Quieres agregar una nueva compra?",
+      title: editingBuy ? "¿Actualizar compra?" : "¿Agregar compra?",
+      text: editingBuy
+        ? "Se actualizarán los datos de la compra."
+        : "Se agregará una nueva compra.",
       icon: "question",
       showCancelButton: true,
-      confirmButtonText: "Si, agregar!",
-      cancelButtonText: "No, cancelar",
+      confirmButtonText: editingBuy ? "Sí, actualizar" : "Sí, agregar",
+      cancelButtonText: "Cancelar",
     });
 
-    if (!confirmSubmit.isConfirmed) {
-      return;
-    }
+    if (!confirmSubmit.isConfirmed) return;
 
     try {
-      const result = await actions.agregarCompra(nuevaCompra);
+      let result;
+      if (editingBuy) {
+        result = await actions.actualizarCompra(editingBuy.id, nuevaCompra);
+      } else {
+        result = await actions.agregarCompra(nuevaCompra);
+      }
 
-      if (result) {
+      if (result?.error) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: `Ha ocurrido un error: ${result.error}`,
+        });
+      } else {
         Swal.fire({
           icon: "success",
-          title: "Compra Agregado",
-          text: "Una nuevoa compra a sido agregado!",
+          title: editingBuy ? "Compra actualizada" : "Compra agregada",
+          text: editingBuy
+            ? "Los datos se han actualizado correctamente."
+            : "¡Una nueva compra ha sido agregada!",
         });
+
         actions.obtenerCompras();
         setNuevaCompra({
           proveedor: "",
@@ -71,20 +156,15 @@ const Buys = () => {
           cantidad: "",
           factura: "",
         });
+        setEditingBuy(null);
         setShowModal(false);
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: `ah ocurrido un error: ${result.error}`,
-        });
       }
     } catch (error) {
-      console.error("Error en handleAddBuy:", error);
+      console.error("Error en handleSaveBuy:", error);
       Swal.fire({
         icon: "error",
-        title: "Submission Error",
-        text: "ah ocurrido un error al enviar el formulario,porfavor intente de nuevo.",
+        title: "Error",
+        text: "Ocurrió un error al enviar el formulario. Intente nuevamente.",
       });
     }
   };
@@ -128,19 +208,29 @@ const Buys = () => {
     }
   };
 
-  const handleEditBuy = (compras) => {
-    setEditingBuy(compras);
+  const handleEditBuy = (compra) => {
+    setEditingBuy(compra);
+    setNuevaCompra(compra);
     setShowModal(true);
   };
 
-  const handleUpdateBuy = async (e) => {
-    e.preventDefault();
-    await actions.updateBuy(editingBuy.id, editingBuy);
-    setShowModal(false);
-    setEditingBuy(null);
-  };
+  // const handleUpdateBuy = async (e) => {
+  //   e.preventDefault();
+  //   await actions.actualizarCompra(editingBuy.id, editingBuy);
+  //   setShowModal(false);
+  //   setEditingBuy(null);
+  // };
 
   const handleOpenModal = () => {
+    setEditingBuy(null); // Asegurar que no está editando
+    setNuevaCompra({
+      proveedor: "",
+      fecha: "",
+      producto: "",
+      precio_unitario: "",
+      cantidad: "",
+      factura: "",
+    });
     setShowModal(true);
   };
   const handleCloseModal = () => {
@@ -220,7 +310,7 @@ const Buys = () => {
           <div className={`modal-container ${showModal ? "show" : ""}`}>
             <div className="modal-content">
               <h2 className="">Nueva Compra</h2>
-              <form className="contacto-formulario " onSubmit={handleUpdateBuy}>
+              <form className="contacto-formulario " onSubmit={handleSaveBuy}>
                 <div className="d-flex">
                   <div className="d-flex column ">
                     <label htmlFor="proveedor">Proveedor</label>
@@ -308,19 +398,20 @@ const Buys = () => {
                     </select>
                   </div>
                 </div>
+                <button
+                  type="submit"
+                  className="button-form btn btn-primary mt-5"
+                >
+                  {editingBuy ? "Actualizar" : "Agregar"}
+                </button>
+                <button
+                  type="button"
+                  className="button-form btn btn-secondary mt-2"
+                  onClick={handleCloseModal}
+                >
+                  Cancelar
+                </button>
               </form>
-              <button
-                onClick={() => handleAddBuy()}
-                className="button-form btn btn-primary mt-5"
-              >
-                Enviar
-              </button>
-              <button
-                className=" button-form btn btn-secondary mt-2"
-                onClick={() => handleCloseModal()}
-              >
-                Cancelar
-              </button>
             </div>
           </div>
         )}
