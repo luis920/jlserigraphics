@@ -1,5 +1,6 @@
 import "../../Styles/Reports.css";
 import Sidebar from "./Sidebar";
+import GraficaVentasGastos from "../ReportsGraph";
 
 const Reports = () => {
   return (
@@ -47,6 +48,8 @@ const Reports = () => {
           </div>
         </div>
       </div>
+
+      <GraficaVentasGastos />
     </div>
   );
 };
