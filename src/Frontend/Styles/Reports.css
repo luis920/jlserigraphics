@@ -1,3 +1,19 @@
+.stadistics-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px; /* Espacio entre estadísticas y la gráfica */
+}
+
+.stadistics {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
 .ingresosTotales,
 .gastosTotales,
 .gananciaNeta,
@@ -11,17 +27,13 @@
   font-size: 40px;
   color: #00ff7f;
 }
-.stadistics {
+
+.grafica-container {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 select {
-  background-color: lightblue;
   color: #00ff7f;
-  border: 1px solid #ccc;
-  padding: 5px;
-  border-radius: 5px;
-  font-size: 25px;
-  width: 20rem;
 }

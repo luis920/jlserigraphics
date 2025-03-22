@@ -1,10 +1,12 @@
 import "../../Styles/Reports.css";
 import Sidebar from "./Sidebar";
 import GraficaVentasGastos from "../ReportsGraph";
+import GraficaVentasAnuales from "../BuysGraph";
 
 const Reports = () => {
   return (
     <div className="d-flex">
+      <div></div>
       <Sidebar />
 
       <div className="stadistics-container">
@@ -47,9 +49,11 @@ const Reports = () => {
             <p>23 pedidos</p>
           </div>
         </div>
+        <div className="grafica-container">
+          <GraficaVentasGastos />
+          <GraficaVentasAnuales />
+        </div>
       </div>
-
-      <GraficaVentasGastos />
     </div>
   );
 };

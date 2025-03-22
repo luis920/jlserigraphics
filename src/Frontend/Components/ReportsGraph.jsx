@@ -16,7 +16,13 @@ const data = [
   { mes: "Febrero", ventas: 7000, gastos: 4000 },
   { mes: "Marzo", ventas: 6500, gastos: 3500 },
   { mes: "Abril", ventas: 8000, gastos: 5000 },
-  { mes: "Mayo", ventas: 9000, gastos: 6000 },
+  { mes: "Junio", ventas: 9000, gastos: 6000 },
+  { mes: "Julio", ventas: 5000, gastos: 3000 },
+  { mes: "Agosto", ventas: 7000, gastos: 4000 },
+  { mes: "Septiembre", ventas: 6500, gastos: 3500 },
+  { mes: "Octubre", ventas: 8000, gastos: 5000 },
+  { mes: "Noviembre", ventas: 9000, gastos: 6000 },
+  { mes: "Diciembre", ventas: 9000, gastos: 6000 },
 ];
 
 const GraficaVentasGastos = () => {
