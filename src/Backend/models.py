@@ -7,7 +7,7 @@ class Usuarios(db.Model):
     nombre_completo = db.Column(db.String(100), nullable=False)
     telefono = db.Column(db.String(15), nullable=False, unique=True) 
     email = db.Column(db.String(100), nullable=False, unique=True)
-    password = db.Column(db.String(200), nullable=False) 
+    password = db.Column(db.String(200), nullable=False)
 
 
     def __init__(self, nombre_completo,telefono,email,password,):
@@ -104,15 +104,4 @@ class Proveedores(db.Model):
         self.suministros_otorgados= suministros_otorgados
 
 
-class Usuarios(db.Model):  
-    id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(100))
-    telefono = db.Column(db.String(100))
-    email = db.Column(db.String(100))
-    contraseña = db.Column(db.String(100))
 
-    def __init__(self, nombre,telefono,email,contraseña):
-        self.nombre= nombre
-        self.telefono = telefono
-        self.email= email
-        self.contraseña= contraseña

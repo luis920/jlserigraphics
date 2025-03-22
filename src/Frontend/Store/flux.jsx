@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
+      usuarios: [],
       clientes: [],
       pedidos: [],
       cotizaciones: [],
@@ -438,6 +439,30 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.error("Error actualizando proveedor:", error);
           return { error: "Error de conexión con el servidor" };
+        }
+      },
+      agregarUsuario: async (nuevoUsuario) => {
+        try {
+          const response = await fetch("http://127.0.0.1:5000/nuevousuario", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(nuevoUsuario),
+          });
+
+          if (response.ok) {
+            const nuevoUsuario = await response.json();
+            const store = getStore();
+            setStore({
+              usuarios: [...store.usuarios, nuevoUsuario],
+            });
+            return nuevoUsuario;
+          } else {
+            console.error("Error al registrarse:", response.status);
+          }
+        } catch (error) {
+          console.error("Error al registrarse:", error);
         }
       },
     },
