@@ -102,3 +102,17 @@ class Proveedores(db.Model):
         self.telefono = telefono
         self.correo_electronico= correo_electronico
         self.suministros_otorgados= suministros_otorgados
+
+
+class Usuarios(db.Model):  
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(100))
+    telefono = db.Column(db.String(100))
+    email = db.Column(db.String(100))
+    contraseña = db.Column(db.String(100))
+
+    def __init__(self, nombre,telefono,email,contraseña):
+        self.nombre= nombre
+        self.telefono = telefono
+        self.email= email
+        self.contraseña= contraseña

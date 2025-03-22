@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin-bottom: 20px; /* Espacio entre estadísticas y la gráfica */
+  margin-bottom: 20px;
 }
 
 .stadistics {
