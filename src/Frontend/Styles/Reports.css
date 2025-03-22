@@ -1,0 +1,21 @@
+.ingresosTotales,
+.gastosTotales,
+.gananciaNeta,
+.numeroDePedidos {
+  width: 15rem;
+  height: 10rem;
+  margin: 10px;
+  border-radius: 10px;
+  text-align: center;
+  padding-top: 30px;
+  font-size: 40px;
+  color: greenyellow;
+}
+.stadistics-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.selector {
+  color: black;
+}
