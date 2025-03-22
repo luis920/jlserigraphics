@@ -9,13 +9,19 @@
   text-align: center;
   padding-top: 30px;
   font-size: 40px;
-  color: greenyellow;
+  color: #00ff7f;
 }
-.stadistics-container {
+.stadistics {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.selector {
-  color: black;
+select {
+  background-color: lightblue;
+  color: #00ff7f;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 25px;
+  width: 20rem;
 }
