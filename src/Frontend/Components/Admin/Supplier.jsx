@@ -1,5 +1,5 @@
 import Sidebar from "./Sidebar";
-import "../../Styles/Buys.css";
+import "../../Styles/Supplier.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useEffect, useContext } from "react";
@@ -197,8 +197,8 @@ const Supplier = () => {
                   <td>{proveedor.id}</td>
                   <td>{proveedor.nombre_del_proveedor}</td>
                   <td>{proveedor.telefono}</td>
-                  <td>{proveedor.correo}</td>
-                  <td>${proveedor.suministros_otorgados}</td>
+                  <td>{proveedor.correo_electronico}</td>
+                  <td>{proveedor.suministros_otorgados}</td>
 
                   <td>
                     <button

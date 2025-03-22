@@ -15,6 +15,7 @@ import Clients from "./Frontend/Components/Admin/Clients";
 import Quote from "./Frontend/Components/Admin/QuoteAdmin";
 import Buys from "./Frontend/Components/Admin/Buys";
 import Supplier from "./Frontend/Components/Admin/Supplier";
+import Reports from "./Frontend/Components/Admin/Reports";
 
 function App() {
   const location = useLocation();
@@ -27,6 +28,7 @@ function App() {
     "/cotizaciones",
     "/compras",
     "/proveedores",
+    "/reportes",
   ];
 
   return (
@@ -48,6 +50,7 @@ function App() {
         <Route path="/cotizaciones" element={<Quote />} />
         <Route path="/compras" element={<Buys />} />
         <Route path="/proveedores" element={<Supplier />} />
+        <Route path="/reportes" element={<Reports />} />
       </Routes>
 
       <Footer />
