@@ -7,7 +7,7 @@ class Usuarios(db.Model):
     nombre_completo = db.Column(db.String(100), nullable=False)
     telefono = db.Column(db.String(15), nullable=False, unique=True) 
     email = db.Column(db.String(100), nullable=False, unique=True)
-    password = db.Column(db.String(200), nullable=False) 
+    password = db.Column(db.String(200), nullable=False)
 
 
     def __init__(self, nombre_completo,telefono,email,password,):
@@ -102,3 +102,6 @@ class Proveedores(db.Model):
         self.telefono = telefono
         self.correo_electronico= correo_electronico
         self.suministros_otorgados= suministros_otorgados
+
+
+

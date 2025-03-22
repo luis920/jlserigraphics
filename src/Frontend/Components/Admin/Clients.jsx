@@ -15,14 +15,6 @@ const Clients = () => {
     telefono: "",
   });
 
-  // const Clients = [
-  //   {
-  //     nombre: "Juan Ramirez",
-  //     direccion: "calle 1 entre 2 y3 #200",
-  //     telefono: "866-260-53-20",
-  //   },
-  // ];
-
   useEffect(() => {
     actions.obtenerClientes();
   }, []);
