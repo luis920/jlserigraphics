@@ -1,5 +1,5 @@
 from flask_marshmallow import Marshmallow
-from Backend.models import  Pedidos, Clientes,Compras,Proveedores
+from Backend.models import  Pedidos, Clientes,Compras,Proveedores,Usuarios
 
 ma = Marshmallow()
 
@@ -32,7 +32,7 @@ class ProveedorSchema(ma.SQLAlchemyAutoSchema):
 
 class UsuariosSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        model = Proveedores
+        model = Usuarios
         fields = ('id', 'nombre', 'telefono', 'email','contraseña')
 
 # Crear instancias para usar en otros archivos
