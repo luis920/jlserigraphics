@@ -197,8 +197,8 @@ const Supplier = () => {
                   <td>{proveedor.id}</td>
                   <td>{proveedor.nombre_del_proveedor}</td>
                   <td>{proveedor.telefono}</td>
-                  <td>{proveedor.correo}</td>
-                  <td>${proveedor.suministros_otorgados}</td>
+                  <td>{proveedor.correo_electronico}</td>
+                  <td>{proveedor.suministros_otorgados}</td>
 
                   <td>
                     <button

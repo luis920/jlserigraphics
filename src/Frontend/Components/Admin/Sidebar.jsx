@@ -44,21 +44,12 @@ const Sidebar = () => {
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faFileLines} />,
       label: "Reportes",
-      path: "/admin-dashboard",
+      path: "/reportes",
     },
-    {
-      icon: <FontAwesomeIcon className="icon-sidebar" icon={faAddressCard} />,
-      label: "Contactanos",
-      path: "/admin-dashboard",
-    },
+
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faMessage} />,
       label: "Mensajes",
-      path: "/admin-dashboard",
-    },
-    {
-      icon: <FontAwesomeIcon className="icon-sidebar" icon={faGear} />,
-      label: "Configuracion",
       path: "/admin-dashboard",
     },
   ];
