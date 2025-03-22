@@ -30,6 +30,11 @@ class ProveedorSchema(ma.SQLAlchemyAutoSchema):
         model = Proveedores
         fields = ('id', 'nombre_del_proveedor', 'telefono', 'correo_electronico','suministros_otorgados')
 
+class UsuariosSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Proveedores
+        fields = ('id', 'nombre', 'telefono', 'email','contraseña')
+
 # Crear instancias para usar en otros archivos
 
 pedido_schema = PedidosSchema()
@@ -46,3 +51,6 @@ compras_schema = ComprasSchema(many=True)
 
 proveedor_schema = ProveedorSchema()
 proveedores_schema = ProveedorSchema(many=True)
+
+usuario_schema = UsuariosSchema()
+usuarios_schema = UsuariosSchema(many=True)
