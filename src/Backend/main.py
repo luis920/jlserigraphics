@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from flask import Flask
+from flask import Flask,jsonify,request
 from flask_cors import CORS
 from Backend.models import db
 from Backend.schemas import ma
@@ -10,8 +10,12 @@ from Backend.routes import routes
 from Backend.config import Config
 from flask_migrate import Migrate
 
+from flask_jwt_extended import create_access_token,get_jwt_identity,jwt_required,JWTManager
+
 app = Flask(__name__)
 app.config.from_object(Config)
+
+jwt = JWTManager(app)
 
 CORS(app)
 db.init_app(app)

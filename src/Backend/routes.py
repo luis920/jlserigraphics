@@ -3,6 +3,7 @@ from werkzeug.utils import secure_filename
 from Backend.models import db, Pedidos, Clientes,Cotizaciones,Compras,Proveedores,Usuarios
 from Backend.schemas import  pedido_schema, pedidos_schema, cliente_schema, clientes_schema,cotizacion_schema,cotizaciones_schema,compra_schema,compras_schema,proveedor_schema,proveedores_schema,usuario_schema,usuarios_schema
 import os
+from flask_jwt_extended import create_access_token
 
 routes = Blueprint('routes', __name__)
 
@@ -208,3 +209,13 @@ def nuevo_usuario():
     db.session.commit()
 
     return jsonify(compra_schema.dump(usuario)),201
+
+@routes.route("/login", methods=["POST"])
+def login():
+    username = request.json.get("username", None)
+    password = request.json.get("password", None)
+    if username != "test" or password != "test":
+        return jsonify({"msg": "Bad username or password"}), 401
+
+    access_token = create_access_token(identity=username)
+    return jsonify(access_token=access_token)
