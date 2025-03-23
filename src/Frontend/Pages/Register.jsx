@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import Swal from "sweetalert2";
 import { Context } from "../Store/appContext.jsx";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [nuevoUsuario, setNuevoUsuario] = useState({
     nombre_completo: "",
     telefono: "",
@@ -14,14 +17,25 @@ const Register = () => {
     const { name, value } = e.target;
     setNuevoUsuario({ ...nuevoUsuario, [name]: value });
   };
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+  };
   const handleRegister = async (e) => {
+    e.preventDefault();
+
     if (
       !nuevoUsuario.nombre_completo ||
       !nuevoUsuario.telefono ||
       !nuevoUsuario.email ||
-      !nuevoUsuario.password
+      !nuevoUsuario.password ||
+      !confirmPassword
     ) {
       Swal.fire("Error", "Por favor, completa todos los campos", "error");
+      return;
+    }
+
+    if (nuevoUsuario.password !== confirmPassword) {
+      Swal.fire("Error", "Las contraseñas no coinciden", "error");
       return;
     }
 
@@ -31,35 +45,38 @@ const Register = () => {
       if (result) {
         Swal.fire({
           icon: "success",
-          title: "En hora buena!",
-          text: "Te has registrado con exito!",
+          title: "¡Registro exitoso!",
+          text: "Te has registrado con éxito.",
         });
+        navigate("/iniciarsesion");
         setNuevoUsuario({
           nombre_completo: "",
           telefono: "",
           email: "",
           password: "",
         });
+        setConfirmPassword("");
       } else {
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: `ah ocurrido un error: ${result.error}`,
+          text: `Ha ocurrido un error: ${result.error}`,
         });
       }
     } catch (error) {
-      console.error("Error en handleAddUser:", error);
+      console.error("Error en handleRegister:", error);
       Swal.fire({
         icon: "error",
-        title: "Submission Error",
-        text: "ah ocurrido un error al enviar el formulario,porfavor intente de nuevo.",
+        title: "Error",
+        text: "Ha ocurrido un error al enviar el formulario, por favor intenta de nuevo.",
       });
     }
   };
+
   return (
     <div>
       <div id="form-ui">
-        <form action="" method="post" id="form">
+        <form action="" method="post" id="form" onSubmit={handleRegister}>
           <div id="form-body">
             <div id="welcome-lines">
               <div id="welcome-line-1">JL Serigraphics</div>
@@ -112,9 +129,11 @@ const Register = () => {
                 </div>
                 <div className="form-inp w-100">
                   <input
+                    onChange={handleConfirmPasswordChange}
                     placeholder="Confirmar contraseña"
                     type="password"
-                    name="password"
+                    name="confirmPassword"
+                    value={confirmPassword}
                     required
                   />
                 </div>

@@ -3,6 +3,10 @@ from werkzeug.utils import secure_filename
 from Backend.models import db, Pedidos, Clientes,Cotizaciones,Compras,Proveedores,Usuarios
 from Backend.schemas import  pedido_schema, pedidos_schema, cliente_schema, clientes_schema,cotizacion_schema,cotizaciones_schema,compra_schema,compras_schema,proveedor_schema,proveedores_schema,usuario_schema,usuarios_schema
 import os
+from flask_jwt_extended import create_access_token
+from flask_bcrypt import Bcrypt
+
+bcrypt = Bcrypt()
 
 routes = Blueprint('routes', __name__)
 
@@ -198,13 +202,51 @@ def editar_proveedor(id):
 
     return jsonify(proveedor_schema.dump(proveedor)), 200  
 
-  #ENDPOINT USUARIOS
+  #ENDPOINT crear usuario
 
-@routes.route('/nuevousuario',methods=['POST'])
+@routes.route('/nuevousuario', methods=['POST'])
 def nuevo_usuario():
     data = request.json
-    usuario = Usuarios(**data)
+
+    
+    hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
+
+    
+    usuario = Usuarios(
+        nombre_completo=data['nombre_completo'],
+        telefono=data['telefono'],
+        email=data['email'],
+        password=hashed_password  
+    )
+
     db.session.add(usuario)
     db.session.commit()
 
-    return jsonify(compra_schema.dump(usuario)),201
+    return jsonify(usuario_schema.dump(usuario)), 201
+
+#ENDPOINT LOGIN
+
+@routes.route("/iniciarsesion", methods=["POST"])
+def login():
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    
+    User=Usuarios.query.filter_by(email=email,password=password).first()
+
+    if User is None :
+        return jsonify({"msg":"email o contraseña incorrectos"}),401
+
+    access_token = create_access_token(identity=email)
+    return jsonify(access_token=access_token)
+
+# @routes.route('/iniciarsesion', methods=['POST'])
+# def login():
+#     data = request.json
+#     usuario = Usuarios.query.filter_by(email=data['email']).first()
+
+#     if usuario and bcrypt.check_password_hash(usuario.password, data['password']):
+#         # Contraseña correcta, crear el token JWT y responder
+#         access_token = create_access_token(identity=usuario.id)
+#         return jsonify(access_token=access_token), 200
+#     else:
+#         return jsonify({"msg": "Correo o contraseña incorrectos"}), 401
