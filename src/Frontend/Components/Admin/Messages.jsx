@@ -2,113 +2,49 @@ import Sidebar from "./Sidebar";
 import "../../Styles/Orders.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import Swal from "sweetalert2";
 import { Context } from "../../Store/appContext.jsx";
 
 const Messages = () => {
   const { store, actions } = useContext(Context);
 
-  useEffect(() => {
-    actions.obtenerMensajes();
-  }, []);
+  //   useEffect(() => {
+  //     actions.obtenerMensajes();
+  //   }, []);
 
   return (
-    <div className="d-flex">
-      <Sidebar />
-      <div className="container mt-5 mx-4">
-        <div className="mb-4">
-          <button className="btn btn-primary">
-            <FontAwesomeIcon
-              className="icon-sidebar text-light"
-              icon={faPlus}
-            />
-          </button>
-        </div>
-
-        {/* Tabla de clientes */}
-        <div className="table-responsive">
-          <h1 className="text-light">Historial de mensajes</h1>
-          <table className="table table-bordered bg-light">
-            <thead className="table-dark">
-              <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Correo</th>
-                <th>Mensaje</th>
-              </tr>
-            </thead>
-            <tbody>
-              {store.clientes.map((cliente) => (
-                <tr key={cliente.id}>
-                  <td>{cliente.id}</td>
-                  <td>{cliente.nombre}</td>
-                  <td>{cliente.direccion}</td>
-                  <td>{cliente.telefono}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+    <div className="card-message">
+      <div className="header-message">
+        <span className="icon-message">
+          <svg
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              clip-rule="evenodd"
+              d="M18 3a1 1 0 00-1.447-.894L8.763 6H5a3 3 0 000 6h.28l1.771 5.316A1 1 0 008 18h1a1 1 0 001-1v-4.382l6.553 3.276A1 1 0 0018 15V3z"
+              fill-rule="evenodd"
+            ></path>
+          </svg>
+        </span>
+        <p className="alert-message">New message!</p>
       </div>
-      <div>
-        {showModal && (
-          <div className={`modal-container ${showModal ? "show" : ""}`}>
-            <div className="modal-content">
-              <h2 className="">Nuevo Cliente</h2>
-              <form className="contacto-formulario ">
-                <div className="d-flex column ">
-                  <label htmlFor="nombre">Nombre del cliente</label>
-                  <input
-                    onChange={handleInputChange}
-                    type="text"
-                    id="nombre"
-                    name="nombre"
-                    value={nuevoCliente.nombre}
-                    required
-                  />
-                </div>
-                <div className="d-flex column ">
-                  <label className="mx-2" htmlFor="tipo_prenda ">
-                    Direccion
-                  </label>
-                  <input
-                    onChange={handleInputChange}
-                    type="text"
-                    id="direccion"
-                    name="direccion"
-                    value={nuevoCliente.direccion}
-                    required
-                  />
-                </div>
 
-                <div className="d-flex column ">
-                  <label htmlFor="telefono">Telefono</label>
-                  <input
-                    onChange={handleInputChange}
-                    type="text"
-                    id="telefono"
-                    name="telefono"
-                    value={nuevoCliente.telefono}
-                    required
-                  />
-                </div>
-              </form>
-              <button
-                onClick={() => handleAddClient()}
-                className="button-form btn btn-primary mt-5"
-              >
-                Enviar
-              </button>
-              <button
-                className=" button-form btn btn-secondary mt-2"
-                onClick={() => handleCloseModal()}
-              >
-                Cancelar
-              </button>
-            </div>
-          </div>
-        )}
+      <p className="message">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam ea quo
+        unde vel adipisci blanditiis voluptates eum. Nam, cum minima?
+      </p>
+
+      <div className="actions-message">
+        <a className="read-message" href="">
+          Take a Look
+        </a>
+
+        <a className="mark-as-read" href="">
+          Mark as Read
+        </a>
       </div>
     </div>
   );
