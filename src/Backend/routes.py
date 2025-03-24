@@ -1,10 +1,11 @@
 from flask import Blueprint, request, jsonify ,send_from_directory,current_app
 from werkzeug.utils import secure_filename
-from Backend.models import db, Pedidos, Clientes,Cotizaciones,Compras,Proveedores,Usuarios
-from Backend.schemas import  pedido_schema, pedidos_schema, cliente_schema, clientes_schema,cotizacion_schema,cotizaciones_schema,compra_schema,compras_schema,proveedor_schema,proveedores_schema,usuario_schema,usuarios_schema
+from Backend.models import db, Pedidos, Clientes,Cotizaciones,Compras,Proveedores,Usuarios,Mensajes
+from Backend.schemas import  pedido_schema, pedidos_schema, cliente_schema, clientes_schema,cotizacion_schema,cotizaciones_schema,compra_schema,compras_schema,proveedor_schema,proveedores_schema,usuario_schema,usuarios_schema,mensaje_schema,mensajes_schema
 import os
 from flask_jwt_extended import create_access_token
 from flask_bcrypt import Bcrypt
+from datetime import date
 
 bcrypt = Bcrypt()
 
@@ -250,3 +251,20 @@ def login():
 #         return jsonify(access_token=access_token), 200
 #     else:
 #         return jsonify({"msg": "Correo o contraseña incorrectos"}), 401
+
+#ENDPOINTS MENSAJES
+
+@routes.route('/mensaje', methods=['POST'])
+def crear_mensaje():
+    data = request.json
+    nuevo_mensaje = Mensajes(
+        nombre=data['nombre'],
+        email=data['email'],
+        mensaje=data['mensaje'],
+        
+    ) 
+
+    db.session.add(nuevo_mensaje)
+    db.session.commit()
+
+    return jsonify(mensaje_schema.dump(nuevo_mensaje)), 201
