@@ -3,7 +3,7 @@
   border-width: 1px;
   border-color: rgba(219, 234, 254, 1);
   border-radius: 1rem;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: rgb(35, 34, 34);
   padding: 1rem;
 }
 
@@ -32,12 +32,12 @@
 
 .alert-message {
   font-weight: 600;
-  color: rgba(107, 114, 128, 1);
+  color: rgb(255, 255, 255);
 }
 
 .message {
   margin-top: 1rem;
-  color: rgba(107, 114, 128, 1);
+  color: #9edfbf;
 }
 
 .actions-message {
@@ -61,8 +61,7 @@
 }
 
 .read-message {
-  background-color: rgba(59, 130, 246, 1);
-  color: rgba(255, 255, 255, 1);
+  color: #00ff7f;
 }
 
 .mark-as-read {
@@ -74,4 +73,11 @@
 
 .mark-as-read:hover {
   background-color: rgb(230, 231, 233);
+}
+.fecha-mensaje {
+  margin-left: 45px;
+  color: #9edfbf;
+}
+.nombre-mensaje {
+  color: #9edfbf;
 }
