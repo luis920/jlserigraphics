@@ -1,5 +1,5 @@
 import Sidebar from "./Sidebar";
-import "../../Styles/Orders.css";
+import "../../Styles/Message.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import React, { useContext } from "react";
