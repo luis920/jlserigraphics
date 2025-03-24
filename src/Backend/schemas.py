@@ -1,5 +1,6 @@
 from flask_marshmallow import Marshmallow
 from Backend.models import  Pedidos, Clientes,Compras,Proveedores,Usuarios,Mensajes
+from marshmallow import fields
 
 ma = Marshmallow()
 
@@ -36,6 +37,7 @@ class UsuariosSchema(ma.SQLAlchemyAutoSchema):
         fields = ('id', 'nombre', 'telefono', 'email','contraseña')
 
 class MensajesSchema(ma.SQLAlchemyAutoSchema):
+    fecha = fields.Date() 
     class Meta:
         model = Mensajes
         fields = ('id', 'nombre', 'email', 'fecha','mensaje')       
