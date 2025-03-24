@@ -50,7 +50,7 @@ const Sidebar = () => {
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faMessage} />,
       label: "Mensajes",
-      path: "/admin-dashboard",
+      path: "/mensajes",
     },
   ];
 

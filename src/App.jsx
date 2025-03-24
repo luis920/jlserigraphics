@@ -29,6 +29,7 @@ function App() {
     "/compras",
     "/proveedores",
     "/reportes",
+    "/mensajes",
   ];
 
   return (
@@ -51,6 +52,7 @@ function App() {
         <Route path="/compras" element={<Buys />} />
         <Route path="/proveedores" element={<Supplier />} />
         <Route path="/reportes" element={<Reports />} />
+        <Route path="/mensajes" element={<Reports />} />
       </Routes>
 
       <Footer />
