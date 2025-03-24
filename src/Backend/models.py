@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-
+from datetime import date
 db = SQLAlchemy()
 
 class Usuarios(db.Model):  
@@ -102,6 +102,18 @@ class Proveedores(db.Model):
         self.telefono = telefono
         self.correo_electronico= correo_electronico
         self.suministros_otorgados= suministros_otorgados
+
+class Mensajes(db.Model):  
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(100))
+    email = db.Column(db.String(100))
+    fecha = db.Column(db.Date, default=date.today)
+    mensaje = db.Column(db.String(100))
+
+    def __init__(self, nombre,email,mensaje):
+        self.nombre= nombre
+        self.email = email
+        self.mensaje= mensaje
 
 
 
