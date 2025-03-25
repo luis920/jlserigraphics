@@ -2,6 +2,7 @@ import "../Styles/Navbar.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import logotipo from "../img/nombrelogo.png";
 
 const Navbar = () => {
   return (
@@ -9,7 +10,7 @@ const Navbar = () => {
       <nav className="navbar navbar-expand-lg bg-body-dark">
         <div className="container-fluid">
           <Link to={"/"} className="navbar-brand text-light">
-            Navbar
+            <img src={logotipo} alt="logo" className="logotipo" />
           </Link>
           <button
             className="navbar-toggler bg-light"
