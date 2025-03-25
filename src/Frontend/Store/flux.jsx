@@ -465,6 +465,21 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error al registrarse:", error);
         }
       },
+      obtenerMensajes: async () => {
+        try {
+          const response = await fetch("http://127.0.0.1:5000/mensajes", {});
+          if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+            setStore({ mensajes: data });
+          } else {
+            console.error("Error al obtener mensajes:", response.status);
+          }
+        } catch (error) {
+          console.error("Error al obtener mensajes:", error);
+          return null;
+        }
+      },
     },
   };
 };
