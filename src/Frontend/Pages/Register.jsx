@@ -79,8 +79,8 @@ const Register = () => {
         <form action="" method="post" id="form" onSubmit={handleRegister}>
           <div id="form-body">
             <div id="welcome-lines">
-              <div id="welcome-line-1">JL Serigraphics</div>
-              <div id="welcome-line-2">Formulario de registro</div>
+              <div id="welcome-line-1">Crear nueva cuenta</div>
+              <div id="welcome-line-2">Porfavor introduce tus datos</div>
             </div>
             <div id="input-area">
               <div className="form-inp">
