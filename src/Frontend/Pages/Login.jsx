@@ -8,8 +8,10 @@ const Login = () => {
         <form action="" method="post" id="form">
           <div id="form-body">
             <div id="welcome-lines">
-              <div id="welcome-line-1">JL Serigraphics</div>
-              <div id="welcome-line-2">Bienvenido</div>
+              <div id="welcome-line-1">Bienvenido</div>
+              <div id="welcome-line-2">
+                porfavor introduce tus credenciales para iniciar sesion
+              </div>
             </div>
             <div id="input-area">
               <div className="form-inp">
