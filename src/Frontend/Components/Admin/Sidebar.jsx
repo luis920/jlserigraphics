@@ -14,6 +14,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import "../../Styles/Sidebar.css";
+import logotipo from "../../img/nombrelogo.png";
+import mano from "../../img/mano.png";
 const Sidebar = () => {
   const menuItems = [
     {
@@ -57,7 +59,9 @@ const Sidebar = () => {
   return (
     <>
       <div className="container-sidebar mx-1 d-flex flex-column">
-        <h1 className="text-light fs-bold">Administrador</h1>
+        <img src={logotipo} alt="" />
+
+        <h1 className="text-light fs-bold">Admin</h1>
         {/* Contenedor único */}
         {menuItems.map((item, index) => (
           <Link
