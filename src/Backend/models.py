@@ -110,10 +110,7 @@ class Mensajes(db.Model):
     fecha = db.Column(db.Date, default=date.today)
     mensaje = db.Column(db.String(100))
 
-    def __init__(self, nombre,email,mensaje):
-        self.nombre= nombre
-        self.email = email
-        self.mensaje= mensaje
+   
 
 
 

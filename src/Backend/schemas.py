@@ -37,7 +37,7 @@ class UsuariosSchema(ma.SQLAlchemyAutoSchema):
         fields = ('id', 'nombre', 'telefono', 'email','contraseña')
 
 class MensajesSchema(ma.SQLAlchemyAutoSchema):
-    fecha = fields.Date() 
+    fecha = fields.Date(format="%Y-%m-%d") 
     class Meta:
         model = Mensajes
         fields = ('id', 'nombre', 'email', 'fecha','mensaje')       

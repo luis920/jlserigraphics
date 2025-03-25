@@ -5,7 +5,7 @@ from Backend.schemas import  pedido_schema, pedidos_schema, cliente_schema, clie
 import os
 from flask_jwt_extended import create_access_token
 from flask_bcrypt import Bcrypt
-from datetime import date
+from datetime import datetime
 
 bcrypt = Bcrypt()
 
@@ -257,14 +257,17 @@ def login():
 @routes.route('/mensaje', methods=['POST'])
 def crear_mensaje():
     data = request.json
-    nuevo_mensaje = Mensajes(
-        nombre=data['nombre'],
-        email=data['email'],
-        mensaje=data['mensaje'],
-        
-    ) 
 
+    nuevo_mensaje = Mensajes(**data)
     db.session.add(nuevo_mensaje)
     db.session.commit()
 
     return jsonify(mensaje_schema.dump(nuevo_mensaje)), 201
+
+
+@routes.route('/mensajes',methods=['GET'])
+def obtener_mensajes():
+
+    mensajes= Mensajes.query.all()
+
+    return jsonify(mensajes_schema.dump(mensajes)),200
