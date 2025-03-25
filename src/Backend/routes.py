@@ -205,7 +205,7 @@ def editar_proveedor(id):
 
   #ENDPOINT crear usuario
 
-@routes.route('/nuevousuario', methods=['POST'])
+@routes.route('/registro', methods=['POST'])
 def nuevo_usuario():
     data = request.json
 
@@ -217,7 +217,9 @@ def nuevo_usuario():
         nombre_completo=data['nombre_completo'],
         telefono=data['telefono'],
         email=data['email'],
-        password=hashed_password  
+        password=hashed_password,
+        rol=data['rol']
+         
     )
 
     db.session.add(usuario)
@@ -227,7 +229,7 @@ def nuevo_usuario():
 
 #ENDPOINT LOGIN
 
-@routes.route("/iniciarsesion", methods=["POST"])
+@routes.route("/login", methods=["POST"])
 def login():
     email = request.json.get("email", None)
     password = request.json.get("password", None)

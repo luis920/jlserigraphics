@@ -23,8 +23,6 @@ function App() {
 
   const noNavbarRoutes = [
     "/pedidos",
-    "/iniciarsesion",
-    "/registro",
     "/clientes",
     "/cotizaciones",
     "/compras",

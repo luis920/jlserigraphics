@@ -8,13 +8,15 @@ class Usuarios(db.Model):
     telefono = db.Column(db.String(15), nullable=False, unique=True) 
     email = db.Column(db.String(100), nullable=False, unique=True)
     password = db.Column(db.String(200), nullable=False)
+    rol = db.Column(db.String(20), nullable=False)
 
 
-    def __init__(self, nombre_completo,telefono,email,password,):
+    def __init__(self, nombre_completo,telefono,email,password,rol):
         self.nombre_completo= nombre_completo
         self.telefono = telefono
         self.email= email
         self.password= password
+        self.rol=rol
         
 class Compras(db.Model):  
     id = db.Column(db.Integer, primary_key=True)

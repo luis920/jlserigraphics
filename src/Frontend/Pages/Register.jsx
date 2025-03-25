@@ -12,6 +12,7 @@ const Register = () => {
     telefono: "",
     email: "",
     password: "",
+    rol: "cliente",
   });
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -54,13 +55,16 @@ const Register = () => {
           telefono: "",
           email: "",
           password: "",
+          rol: "cliente",
         });
         setConfirmPassword("");
       } else {
+        const errorMessage =
+          result?.error || "Ha ocurrido un error desconocido";
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: `Ha ocurrido un error: ${result.error}`,
+          text: errorMessage,
         });
       }
     } catch (error) {
@@ -79,8 +83,8 @@ const Register = () => {
         <form action="" method="post" id="form" onSubmit={handleRegister}>
           <div id="form-body">
             <div id="welcome-lines">
-              <div id="welcome-line-1">JL Serigraphics</div>
-              <div id="welcome-line-2">Formulario de registro</div>
+              <div id="welcome-line-1">Crear nueva cuenta</div>
+              <div id="welcome-line-2">Porfavor introduce tus datos</div>
             </div>
             <div id="input-area">
               <div className="form-inp">

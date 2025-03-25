@@ -34,7 +34,7 @@ class ProveedorSchema(ma.SQLAlchemyAutoSchema):
 class UsuariosSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Usuarios
-        fields = ('id', 'nombre', 'telefono', 'email','contraseña')
+        fields = ('id', 'nombre', 'telefono', 'email','contraseña','rol')
 
 class MensajesSchema(ma.SQLAlchemyAutoSchema):
     fecha = fields.Date(format="%Y-%m-%d") 
