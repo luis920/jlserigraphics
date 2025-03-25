@@ -1,62 +1,59 @@
 import Sidebar from "./Sidebar";
 import "../../Styles/Message.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import React, { useContext } from "react";
-import Swal from "sweetalert2";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../../Store/appContext.jsx";
 
 const Messages = () => {
   const { store, actions } = useContext(Context);
 
-  //   useEffect(() => {
-  //     actions.obtenerMensajes();
-  //   }, []);
+  useEffect(() => {
+    actions.obtenerMensajes();
+  }, []);
 
-  const messages = [
-    {
-      id: 1,
-      nombre: "Juan Ramirez",
-      email: "prueba1@hotmail.com",
-      mensaje: "informes sobre impresion de playeras de algodon",
-      fecha: "21 / feb / 2025",
-    },
-    {
-      id: 2,
-      nombre: "Juan Ramirez",
-      email: "prueba2@hotmail.com",
-      mensaje: "informes sobre sobre bordado en camisa",
-      fecha: "21 / feb / 2025",
-    },
-    {
-      id: 3,
-      nombre: "Juan Ramirez",
-      email: "prueba3@hotmail.com",
-      mensaje: "me interesa bordar unas gorras con mi logo",
-      fecha: "21 / feb / 2025",
-    },
-    {
-      id: 1,
-      nombre: "Juan Ramirez",
-      email: "prueba1@hotmail.com",
-      mensaje: "informes sobre impresion de playeras de algodon",
-      fecha: "21 / feb / 2025",
-    },
-    {
-      id: 2,
-      nombre: "Juan Ramirez",
-      email: "prueba2@hotmail.com",
-      mensaje: "informes sobre sobre bordado en camisa ",
-      fecha: "21 / feb / 2025",
-    },
-    {
-      id: 3,
-      nombre: "Juan Ramirez",
-      email: "prueba3@hotmail.com",
-      mensaje: "me interesa bordar unas gorras con mi logo",
-      fecha: "21 / feb / 2025",
-    },
-  ];
+  // const messages = [
+  //   {
+  //     id: 1,
+  //     nombre: "Juan Ramirez",
+  //     email: "prueba1@hotmail.com",
+  //     mensaje: "informes sobre impresion de playeras de algodon",
+  //     fecha: "21 / feb / 2025",
+  //   },
+  //   {
+  //     id: 2,
+  //     nombre: "Juan Ramirez",
+  //     email: "prueba2@hotmail.com",
+  //     mensaje: "informes sobre sobre bordado en camisa",
+  //     fecha: "21 / feb / 2025",
+  //   },
+  //   {
+  //     id: 3,
+  //     nombre: "Juan Ramirez",
+  //     email: "prueba3@hotmail.com",
+  //     mensaje: "me interesa bordar unas gorras con mi logo",
+  //     fecha: "21 / feb / 2025",
+  //   },
+  //   {
+  //     id: 1,
+  //     nombre: "Juan Ramirez",
+  //     email: "prueba1@hotmail.com",
+  //     mensaje: "informes sobre impresion de playeras de algodon",
+  //     fecha: "21 / feb / 2025",
+  //   },
+  //   {
+  //     id: 2,
+  //     nombre: "Juan Ramirez",
+  //     email: "prueba2@hotmail.com",
+  //     mensaje: "informes sobre sobre bordado en camisa ",
+  //     fecha: "21 / feb / 2025",
+  //   },
+  //   {
+  //     id: 3,
+  //     nombre: "Juan Ramirez",
+  //     email: "prueba3@hotmail.com",
+  //     mensaje: "me interesa bordar unas gorras con mi logo",
+  //     fecha: "21 / feb / 2025",
+  //   },
+  // ];
 
   return (
     <div className="d-flex">
@@ -64,7 +61,7 @@ const Messages = () => {
       <div className="container">
         <h1 className="text-center text-light mx-5">Historial de mensajes</h1>
         <div className="row">
-          {messages.map((mensaje) => (
+          {store.mensajes.map((mensaje) => (
             <div className="col-md-4 mb-4 " key={mensaje.id}>
               <div className="card-message p-3">
                 <div className="header-message">

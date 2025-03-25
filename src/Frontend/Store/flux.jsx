@@ -7,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       cotizaciones: [],
       compras: [],
       proveedores: [],
+      mensajes: [],
     },
     actions: {
       GetClients: async () => {
