@@ -21,38 +21,38 @@ const Sidebar = () => {
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faShirt} />,
       label: "Gestion de pedidos",
-      path: "/pedidos",
+      path: "pedidos",
     },
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faCreditCard} />,
       label: "Compras",
-      path: "/compras",
+      path: "compras",
     },
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faUser} />,
       label: "Clientes",
-      path: "/clientes",
+      path: "clientes",
     },
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faTruckFieldUn} />,
       label: "Proveedores",
-      path: "/proveedores",
+      path: "proveedores",
     },
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faCartFlatbed} />,
       label: "Cotizaciones",
-      path: "/cotizaciones",
+      path: "cotizaciones",
     },
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faFileLines} />,
       label: "Reportes",
-      path: "/reportes",
+      path: "reportes",
     },
 
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faMessage} />,
       label: "Mensajes",
-      path: "/mensajes",
+      path: "mensajes",
     },
   ];
 

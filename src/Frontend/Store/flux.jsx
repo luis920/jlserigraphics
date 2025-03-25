@@ -1,13 +1,14 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      usuarios: [],
+      usuario: [],
       clientes: [],
       pedidos: [],
       cotizaciones: [],
       compras: [],
       proveedores: [],
       mensajes: [],
+      token: localStorage.getItem("token") || null,
     },
     actions: {
       GetClients: async () => {
@@ -444,7 +445,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       agregarUsuario: async (nuevoUsuario) => {
         try {
-          const response = await fetch("http://127.0.0.1:5000/nuevousuario", {
+          const response = await fetch("http://127.0.0.1:5000/registro", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -453,12 +454,12 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
 
           if (response.ok) {
-            const nuevoUsuario = await response.json();
+            const usuarioRegistrado = await response.json();
             const store = getStore();
             setStore({
-              usuarios: [...store.usuarios, nuevoUsuario],
+              usuario: [...store.usuario, usuarioRegistrado],
             });
-            return nuevoUsuario;
+            return usuarioRegistrado;
           } else {
             console.error("Error al registrarse:", response.status);
           }
@@ -466,6 +467,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error al registrarse:", error);
         }
       },
+
       obtenerMensajes: async () => {
         try {
           const response = await fetch("http://127.0.0.1:5000/mensajes", {});
@@ -479,6 +481,36 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.error("Error al obtener mensajes:", error);
           return null;
+        }
+      },
+      login: async (email, password) => {
+        try {
+          const response = await fetch("http://127.0.0.1:5000/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("rol", data.rol);
+
+            setStore({ usuario: data, token: data.token });
+
+            // console.log("TOKEN GUARDADO EN STORE:", getStore().token)
+
+            return data;
+          } else {
+            console.log(
+              "Error en login:",
+              response.status,
+              response.statusText
+            );
+          }
+        } catch (error) {
+          console.error("Error en login:", error);
         }
       },
     },

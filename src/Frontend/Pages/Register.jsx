@@ -12,6 +12,7 @@ const Register = () => {
     telefono: "",
     email: "",
     password: "",
+    rol: "cliente",
   });
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -54,13 +55,16 @@ const Register = () => {
           telefono: "",
           email: "",
           password: "",
+          rol: "cliente",
         });
         setConfirmPassword("");
       } else {
+        const errorMessage =
+          result?.error || "Ha ocurrido un error desconocido";
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: `Ha ocurrido un error: ${result.error}`,
+          text: errorMessage,
         });
       }
     } catch (error) {

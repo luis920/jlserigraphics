@@ -11,11 +11,12 @@ class Usuarios(db.Model):
     rol = db.Column(db.String(20), nullable=False)
 
 
-    def __init__(self, nombre_completo,telefono,email,password,):
+    def __init__(self, nombre_completo,telefono,email,password,rol):
         self.nombre_completo= nombre_completo
         self.telefono = telefono
         self.email= email
         self.password= password
+        self.rol=rol
         
 class Compras(db.Model):  
     id = db.Column(db.Integer, primary_key=True)
