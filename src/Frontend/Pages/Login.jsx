@@ -21,52 +21,46 @@ const Login = () => {
     e.preventDefault();
 
     if (!user.email || !user.password) {
-      Swal.fire("Error", "Por favor, completa todos los campos", "error");
+      Swal.fire("Error", "Por favor completa todos los campos", "error");
       return;
     }
 
     try {
-      const response = await actions.login(user.email, user.password);
-      console.log("Respuesta del login:", response);
+      const result = await actions.login(user.email, user.password);
 
-      if (!response.success) {
-        Swal.fire(
-          "Error",
-          response.message || "Credenciales incorrectas",
-          "error"
-        );
+      if (!result || !result.access_token || !result.usuario) {
+        Swal.fire("Error", "Correo o contraseña incorrectos", "error");
         return;
       }
 
-      // Accedemos correctamente a "usuario" en singular
-      const rol = response.data.rol?.toLowerCase();
+      const { rol } = result.usuario;
 
-      if (rol === "admin") {
-        navigate("/pedidos");
-      } else if (rol === "cliente") {
-        navigate("/compras");
-      } else {
-        Swal.fire("Error", "Rol desconocido. Acceso denegado.", "error");
-      }
+      Swal.fire({
+        title: "¡Inicio de sesión exitoso!",
+        text: "Redirigiendo...",
+        icon: "success",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+
+      setTimeout(() => {
+        if (rol.toLowerCase() === "admin") {
+          navigate("/pedidos");
+        } else if (rol.toLowerCase() === "cliente") {
+          navigate("/compras");
+        } else {
+          Swal.fire("Error", "Rol desconocido. Acceso denegado.", "error");
+        }
+      }, 1500);
     } catch (error) {
       console.error("Error en el login:", error);
-      Swal.fire("Error", "Ocurrió un error, intenta de nuevo", "error");
+      Swal.fire(
+        "Error",
+        "Hubo un problema al iniciar sesión, intenta de nuevo.",
+        "error"
+      );
     }
   };
-
-  // if (result) {
-  //   const { rol } = result.usuarios
-
-  //   if (rol === "admin" || rol === "Admin") {
-  //     navigate("/pedidos")
-  //   } else if (rol === "cliente" || rol === "cliente") {
-  //     navigate("/miscompras")
-  //   } else {
-  //     setError("Unknown role. Access denied.")
-  //   }
-  // } else {
-  //   setError("Incorrect credentials.")
-  // }
 
   return (
     <div>
