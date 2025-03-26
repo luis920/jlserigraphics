@@ -229,30 +229,37 @@ def nuevo_usuario():
 
 #ENDPOINT LOGIN
 
-@routes.route("/login", methods=["POST"])
-def login():
-    email = request.json.get("email", None)
-    password = request.json.get("password", None)
-    
-    User=Usuarios.query.filter_by(email=email,password=password).first()
-
-    if User is None :
-        return jsonify({"msg":"email o contraseña incorrectos"}),401
-
-    access_token = create_access_token(identity=email)
-    return jsonify(access_token=access_token)
-
-# @routes.route('/iniciarsesion', methods=['POST'])
+# @routes.route("/login", methods=["POST"])
 # def login():
-#     data = request.json
-#     usuario = Usuarios.query.filter_by(email=data['email']).first()
+#     email = request.json.get("email", None)
+#     password = request.json.get("password", None)
+    
+#     User=Usuarios.query.filter_by(email=email,password=password).first()
 
-#     if usuario and bcrypt.check_password_hash(usuario.password, data['password']):
-#         # Contraseña correcta, crear el token JWT y responder
-#         access_token = create_access_token(identity=usuario.id)
-#         return jsonify(access_token=access_token), 200
-#     else:
-#         return jsonify({"msg": "Correo o contraseña incorrectos"}), 401
+#     if User is None :
+#         return jsonify({"msg":"email o contraseña incorrectos"}),401
+
+#     access_token = create_access_token(identity=email)
+#     return jsonify(access_token=access_token)
+
+@routes.route('/iniciarsesion', methods=['POST'])
+def login():
+    data = request.json
+    usuario = Usuarios.query.filter_by(email=data['email']).first()
+
+    if usuario and bcrypt.check_password_hash(usuario.password, data['password']):
+        # Contraseña correcta, crear el token JWT y responder
+        access_token = create_access_token(identity=usuario.id)
+        return jsonify({
+    "access_token": access_token,
+    "usuario": {
+        "id": usuario.id,
+        "email": usuario.email,
+        "rol": usuario.rol  
+    }
+}), 200
+    else:
+        return jsonify({"msg": "Correo o contraseña incorrectos"}), 401
 
 #ENDPOINTS MENSAJES
 
