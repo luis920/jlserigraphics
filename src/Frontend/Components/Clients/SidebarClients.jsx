@@ -24,7 +24,7 @@ const SidebarClients = () => {
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faCreditCard} />,
       label: "Metodos de pago",
-      path: "/dashboard-cliente/pago",
+      path: "/dashboard-cliente/pagos",
     },
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faMessage} />,
