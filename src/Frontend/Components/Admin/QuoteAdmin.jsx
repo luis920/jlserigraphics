@@ -1,7 +1,7 @@
 import Sidebar from "./Sidebar.jsx";
 import "../../Styles/QuoteAdmin.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faBell } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useEffect, useContext, useRef } from "react";
 import Swal from "sweetalert2";
 import { Context } from "../../Store/appContext.jsx";
@@ -157,7 +157,7 @@ const Quote = () => {
           >
             <FontAwesomeIcon
               className="icon-sidebar text-light"
-              icon={faPlus}
+              icon={faBell}
             />
             Solicitudes de cotizacion
           </button>
