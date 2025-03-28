@@ -73,6 +73,7 @@ const Sidebar = () => {
             {item.label}
           </Link>
         ))}
+        <button className="btn-sesion">cerrar sesion</button>
       </div>
     </>
   );
