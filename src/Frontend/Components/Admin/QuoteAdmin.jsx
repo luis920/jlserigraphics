@@ -151,6 +151,16 @@ const Quote = () => {
             />
             Generar nueva cotización
           </button>
+          <button
+            className="btn btn-primary"
+            onClick={() => setShowModal(true)}
+          >
+            <FontAwesomeIcon
+              className="icon-sidebar text-light"
+              icon={faPlus}
+            />
+            Solicitudes de cotizacion
+          </button>
         </div>
 
         {/* Tabla de clientes */}
