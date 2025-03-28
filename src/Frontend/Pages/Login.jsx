@@ -47,7 +47,7 @@ const Login = () => {
         if (rol.toLowerCase() === "admin") {
           navigate("/dashboard-admin/pedidos");
         } else if (rol.toLowerCase() === "cliente") {
-          navigate("/dashboard-admin/compras");
+          navigate("/dashboard-cliente/compras");
         } else {
           Swal.fire("Error", "Rol desconocido. Acceso denegado.", "error");
         }
