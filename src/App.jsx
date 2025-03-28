@@ -45,13 +45,13 @@ function App() {
         <Route path="/registro" element={<Register />} />
 
         {/* ADMIN DASHBOARD */}
-        <Route path="/pedidos" element={<Orders />} />
-        <Route path="/clientes" element={<Clients />} />
-        <Route path="/cotizaciones" element={<Quote />} />
-        <Route path="/compras" element={<Buys />} />
-        <Route path="/proveedores" element={<Supplier />} />
-        <Route path="/reportes" element={<Reports />} />
-        <Route path="/mensajes" element={<Messages />} />
+        <Route path="/dashboard-admin/pedidos" element={<Orders />} />
+        <Route path="/dashboard-admin/clientes" element={<Clients />} />
+        <Route path="/dashboard-admin/cotizaciones" element={<Quote />} />
+        <Route path="/dashboard-admin/compras" element={<Buys />} />
+        <Route path="/dashboard-admin/proveedores" element={<Supplier />} />
+        <Route path="/dashboard-admin/reportes" element={<Reports />} />
+        <Route path="/dashboard-admin/mensajes" element={<Messages />} />
       </Routes>
 
       <Footer />
