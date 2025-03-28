@@ -1,3 +1,6 @@
+import "../Styles/Deals.css";
+import playera from "../img/playera1.webp";
+
 const Deals = () => {
   return (
     <div>
@@ -18,7 +21,7 @@ const Deals = () => {
 
       <div class="card">
         <div class="image">
-          <span class="text">This is a chair.</span>
+          <img src={playera} alt="" className="img-deals" />
         </div>
         <span class="title">Cool Chair</span>
         <span class="price">$100</span>
