@@ -17,6 +17,7 @@ import Buys from "./Frontend/Components/Admin/Buys";
 import Supplier from "./Frontend/Components/Admin/Supplier";
 import Reports from "./Frontend/Components/Admin/Reports";
 import Messages from "./Frontend/Components/Admin/Messages";
+import MyBuys from "./Frontend/Components/Clients/MyBuys";
 
 function App() {
   const location = useLocation();
@@ -29,6 +30,7 @@ function App() {
     "/dashboard-admin/proveedores",
     "/dashboard-admin/reportes",
     "/dashboard-admin/mensajes",
+    "/dashboard-cliente/compras",
   ];
 
   return (
@@ -52,6 +54,9 @@ function App() {
         <Route path="/dashboard-admin/proveedores" element={<Supplier />} />
         <Route path="/dashboard-admin/reportes" element={<Reports />} />
         <Route path="/dashboard-admin/mensajes" element={<Messages />} />
+
+        {/* ADMIN DASHBOARD */}
+        <Route path="/dashboard-cliente/compras" element={<MyBuys />} />
       </Routes>
 
       <Footer />
