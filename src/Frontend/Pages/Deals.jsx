@@ -15,6 +15,14 @@ const Deals = () => {
       <h1 className="text-light fw-bold text-center fs-1 mt-3">
         ¡Grandes descuentos te esperan! Mira nuestras ofertas.
       </h1>
+
+      <div class="card">
+        <div class="image">
+          <span class="text">This is a chair.</span>
+        </div>
+        <span class="title">Cool Chair</span>
+        <span class="price">$100</span>
+      </div>
     </div>
   );
 };
