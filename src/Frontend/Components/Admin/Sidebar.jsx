@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Context } from "../../Store/appContext";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouse,
@@ -17,44 +19,51 @@ import "../../Styles/Sidebar.css";
 import logotipo from "../../img/nombrelogo.png";
 import mano from "../../img/mano.png";
 const Sidebar = () => {
+  const { actions } = useContext(Context);
+  const navigate = useNavigate();
   const menuItems = [
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faShirt} />,
       label: "Gestion de pedidos",
-      path: "/pedidos",
+      path: "/dashboard-admin/pedidos",
     },
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faCreditCard} />,
       label: "Compras",
-      path: "/compras",
+      path: "/dashboard-admin/compras",
     },
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faUser} />,
       label: "Clientes",
-      path: "/clientes",
+      path: "/dashboard-admin/clientes",
     },
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faTruckFieldUn} />,
       label: "Proveedores",
-      path: "/proveedores",
+      path: "/dashboard-admin/proveedores",
     },
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faCartFlatbed} />,
       label: "Cotizaciones",
-      path: "/cotizaciones",
+      path: "/dashboard-admin/cotizaciones",
     },
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faFileLines} />,
       label: "Reportes",
-      path: "/reportes",
+      path: "/dashboard-admin/reportes",
     },
 
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faMessage} />,
       label: "Mensajes",
-      path: "/mensajes",
+      path: "/dashboard-admin/mensajes",
     },
   ];
+
+  const handleLogout = () => {
+    actions.cerrarSesion();
+    navigate("/");
+  };
 
   return (
     <>
@@ -73,6 +82,9 @@ const Sidebar = () => {
             {item.label}
           </Link>
         ))}
+        <button className="btn-sesion" onClick={handleLogout}>
+          cerrar sesion
+        </button>
       </div>
     </>
   );

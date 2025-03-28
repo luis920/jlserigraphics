@@ -45,9 +45,9 @@ const Login = () => {
 
       setTimeout(() => {
         if (rol.toLowerCase() === "admin") {
-          navigate("/pedidos");
+          navigate("/dashboard-admin/pedidos");
         } else if (rol.toLowerCase() === "cliente") {
-          navigate("/compras");
+          navigate("/dashboard-admin/compras");
         } else {
           Swal.fire("Error", "Rol desconocido. Acceso denegado.", "error");
         }

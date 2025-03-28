@@ -494,10 +494,10 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await response.json();
 
           if (response.ok) {
-            localStorage.setItem("token", data.token);
-            localStorage.setItem("rol", data.rol);
+            localStorage.setItem("token", data.access_token);
+            localStorage.setItem("rol", data.usuario.rol);
 
-            setStore({ usuario: data, token: data.token });
+            setStore({ usuario: data.usuario, token: data.access_token });
 
             return data;
           } else {
@@ -510,6 +510,11 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.error("Error en login:", error);
         }
+      },
+      cerrarSesion: () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("rol");
+        setStore({ usuario: null, token: null, rol: null });
       },
     },
   };
