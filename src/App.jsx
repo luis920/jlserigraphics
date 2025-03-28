@@ -22,13 +22,13 @@ function App() {
   const location = useLocation();
 
   const noNavbarRoutes = [
-    "/pedidos",
-    "/clientes",
-    "/cotizaciones",
-    "/compras",
-    "/proveedores",
-    "/reportes",
-    "/mensajes",
+    "/dashboard-admin/pedidos",
+    "/dashboard-admin/clientes",
+    "/dashboard-admin/cotizaciones",
+    "/dashboard-admin/compras",
+    "/dashboard-admin/proveedores",
+    "/dashboard-admin/reportes",
+    "/dashboard-admin/mensajes",
   ];
 
   return (
