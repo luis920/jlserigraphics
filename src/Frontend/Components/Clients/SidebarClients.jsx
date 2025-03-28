@@ -3,34 +3,33 @@ import { Context } from "../../Store/appContext";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faHouse,
   faShirt,
   faUser,
-  faCartFlatbed,
-  faFileLines,
-  faAddressCard,
   faMessage,
-  faGear,
   faCreditCard,
-  faTruckFieldUn,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import "../../Styles/Sidebar.css";
 import logotipo from "../../img/nombrelogo.png";
-import mano from "../../img/mano.png";
+
 const SidebarClients = () => {
-  const { actions } = useContext(Context);
+  const { store, actions } = useContext(Context);
   const navigate = useNavigate();
   const menuItems = [
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faShirt} />,
-      label: "Historial de compras",
-      path: "/dashboard-cliente/compras",
+      label: "Historial de pedidos",
+      path: "/dashboard-cliente/pedidos",
     },
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faCreditCard} />,
       label: "Metodos de pago",
       path: "/dashboard-cliente/pago",
+    },
+    {
+      icon: <FontAwesomeIcon className="icon-sidebar" icon={faMessage} />,
+      label: "Mensajes",
+      path: "/dashboard-cliente/mensajes",
     },
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faUser} />,
@@ -49,7 +48,7 @@ const SidebarClients = () => {
       <div className="container-sidebar mx-1 d-flex flex-column">
         <img src={logotipo} alt="" />
 
-        <h1 className="text-light fs-bold">Admin</h1>
+        <h1 className="text-light fs-bold">Cliente</h1>
         {/* Contenedor único */}
         {menuItems.map((item, index) => (
           <Link

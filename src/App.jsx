@@ -30,7 +30,7 @@ function App() {
     "/dashboard-admin/proveedores",
     "/dashboard-admin/reportes",
     "/dashboard-admin/mensajes",
-    "/dashboard-cliente/compras",
+    "/dashboard-cliente/pedidos",
   ];
 
   return (
@@ -55,8 +55,8 @@ function App() {
         <Route path="/dashboard-admin/reportes" element={<Reports />} />
         <Route path="/dashboard-admin/mensajes" element={<Messages />} />
 
-        {/* ADMIN DASHBOARD */}
-        <Route path="/dashboard-cliente/compras" element={<MyBuys />} />
+        {/* CLIENTE DASHBOARD */}
+        <Route path="/dashboard-cliente/pedidos" element={<MyBuys />} />
       </Routes>
 
       <Footer />

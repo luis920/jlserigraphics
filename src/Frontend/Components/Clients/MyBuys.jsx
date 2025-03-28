@@ -1,10 +1,10 @@
-import Sidebar from "./Sidebar";
 import "../../Styles/Buys.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useEffect, useContext } from "react";
 import Swal from "sweetalert2";
 import { Context } from "../../Store/appContext.jsx";
+import SidebarClients from "./SidebarClients.jsx";
 
 const MyBuys = () => {
   const { store, actions } = useContext(Context);
@@ -168,7 +168,7 @@ const MyBuys = () => {
 
   return (
     <div className="d-flex">
-      <Sidebar />
+      <SidebarClients />
       <div className="container mt-5 mx-4">
         <div className="mb-4">
           <button className="btn btn-primary" onClick={() => handleOpenModal()}>
@@ -176,13 +176,13 @@ const MyBuys = () => {
               className="icon-sidebar text-light"
               icon={faPlus}
             />
-            Agregar nueva compra
+            Generar un nuevo pedido
           </button>
         </div>
 
         {/* Tabla de pedidos */}
         <div className="table-responsive">
-          <h1 className="text-light">Historial de compras</h1>
+          <h1 className="text-light">Historial de pedidos</h1>
           <table className="table table-bordered bg-light">
             <thead className="table-dark">
               <tr>
