@@ -511,6 +511,11 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error en login:", error);
         }
       },
+      cerrarSesion: () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("rol");
+        setStore({ usuario: null, token: null, rol: null });
+      },
     },
   };
 };

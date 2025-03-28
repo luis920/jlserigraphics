@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Context } from "../../Store/appContext";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouse,
@@ -17,6 +19,8 @@ import "../../Styles/Sidebar.css";
 import logotipo from "../../img/nombrelogo.png";
 import mano from "../../img/mano.png";
 const Sidebar = () => {
+  const { actions } = useContext(Context);
+  const navigate = useNavigate();
   const menuItems = [
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faShirt} />,
@@ -56,6 +60,11 @@ const Sidebar = () => {
     },
   ];
 
+  const handleLogout = () => {
+    actions.cerrarSesion();
+    navigate("/");
+  };
+
   return (
     <>
       <div className="container-sidebar mx-1 d-flex flex-column">
@@ -73,7 +82,9 @@ const Sidebar = () => {
             {item.label}
           </Link>
         ))}
-        <button className="btn-sesion">cerrar sesion</button>
+        <button className="btn-sesion" onClick={handleLogout}>
+          cerrar sesion
+        </button>
       </div>
     </>
   );
