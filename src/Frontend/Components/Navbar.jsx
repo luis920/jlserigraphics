@@ -17,7 +17,7 @@ const Navbar = () => {
 
             {/* Botón toggle de menú solo visible en pantallas pequeñas */}
             <button
-              className="navbar-toggler bg-light"
+              className="navbar-toggler  "
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#navbarNavAltMarkup"
@@ -31,10 +31,7 @@ const Navbar = () => {
             {/* Icono de usuario fijo a la derecha solo en dispositivos pequeños */}
             <div className="d-lg-none">
               <Link to={"/iniciarsesion"}>
-                <FontAwesomeIcon
-                  className="icon-sesion fs-2 text-light"
-                  icon={faUser}
-                />
+                <FontAwesomeIcon className="icon-sesion " icon={faUser} />
               </Link>
             </div>
           </div>
