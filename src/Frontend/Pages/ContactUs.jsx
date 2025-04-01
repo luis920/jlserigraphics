@@ -3,13 +3,66 @@ import "../Styles/ContactUs.css";
 import Mapa from "../Components/Map.jsx";
 
 const ContactUs = () => {
-  const [showModal, SetShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [contactanos, setContactanos] = useState({
     nombre: "",
     correo: "",
     mensaje: "",
   });
 
+  const handleAddContactUs = async (e) => {
+    if (!contactanos.nombre || !contactanos.correo || !contactanos.mensaje) {
+      Swal.fire("Error", "Por favor, completa todos los campos", "error");
+      return;
+    }
+
+    const confirmSubmit = await Swal.fire({
+      title: "Estas seguro?",
+      text: "Quieres enviar este mensaje?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Si, enviar!",
+      cancelButtonText: "No, cancelar",
+    });
+
+    if (!confirmSubmit.isConfirmed) {
+      return;
+    }
+
+    try {
+      const result = await actions.enviarMensajeContactanos(
+        nuevoMensajeContactanos
+      );
+
+      if (result) {
+        Swal.fire({
+          icon: "success",
+          title: "Cliente Agregado",
+          text: "Un nuevo cliente a sido agregado!",
+        });
+
+        setContactanos({
+          nombre: "",
+          correo: "",
+          mensaje: "",
+        });
+        setShowModal(false);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: `ah ocurrido un error: ${result.error}`,
+        });
+      }
+    } catch (error) {
+      console.error("Error en handleContactUs:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Submission Error",
+        text: "ah ocurrido un error al enviar el formulario,porfavor intente de nuevo.",
+      });
+    }
+  };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setContactanos({ ...contactanos, [name]: value });
@@ -84,7 +137,10 @@ const ContactUs = () => {
                   ></textarea>
                 </div>
               </form>
-              <button className="button-form btn btn-primary mt-5">
+              <button
+                className="button-form btn btn-primary mt-5"
+                onClick={() => handleAddContactUs()}
+              >
                 Enviar
               </button>
               <button
