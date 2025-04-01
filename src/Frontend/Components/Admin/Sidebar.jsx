@@ -82,9 +82,9 @@ const Sidebar = () => {
             {item.label}
           </Link>
         ))}
-        <button className="btn-sesion" onClick={handleLogout}>
+        {/* <button className="btn-sesion" onClick={handleLogout}>
           cerrar sesion
-        </button>
+        </button> */}
       </div>
     </>
   );
