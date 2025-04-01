@@ -3,11 +3,13 @@ import "../../Styles/Orders.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Context } from "../../Store/appContext.jsx";
 
 const Orders = () => {
   const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
   const [filtro, setFiltro] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [pedidos, setPedidos] = useState([]);
@@ -113,10 +115,26 @@ const Orders = () => {
       ? "Pedidos entregados"
       : "Historial de pedidos";
 
+  const handleLogout = () => {
+    actions.cerrarSesion();
+    navigate("/");
+  };
+
   return (
     <div className="d-flex">
       <Sidebar />
       <div className="container mt-5 mx-4">
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <h1 className="text-light">{titulo}</h1>
+          <div className="d-flex align-items-center gap-3">
+            <span className="text-light fw-bold">
+              Bienvenido, {store.usuario.rol?.nombre || "Usuario"}
+            </span>
+            <button className="btn btn-danger" onClick={handleLogout}>
+              Cerrar sesión
+            </button>
+          </div>
+        </div>
         <div className="d-flex  gap-2 mb-4">
           <button
             className="order-btn w-50"

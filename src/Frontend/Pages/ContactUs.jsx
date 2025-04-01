@@ -1,14 +1,84 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import "../Styles/ContactUs.css";
 import Mapa from "../Components/Map.jsx";
+import Swal from "sweetalert2";
+import { Context } from "../Store/appContext.jsx";
 
 const ContactUs = () => {
-  const [showModal, SetShowModal] = useState(false);
-  const handleOpenModal = () => {
-    SetShowModal(true);
+  const { store, actions } = useContext(Context);
+  const [showModal, setShowModal] = useState(false);
+  const [mensajeContactanos, setMensajeContactanos] = useState({
+    nombre: "",
+    correo: "",
+    mensaje: "",
+  });
+
+  const handleAddContactUs = async (e) => {
+    if (
+      !mensajeContactanos.nombre ||
+      !mensajeContactanos.correo ||
+      !mensajeContactanos.mensaje
+    ) {
+      Swal.fire("Error", "Por favor, completa todos los campos", "error");
+      return;
+    }
+
+    const confirmSubmit = await Swal.fire({
+      title: "Estas seguro?",
+      text: "Quieres enviar este mensaje?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Si, enviar!",
+      cancelButtonText: "No, cancelar",
+    });
+
+    if (!confirmSubmit.isConfirmed) {
+      return;
+    }
+
+    try {
+      const result = await actions.enviarMensajeContactanos(mensajeContactanos);
+
+      if (result) {
+        Swal.fire({
+          icon: "success",
+          title: "Mensaje enviado con exito",
+          text: "Un asesor se pondra en contacto con usted!",
+        });
+
+        setMensajeContactanos({
+          nombre: "",
+          correo: "",
+          mensaje: "",
+        });
+        setShowModal(false);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: `ah ocurrido un error: ${result.error}`,
+        });
+      }
+    } catch (error) {
+      console.error("Error en handleContactUs:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Submission Error",
+        text: "ah ocurrido un error al enviar el formulario,porfavor intente de nuevo.",
+      });
+    }
   };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setMensajeContactanos({ ...mensajeContactanos, [name]: value });
+  };
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
   const handleCloseModal = () => {
-    SetShowModal(false);
+    setShowModal(false);
   };
 
   return (
@@ -39,30 +109,43 @@ const ContactUs = () => {
               <h2 className="">Formulario de Contacto</h2>
               <form className="contacto-formulario ">
                 <div className="d-flex column ">
-                  <label htmlFor="name">Nombre:</label>
-                  <input type="text" id="name" name="name" required />
+                  <label htmlFor="nombre">Nombre:</label>
+                  <input
+                    onChange={handleInputChange}
+                    type="text"
+                    id="nombre"
+                    name="nombre"
+                    value={mensajeContactanos.nombre}
+                    required
+                  />
                 </div>
                 <div className="d-flex column ">
-                  <label htmlFor="email ">Correo:</label>
+                  <label htmlFor="correo ">Correo:</label>
                   <input
+                    onChange={handleInputChange}
                     className="my-2"
                     type="email"
-                    id="email"
-                    name="email"
+                    id="correo"
+                    name="correo"
+                    value={mensajeContactanos.correo}
                     required
                   />
                 </div>
                 <div className="d-flex column  ">
-                  <label htmlFor="message">Mensaje:</label>
+                  <label htmlFor="mensaje">Mensaje:</label>
                   <textarea
-                    className=""
-                    id="message"
-                    name="message"
+                    onChange={handleInputChange}
+                    id="mensaje"
+                    name="mensaje"
+                    value={mensajeContactanos.mensaje}
                     required
                   ></textarea>
                 </div>
               </form>
-              <button className="button-form btn btn-primary mt-5">
+              <button
+                className="button-form btn btn-primary mt-5"
+                onClick={() => handleAddContactUs()}
+              >
                 Enviar
               </button>
               <button

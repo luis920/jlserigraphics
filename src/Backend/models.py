@@ -112,6 +112,19 @@ class Mensajes(db.Model):
     fecha = db.Column(db.Date, default=date.today)
     mensaje = db.Column(db.String(100))
 
+class Contactanos(db.Model):  
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(100))
+    correo = db.Column(db.String(100))
+    mensaje = db.Column(db.String(300))
+
+    def __init__(self, nombre,correo,mensaje):
+        self.nombre= nombre
+        self.correo= correo
+        self.mensaje= mensaje
+
+
+
    
 
 

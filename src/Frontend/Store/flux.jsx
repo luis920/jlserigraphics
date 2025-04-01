@@ -9,6 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       proveedores: [],
       mensajes: [],
       token: localStorage.getItem("token") || null,
+      contactanos: [],
     },
     actions: {
       GetClients: async () => {
@@ -515,6 +516,30 @@ const getState = ({ getStore, getActions, setStore }) => {
         localStorage.removeItem("token");
         localStorage.removeItem("rol");
         setStore({ usuario: null, token: null, rol: null });
+      },
+      enviarMensajeContactanos: async (mensajeContactanos) => {
+        try {
+          const response = await fetch("http://127.0.0.1:5000/contacto", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(mensajeContactanos),
+          });
+
+          if (response.ok) {
+            const MensajeContactanos = await response.json();
+            const store = getStore();
+            setStore({
+              contactanos: [...store.contactanos, mensajeContactanos],
+            });
+            return MensajeContactanos;
+          } else {
+            console.error("Error al enviar mensaje:", response.status);
+          }
+        } catch (error) {
+          console.error("Error al enviar mensaje:", error);
+        }
       },
     },
   };

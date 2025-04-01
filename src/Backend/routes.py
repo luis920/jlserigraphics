@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify ,send_from_directory,current_app
 from werkzeug.utils import secure_filename
-from Backend.models import db, Pedidos, Clientes,Cotizaciones,Compras,Proveedores,Usuarios,Mensajes
+from Backend.models import db, Pedidos, Clientes,Cotizaciones,Compras,Proveedores,Usuarios,Mensajes,Contactanos
 from Backend.schemas import  pedido_schema, pedidos_schema, cliente_schema, clientes_schema,cotizacion_schema,cotizaciones_schema,compra_schema,compras_schema,proveedor_schema,proveedores_schema,usuario_schema,usuarios_schema,mensaje_schema,mensajes_schema
 import os
 from flask_jwt_extended import create_access_token
@@ -271,3 +271,26 @@ def obtener_mensajes():
     mensajes= Mensajes.query.all()
 
     return jsonify(mensajes_schema.dump(mensajes)),200
+
+#ENDPOINT CONTACTANOS
+
+@routes.route('/contacto', methods=['POST'])
+def contactanos():
+    data = request.json
+
+    nuevo_mensaje_contactanos = Contactanos(**data)
+    db.session.add(nuevo_mensaje_contactanos)
+    db.session.commit()
+
+    return jsonify(mensaje_schema.dump(nuevo_mensaje_contactanos)), 201
+
+@routes.route('/contactanos',methods=['GET'])
+def obtener_mensajes_contactanos():
+
+    obtener_mensajes_contacto= Contactanos.query.all()
+
+    return jsonify(mensajes_schema.dump(obtener_mensajes_contacto)),200
+
+
+
+
