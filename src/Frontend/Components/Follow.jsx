@@ -26,6 +26,8 @@ const Follow = () => {
       <a
         href="https://www.instagram.com/jlserigraphics"
         className="d-block text-center text-decoration-none text-light fs-2"
+        target="_blank"
+        rel="noopener noreferrer"
       >
         Visita nuestro Instagram{" "}
       </a>
