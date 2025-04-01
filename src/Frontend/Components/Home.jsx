@@ -1,11 +1,11 @@
-import Quote from "./Quote";
+import WhoWeAre from "./WhoWeAre";
 import Follow from "./Follow";
 import About from "./About";
 
 const Home = () => {
   return (
     <div>
-      <Quote />
+      <WhoWeAre />
       <Follow />
       <About />
     </div>

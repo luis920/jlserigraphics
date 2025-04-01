@@ -1,4 +1,8 @@
 import "../Styles/Follow.css";
+import panter from "../img/pinkpanter.png";
+import snack from "../img/snack.png";
+import weekend from "../img/weekend.png";
+import younggroup from "../img/younggroup.png";
 
 const Follow = () => {
   return (
@@ -7,21 +11,23 @@ const Follow = () => {
       <hr className="mb-5" />
       <div className="instaImgContainer flex">
         <div className="instaImg1 ">
-          <h1>imagen 1</h1>
+          <img src={panter} alt="" className="img1" />
         </div>
         <div className="instaImg2 ">
-          <h1>imagen 2</h1>
+          <img src={snack} alt="" className="img2" />
         </div>
         <div className="instaImg3 ">
-          <h1>imagen 3</h1>
+          <img src={weekend} alt="" className="img3" />
         </div>
         <div className="instaImg4 ">
-          <h1>imagen 4</h1>
+          <img src={younggroup} alt="" className="img4" />
         </div>
       </div>
       <a
         href="https://www.instagram.com/jlserigraphics"
         className="d-block text-center text-decoration-none text-light fs-2"
+        target="_blank"
+        rel="noopener noreferrer"
       >
         Visita nuestro Instagram{" "}
       </a>
