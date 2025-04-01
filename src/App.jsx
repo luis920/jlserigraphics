@@ -12,7 +12,6 @@ import Register from "./Frontend/Pages/Register";
 import Orders from "./Frontend/Components/Admin/Orders";
 import injectContext from "./Frontend/Store/appContext";
 import Clients from "./Frontend/Components/Admin/Clients";
-import Quote from "./Frontend/Components/Admin/QuoteAdmin";
 import Buys from "./Frontend/Components/Admin/Buys";
 import Supplier from "./Frontend/Components/Admin/Supplier";
 import Reports from "./Frontend/Components/Admin/Reports";
@@ -26,7 +25,6 @@ function App() {
   const noNavbarRoutes = [
     "/dashboard-admin/pedidos",
     "/dashboard-admin/clientes",
-    "/dashboard-admin/cotizaciones",
     "/dashboard-admin/compras",
     "/dashboard-admin/proveedores",
     "/dashboard-admin/reportes",
@@ -51,7 +49,6 @@ function App() {
         {/* ADMIN DASHBOARD */}
         <Route path="/dashboard-admin/pedidos" element={<Orders />} />
         <Route path="/dashboard-admin/clientes" element={<Clients />} />
-        <Route path="/dashboard-admin/cotizaciones" element={<Quote />} />
         <Route path="/dashboard-admin/compras" element={<Buys />} />
         <Route path="/dashboard-admin/proveedores" element={<Supplier />} />
         <Route path="/dashboard-admin/reportes" element={<Reports />} />

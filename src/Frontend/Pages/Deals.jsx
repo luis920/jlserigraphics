@@ -2,6 +2,14 @@ import "../Styles/Deals.css";
 import playera from "../img/playera1.webp";
 
 const Deals = () => {
+  const ofertas = [
+    {
+      titulo: "Playera algodon estampada a 1 tinta",
+      precio: 105,
+      imagen:
+        "https://i5.walmartimages.com/asr/78f3e13f-b452-45fb-a4af-9f578eb0ff0f.da696bdb2fc1e486023ee83b27385f4c.jpeg",
+    },
+  ];
   return (
     <div>
       <div className="text-center bg-dark p-2">
@@ -18,14 +26,15 @@ const Deals = () => {
       <h1 className="text-light fw-bold text-center fs-1 mt-3">
         ¡Grandes descuentos te esperan! Mira nuestras ofertas.
       </h1>
-
-      <div class="card">
-        <div class="image">
-          <img src={playera} alt="" className="img-deals" />
+      {ofertas.map((item) => (
+        <div key={item.id} class="card">
+          <div class="image">
+            <img src={item.imagen} alt="" className="img-deals" />
+          </div>
+          <span class="title">{item.titulo}</span>
+          <span class="price">${item.precio}</span>
         </div>
-        <span class="title">Cool Chair</span>
-        <span class="price">$100</span>
-      </div>
+      ))}
     </div>
   );
 };

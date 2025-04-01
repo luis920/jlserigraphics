@@ -17,7 +17,7 @@ import {
 import { Link } from "react-router-dom";
 import "../../Styles/Sidebar.css";
 import logotipo from "../../img/nombrelogo.png";
-import mano from "../../img/mano.png";
+
 const Sidebar = () => {
   const { actions } = useContext(Context);
   const navigate = useNavigate();
@@ -42,11 +42,11 @@ const Sidebar = () => {
       label: "Proveedores",
       path: "/dashboard-admin/proveedores",
     },
-    {
-      icon: <FontAwesomeIcon className="icon-sidebar" icon={faCartFlatbed} />,
-      label: "Cotizaciones",
-      path: "/dashboard-admin/cotizaciones",
-    },
+    // {
+    //   icon: <FontAwesomeIcon className="icon-sidebar" icon={faCartFlatbed} />,
+    //   label: "Cotizaciones",
+    //   path: "/dashboard-admin/cotizaciones",
+    // },
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faFileLines} />,
       label: "Reportes",

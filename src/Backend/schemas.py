@@ -19,7 +19,7 @@ class ClientesSchema(ma.SQLAlchemyAutoSchema):
 class CotizacionesSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Clientes
-        fields = ('id', 'nombre_del_cliente', 'direccion_cliente', 'telefono_cliente','tipo_de_prenda','cantidad_piezas','precio','subtotal','total')
+        fields = ('id', 'nombre_del_cliente', 'direccion_cliente', 'telefono_cliente','tipo_de_prenda','cantidad_piezas','precio','subtotal','total','pdf_url')
 
 class ComprasSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
