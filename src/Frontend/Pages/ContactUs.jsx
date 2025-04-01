@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import "../Styles/ContactUs.css";
 import Mapa from "../Components/Map.jsx";
+import Swal from "sweetalert2";
+import { Context } from "../Store/appContext.jsx";
 
 const ContactUs = () => {
+  const { store, actions } = useContext(Context);
   const [showModal, setShowModal] = useState(false);
   const [contactanos, setContactanos] = useState({
     nombre: "",
@@ -69,11 +72,11 @@ const ContactUs = () => {
   };
 
   const handleOpenModal = () => {
-    SetShowModal(true);
+    setShowModal(true);
   };
 
   const handleCloseModal = () => {
-    SetShowModal(false);
+    setShowModal(false);
   };
 
   return (
