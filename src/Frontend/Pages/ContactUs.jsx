@@ -7,14 +7,18 @@ import { Context } from "../Store/appContext.jsx";
 const ContactUs = () => {
   const { store, actions } = useContext(Context);
   const [showModal, setShowModal] = useState(false);
-  const [contactanos, setContactanos] = useState({
+  const [mensajeContactanos, setMensajeContactanos] = useState({
     nombre: "",
     correo: "",
     mensaje: "",
   });
 
   const handleAddContactUs = async (e) => {
-    if (!contactanos.nombre || !contactanos.correo || !contactanos.mensaje) {
+    if (
+      !mensajeContactanos.nombre ||
+      !mensajeContactanos.correo ||
+      !mensajeContactanos.mensaje
+    ) {
       Swal.fire("Error", "Por favor, completa todos los campos", "error");
       return;
     }
@@ -33,18 +37,16 @@ const ContactUs = () => {
     }
 
     try {
-      const result = await actions.enviarMensajeContactanos(
-        nuevoMensajeContactanos
-      );
+      const result = await actions.enviarMensajeContactanos(mensajeContactanos);
 
       if (result) {
         Swal.fire({
           icon: "success",
-          title: "Cliente Agregado",
-          text: "Un nuevo cliente a sido agregado!",
+          title: "Mensaje enviado con exito",
+          text: "Un asesor se pondra en contacto con usted!",
         });
 
-        setContactanos({
+        setMensajeContactanos({
           nombre: "",
           correo: "",
           mensaje: "",
@@ -68,7 +70,7 @@ const ContactUs = () => {
   };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setContactanos({ ...contactanos, [name]: value });
+    setMensajeContactanos({ ...mensajeContactanos, [name]: value });
   };
 
   const handleOpenModal = () => {
@@ -113,7 +115,7 @@ const ContactUs = () => {
                     type="text"
                     id="nombre"
                     name="nombre"
-                    value={contactanos.nombre}
+                    value={mensajeContactanos.nombre}
                     required
                   />
                 </div>
@@ -125,7 +127,7 @@ const ContactUs = () => {
                     type="email"
                     id="correo"
                     name="correo"
-                    value={contactanos.correo}
+                    value={mensajeContactanos.correo}
                     required
                   />
                 </div>
@@ -135,7 +137,7 @@ const ContactUs = () => {
                     onChange={handleInputChange}
                     id="mensaje"
                     name="mensaje"
-                    value={contactanos.mensaje}
+                    value={mensajeContactanos.mensaje}
                     required
                   ></textarea>
                 </div>

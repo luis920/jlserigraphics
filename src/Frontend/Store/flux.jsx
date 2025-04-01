@@ -517,21 +517,21 @@ const getState = ({ getStore, getActions, setStore }) => {
         localStorage.removeItem("rol");
         setStore({ usuario: null, token: null, rol: null });
       },
-      agregarCompra: async (nuevoMensajeContactanos) => {
+      enviarMensajeContactanos: async (mensajeContactanos) => {
         try {
           const response = await fetch("http://127.0.0.1:5000/contacto", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(nuevoMensajeContactanos),
+            body: JSON.stringify(mensajeContactanos),
           });
 
           if (response.ok) {
             const MensajeContactanos = await response.json();
             const store = getStore();
             setStore({
-              contactanos: [...store.contactanos, nuevoMensajeContactanos],
+              contactanos: [...store.contactanos, mensajeContactanos],
             });
             return MensajeContactanos;
           } else {
