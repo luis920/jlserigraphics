@@ -5,7 +5,7 @@ const WhoWeAre = () => {
   return (
     <div className="d-flex container">
       <div className="text-light  who-container ">
-        <h1>QUIENES SOMOS?</h1>
+        <h1 className="fw-bold">QUIENES SOMOS?</h1>
         En <strong>JL SERIGRPAHICS</strong>, nos especializamos en la impresión
         y bordado en textiles, ofreciendo productos de alta calidad para
         empresas, emprendedores y clientes individuales. Con más de 5 años de
