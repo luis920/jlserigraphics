@@ -54,23 +54,23 @@ def obtener_clientes():
 #ENDPOINTS COTIZACIONES 
   
   #Generar cotizacion
-# @routes.route('/cotizacion', methods=['POST'])
-# def generar_cotizacion():
-#     data = request.json
-#     nueva_cotizacion= Cotizaciones(**data)
-#     db.session.add(nueva_cotizacion)
-#     db.session.commit()
-#     return jsonify(cotizacion_schema.dump(nueva_cotizacion)),201
+@routes.route('/cotizacion', methods=['POST'])
+def generar_cotizacion():
+    data = request.json
+    nueva_cotizacion= Cotizaciones(**data)
+    db.session.add(nueva_cotizacion)
+    db.session.commit()
+    return jsonify(cotizacion_schema.dump(nueva_cotizacion)),201
    
    #obtener cotizaciones
-# @routes.route('/cotizaciones', methods=['GET'])
-# def obtener_cotizaciones():
+@routes.route('/cotizaciones', methods=['GET'])
+def obtener_cotizaciones():
 
-#   cotizaciones = Cotizaciones.query.all()
-#   return jsonify(cotizaciones_schema.dump(cotizaciones))
+  cotizaciones = Cotizaciones.query.all()
+  return jsonify(cotizaciones_schema.dump(cotizaciones))
 
 # #DESCARGAR Y GUARDAR PDF DE COTIZACIONES
-# @routes.route("/guardar_cotizacion", methods=["POST"])
+# @routes.route("/cotizacion", methods=["POST"])
 # def guardar_cotizacion():
 #     try:
 #         nombre = request.form.get("nombre_del_cliente")
@@ -79,32 +79,36 @@ def obtener_clientes():
 #         tipo_prenda = request.form.get("tipo_de_prenda")
 #         cantidad = int(request.form.get("cantidad_piezas"))
 #         precio = float(request.form.get("precio"))
-#         pdf_file = request.files["pdf"]
+#         pdf_file = request.files.get("pdf")  # Ahora lo llamamos pdf_file
 
-#         if pdf_file:
-#             filename = secure_filename(f"Cotizacion-{nombre}.pdf")
-#             filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
-#             pdf_file.save(filepath)
-#             pdf_url = f"http://localhost:5000/uploads/{filename}"
+#         if not pdf_file:
+#             return jsonify({"error": "No se proporcionó un archivo PDF"}), 400
 
-#             nueva_cotizacion = Cotizaciones(
-#                 nombre_del_cliente=nombre,
-#                 direccion_cliente=direccion,
-#                 telefono_cliente=telefono,
-#                 tipo_de_prenda=tipo_prenda,
-#                 cantidad_piezas=cantidad,
-#                 precio=precio,
-#                 pdf_url=pdf_url,
-#             )
+#         # Guardar el archivo y generar la URL
+#         filename = secure_filename(f"Cotizacion-{nombre}.pdf")
+#         filepath = os.path.join(current_app.config["UPLOAD_FOLDER"], filename)
+#         pdf_file.save(filepath)
 
-#             db.session.add(nueva_cotizacion)
-#             db.session.commit()
+#         pdf_url = f"http://localhost:5000/uploads/{filename}"  # URL del PDF
 
-#             return jsonify({"message": "Cotización guardada correctamente", "pdf_url": pdf_url}), 201
+#         # Crear la cotización con la URL del PDF
+#         nueva_cotizacion = Cotizaciones(
+#             nombre_del_cliente=nombre,
+#             direccion_cliente=direccion,
+#             telefono_cliente=telefono,
+#             tipo_de_prenda=tipo_prenda,
+#             cantidad_piezas=cantidad,
+#             precio=precio,
+#             pdf_url=pdf_url  # Guardamos solo la URL
+#         )
+
+#         db.session.add(nueva_cotizacion)
+#         db.session.commit()
+
+#         return jsonify({"message": "Cotización guardada correctamente", "pdf_url": pdf_url}), 201
 
 #     except Exception as e:
 #         return jsonify({"error": str(e)}), 500
-
 # @routes.route("/uploads/<filename>")
 # def descargar_pdf(filename):
 #     return send_from_directory(current_app.config["UPLOAD_FOLDER"], filename)
@@ -227,20 +231,7 @@ def nuevo_usuario():
 
     return jsonify(usuario_schema.dump(usuario)), 201
 
-#ENDPOINT LOGIN
 
-# @routes.route("/login", methods=["POST"])
-# def login():
-#     email = request.json.get("email", None)
-#     password = request.json.get("password", None)
-    
-#     User=Usuarios.query.filter_by(email=email,password=password).first()
-
-#     if User is None :
-#         return jsonify({"msg":"email o contraseña incorrectos"}),401
-
-#     access_token = create_access_token(identity=email)
-#     return jsonify(access_token=access_token)
 
 @routes.route('/iniciarsesion', methods=['POST'])
 def login():

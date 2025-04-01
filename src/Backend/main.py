@@ -1,4 +1,5 @@
 from dotenv import load_dotenv
+import os
 
 load_dotenv()
 
@@ -27,15 +28,6 @@ ma.init_app(app)
 migrate = Migrate(app, db)
 
 app.register_blueprint(routes)
-
-UPLOAD_FOLDER = 'uploads/'
-ALLOWED_EXTENSIONS = {'pdf'}
-
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
 
 
 
