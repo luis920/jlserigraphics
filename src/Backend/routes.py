@@ -284,6 +284,13 @@ def contactanos():
 
     return jsonify(mensaje_schema.dump(nuevo_mensaje_contactanos)), 201
 
+@routes.route('/contactanos',methods=['GET'])
+def obtener_mensajes_contactanos():
+
+    obtener_mensajes_contacto= Contactanos.query.all()
+
+    return jsonify(mensajes_schema.dump(obtener_mensajes_contacto)),200
+
 
 
 

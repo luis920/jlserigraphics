@@ -4,9 +4,21 @@ import Mapa from "../Components/Map.jsx";
 
 const ContactUs = () => {
   const [showModal, SetShowModal] = useState(false);
+  const [contactanos, setContactanos] = useState({
+    nombre: "",
+    correo: "",
+    mensaje: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setContactanos({ ...contactanos, [name]: value });
+  };
+
   const handleOpenModal = () => {
     SetShowModal(true);
   };
+
   const handleCloseModal = () => {
     SetShowModal(false);
   };
@@ -39,25 +51,35 @@ const ContactUs = () => {
               <h2 className="">Formulario de Contacto</h2>
               <form className="contacto-formulario ">
                 <div className="d-flex column ">
-                  <label htmlFor="name">Nombre:</label>
-                  <input type="text" id="name" name="name" required />
+                  <label htmlFor="nombre">Nombre:</label>
+                  <input
+                    onChange={handleInputChange}
+                    type="text"
+                    id="nombre"
+                    name="nombre"
+                    value={contactanos.nombre}
+                    required
+                  />
                 </div>
                 <div className="d-flex column ">
-                  <label htmlFor="email ">Correo:</label>
+                  <label htmlFor="correo ">Correo:</label>
                   <input
+                    onChange={handleInputChange}
                     className="my-2"
                     type="email"
-                    id="email"
-                    name="email"
+                    id="correo"
+                    name="correo"
+                    value={contactanos.correo}
                     required
                   />
                 </div>
                 <div className="d-flex column  ">
-                  <label htmlFor="message">Mensaje:</label>
+                  <label htmlFor="mensaje">Mensaje:</label>
                   <textarea
-                    className=""
-                    id="message"
-                    name="message"
+                    onChange={handleInputChange}
+                    id="mensaje"
+                    name="mensaje"
+                    value={contactanos.mensaje}
                     required
                   ></textarea>
                 </div>
