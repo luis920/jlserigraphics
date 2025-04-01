@@ -56,7 +56,7 @@ const Deals = () => {
       <h1 className="text-light fw-bold text-center fs-1 mt-3">
         ¡Grandes descuentos te esperan! Mira nuestras ofertas.
       </h1>
-      <div className="row">
+      <div className="row  justify-content-center mx-5">
         {ofertas.map((item, index) => (
           <div key={index} className="col-md-4 mt-3">
             <div className="card">
