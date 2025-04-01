@@ -246,7 +246,8 @@ def login():
     "usuario": {
         "id": usuario.id,
         "email": usuario.email,
-        "rol": usuario.rol  
+        "rol": usuario.rol,
+        "nombre_completo": usuario.nombre_completo
     }
 }), 200
     else:

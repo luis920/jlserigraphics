@@ -128,7 +128,7 @@ const Orders = () => {
           <h1 className="text-light">{titulo}</h1>
           <div className="d-flex align-items-center gap-3">
             <span className="text-light fw-bold">
-              Bienvenido, {store.usuario.rol?.nombre || "Usuario"}
+              Bienvenido, {store.usuario.nombre_completo || "Usuario"}
             </span>
             <button className="btn btn-danger" onClick={handleLogout}>
               Cerrar sesión
