@@ -119,9 +119,9 @@ class Contactanos(db.Model):
     mensaje = db.Column(db.String(300))
 
     def __init__(self, nombre,correo,mensaje):
-        self.nombre_del_proveedor= nombre
+        self.nombre= nombre
         self.correo= correo
-        self.mnsaje= mensaje
+        self.mensaje= mensaje
 
 
 
