@@ -1,4 +1,5 @@
 import "../../Styles/Buys.css";
+import Navbar from "../Navbar.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useEffect, useContext } from "react";
@@ -167,187 +168,193 @@ const MyBuys = () => {
   };
 
   return (
-    <div className="d-flex">
-      <SidebarClients />
-      <div className="container mt-5 mx-4">
-        <div className="mb-4">
-          <button className="btn btn-primary" onClick={() => handleOpenModal()}>
-            <FontAwesomeIcon
-              className="icon-sidebar text-light"
-              icon={faPlus}
-            />
-            Generar un nuevo pedido
-          </button>
-        </div>
-
-        {/* Tabla de pedidos */}
-        <div className="table-responsive">
-          <h1 className="text-light">Historial de pedidos</h1>
-          <table className="table table-bordered bg-light">
-            <thead className="table-dark">
-              <tr>
-                <th>ID</th>
-                <th>Proveedor</th>
-                <th>Fecha</th>
-                <th>Producto</th>
-                <th>Precio unitario</th>
-                <th>Cantidad</th>
-                <th>Total</th>
-                <th>Factura</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {store.compras.map((compra) => (
-                <tr key={compra.id}>
-                  <td>{compra.id}</td>
-                  <td>{compra.proveedor}</td>
-                  <td>{compra.fecha}</td>
-                  <td>{compra.producto}</td>
-                  <td>${compra.precio_unitario}</td>
-                  <td>{compra.cantidad}</td>
-                  <td>${compra.total}</td>
-                  <td>{compra.factura}</td>
-                  <td>
-                    <button
-                      className="Btn"
-                      onClick={() => handleEditBuy(compra)}
-                    >
-                      <FontAwesomeIcon
-                        className="icon-actions-pen"
-                        icon={faPencil}
-                      />
-                    </button>
-                    <button
-                      className="Btn"
-                      onClick={() => handleDeleteBuy(compra.id)}
-                    >
-                      <FontAwesomeIcon
-                        className="icon-actions-trash"
-                        icon={faTrash}
-                      />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div>
-        {showModal && (
-          <div className={`modal-container ${showModal ? "show" : ""}`}>
-            <div className="modal-content">
-              <h2 className="">Nueva Compra</h2>
-              <form className="contacto-formulario " onSubmit={handleSaveBuy}>
-                <div className="d-flex">
-                  <div className="d-flex column ">
-                    <label htmlFor="proveedor">Proveedor</label>
-                    <input
-                      onChange={handleInputChange}
-                      type="text"
-                      id="proveedor"
-                      name="proveedor"
-                      value={nuevaCompra.proveedor}
-                      required
-                    />
-                  </div>
-                  <div className="d-flex column ">
-                    <label className="mx-2" htmlFor="fecha ">
-                      Fecha
-                    </label>
-                    <input
-                      onChange={handleInputChange}
-                      className="mx-2"
-                      type="date"
-                      id="fecha"
-                      name="fecha"
-                      value={nuevaCompra.fecha}
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="d-flex">
-                  <div className="d-flex column ">
-                    <label htmlFor="producto">Producto</label>
-                    <input
-                      onChange={handleInputChange}
-                      type="text"
-                      id="producto"
-                      name="producto"
-                      value={nuevaCompra.producto}
-                      required
-                    />
-                  </div>
-                  <div className="d-flex column ">
-                    <label className="mx-2" htmlFor="precio_unitario ">
-                      Precio unitario
-                    </label>
-                    <input
-                      onChange={handleInputChange}
-                      className="mx-2"
-                      type="number"
-                      id="precio_unitario"
-                      name="precio_unitario"
-                      value={nuevaCompra.precio_unitario}
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="d-flex">
-                  <div className="d-flex column ">
-                    <label htmlFor="cantidad">Cantidad</label>
-                    <input
-                      onChange={handleInputChange}
-                      type="number"
-                      id="cantidad"
-                      name="cantidad"
-                      value={nuevaCompra.cantidad}
-                      required
-                    />
-                  </div>
-                  <div className="d-flex column ">
-                    <label className="mx-2" htmlFor="factura ">
-                      Factura
-                    </label>
-                    <select
-                      onChange={handleInputChange}
-                      className="mx-2"
-                      type="text"
-                      id="factura"
-                      name="factura"
-                      value={nuevaCompra.factura}
-                      required
-                    >
-                      <option value="Selecciona una opcion">
-                        Selecciona una opcion
-                      </option>
-                      <option value="entregado">entregado</option>
-                      <option value="en proceso">en proceso</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="d-flex">
-                  <button
-                    type="submit"
-                    className="button-form btn btn-primary w-50 "
-                  >
-                    {editingBuy ? "Actualizar" : "Agregar"}
-                  </button>
-                  <button
-                    type="button"
-                    className="button-form btn btn-secondary w-50 "
-                    onClick={handleCloseModal}
-                  >
-                    Cancelar
-                  </button>
-                </div>
-              </form>
-            </div>
+    <>
+      <Navbar />
+      <div className="d-flex">
+        <SidebarClients />
+        <div className="container mt-5 mx-4">
+          <div className="mb-4">
+            <button
+              className="btn btn-primary"
+              onClick={() => handleOpenModal()}
+            >
+              <FontAwesomeIcon
+                className="icon-sidebar text-light"
+                icon={faPlus}
+              />
+              Generar un nuevo pedido
+            </button>
           </div>
-        )}
+
+          {/* Tabla de pedidos */}
+          <div className="table-responsive">
+            <h1 className="text-light">Historial de pedidos</h1>
+            <table className="table table-bordered bg-light">
+              <thead className="table-dark">
+                <tr>
+                  <th>ID</th>
+                  <th>Proveedor</th>
+                  <th>Fecha</th>
+                  <th>Producto</th>
+                  <th>Precio unitario</th>
+                  <th>Cantidad</th>
+                  <th>Total</th>
+                  <th>Factura</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {store.compras.map((compra) => (
+                  <tr key={compra.id}>
+                    <td>{compra.id}</td>
+                    <td>{compra.proveedor}</td>
+                    <td>{compra.fecha}</td>
+                    <td>{compra.producto}</td>
+                    <td>${compra.precio_unitario}</td>
+                    <td>{compra.cantidad}</td>
+                    <td>${compra.total}</td>
+                    <td>{compra.factura}</td>
+                    <td>
+                      <button
+                        className="Btn"
+                        onClick={() => handleEditBuy(compra)}
+                      >
+                        <FontAwesomeIcon
+                          className="icon-actions-pen"
+                          icon={faPencil}
+                        />
+                      </button>
+                      <button
+                        className="Btn"
+                        onClick={() => handleDeleteBuy(compra.id)}
+                      >
+                        <FontAwesomeIcon
+                          className="icon-actions-trash"
+                          icon={faTrash}
+                        />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          {showModal && (
+            <div className={`modal-container ${showModal ? "show" : ""}`}>
+              <div className="modal-content">
+                <h2 className="">Nueva Compra</h2>
+                <form className="contacto-formulario " onSubmit={handleSaveBuy}>
+                  <div className="d-flex">
+                    <div className="d-flex column ">
+                      <label htmlFor="proveedor">Proveedor</label>
+                      <input
+                        onChange={handleInputChange}
+                        type="text"
+                        id="proveedor"
+                        name="proveedor"
+                        value={nuevaCompra.proveedor}
+                        required
+                      />
+                    </div>
+                    <div className="d-flex column ">
+                      <label className="mx-2" htmlFor="fecha ">
+                        Fecha
+                      </label>
+                      <input
+                        onChange={handleInputChange}
+                        className="mx-2"
+                        type="date"
+                        id="fecha"
+                        name="fecha"
+                        value={nuevaCompra.fecha}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="d-flex">
+                    <div className="d-flex column ">
+                      <label htmlFor="producto">Producto</label>
+                      <input
+                        onChange={handleInputChange}
+                        type="text"
+                        id="producto"
+                        name="producto"
+                        value={nuevaCompra.producto}
+                        required
+                      />
+                    </div>
+                    <div className="d-flex column ">
+                      <label className="mx-2" htmlFor="precio_unitario ">
+                        Precio unitario
+                      </label>
+                      <input
+                        onChange={handleInputChange}
+                        className="mx-2"
+                        type="number"
+                        id="precio_unitario"
+                        name="precio_unitario"
+                        value={nuevaCompra.precio_unitario}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="d-flex">
+                    <div className="d-flex column ">
+                      <label htmlFor="cantidad">Cantidad</label>
+                      <input
+                        onChange={handleInputChange}
+                        type="number"
+                        id="cantidad"
+                        name="cantidad"
+                        value={nuevaCompra.cantidad}
+                        required
+                      />
+                    </div>
+                    <div className="d-flex column ">
+                      <label className="mx-2" htmlFor="factura ">
+                        Factura
+                      </label>
+                      <select
+                        onChange={handleInputChange}
+                        className="mx-2"
+                        type="text"
+                        id="factura"
+                        name="factura"
+                        value={nuevaCompra.factura}
+                        required
+                      >
+                        <option value="Selecciona una opcion">
+                          Selecciona una opcion
+                        </option>
+                        <option value="entregado">entregado</option>
+                        <option value="en proceso">en proceso</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="d-flex">
+                    <button
+                      type="submit"
+                      className="button-form btn btn-primary w-50 "
+                    >
+                      {editingBuy ? "Actualizar" : "Agregar"}
+                    </button>
+                    <button
+                      type="button"
+                      className="button-form btn btn-secondary w-50 "
+                      onClick={handleCloseModal}
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
