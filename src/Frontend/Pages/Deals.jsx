@@ -1,43 +1,37 @@
 import "../Styles/Deals.css";
-import playera from "../img/playera1.webp";
+import PlayeraAlgodon from "../img/PlayeraAlgodon.png";
+import PlayeraDryfit from "../img/PlayeraDryfit.png";
+import Gorras from "../img/Gorras.png";
+import Hoodies from "../img/Hoodies.png";
+import Camisas from "../img/Camisas.png";
+import { Link } from "react-router-dom";
 
 const Deals = () => {
   const ofertas = [
     {
-      titulo: "Playera algodon estampada a 1 tinta",
-      precio: 105,
-      imagen:
-        "https://i5.walmartimages.com/asr/78f3e13f-b452-45fb-a4af-9f578eb0ff0f.da696bdb2fc1e486023ee83b27385f4c.jpeg",
+      titulo: "Playera de algodon",
+      precio: "115 c/u",
+      imagen: PlayeraAlgodon,
     },
     {
-      titulo: "Playera algodon estampada a 1 tinta",
-      precio: 105,
-      imagen:
-        "https://i5.walmartimages.com/asr/78f3e13f-b452-45fb-a4af-9f578eb0ff0f.da696bdb2fc1e486023ee83b27385f4c.jpeg",
+      titulo: "Playera Dry-fit",
+      precio: "165 c/",
+      imagen: PlayeraDryfit,
     },
     {
-      titulo: "Playera algodon estampada a 1 tinta",
-      precio: 105,
-      imagen:
-        "https://i5.walmartimages.com/asr/78f3e13f-b452-45fb-a4af-9f578eb0ff0f.da696bdb2fc1e486023ee83b27385f4c.jpeg",
+      titulo: "Camisa de vestir manga larga con logo y nombre bordado",
+      precio: "430 c/u",
+      imagen: Camisas,
     },
     {
-      titulo: "Playera algodon estampada a 1 tinta",
-      precio: 105,
-      imagen:
-        "https://i5.walmartimages.com/asr/78f3e13f-b452-45fb-a4af-9f578eb0ff0f.da696bdb2fc1e486023ee83b27385f4c.jpeg",
+      titulo: "Sudadera con gorro y cangurera",
+      precio: "350 c/u",
+      imagen: Hoodies,
     },
     {
-      titulo: "Playera algodon estampada a 1 tinta",
-      precio: 105,
-      imagen:
-        "https://i5.walmartimages.com/asr/78f3e13f-b452-45fb-a4af-9f578eb0ff0f.da696bdb2fc1e486023ee83b27385f4c.jpeg",
-    },
-    {
-      titulo: "Playera algodon estampada a 1 tinta",
-      precio: 105,
-      imagen:
-        "https://i5.walmartimages.com/asr/78f3e13f-b452-45fb-a4af-9f578eb0ff0f.da696bdb2fc1e486023ee83b27385f4c.jpeg",
+      titulo: "Gorra de malla con bordado de 1 a 2 colores",
+      precio: "135 c/u",
+      imagen: Gorras,
     },
   ];
   return (
@@ -56,16 +50,20 @@ const Deals = () => {
       <h1 className="text-light fw-bold text-center fs-1 mt-3">
         ¡Grandes descuentos te esperan! Mira nuestras ofertas.
       </h1>
+
       <div className="row  justify-content-center mx-5">
         {ofertas.map((item, index) => (
           <div key={index} className="col-md-4 mt-3">
-            <div className="card">
-              <div className="image">
-                <img src={item.imagen} alt="" className="img-deals" />
+            <Link to={"/contactanos"}>
+              <div className="card">
+                <div className="image">
+                  <img src={item.imagen} alt="" className="img-deals" />
+                </div>
+
+                <span className="title">{item.titulo}</span>
+                <span className="price">${item.precio}</span>
               </div>
-              <span className="title">{item.titulo}</span>
-              <span className="price">${item.precio}</span>
-            </div>
+            </Link>
           </div>
         ))}
       </div>

@@ -38,16 +38,9 @@ const SidebarClients = () => {
     },
   ];
 
-  const handleLogout = () => {
-    actions.cerrarSesion();
-    navigate("/");
-  };
-
   return (
     <>
       <div className="container-sidebar mx-1 d-flex flex-column">
-        <img src={logotipo} alt="" />
-
         <h1 className="text-light fs-bold">Cliente</h1>
         {/* Contenedor único */}
         {menuItems.map((item, index) => (
@@ -60,9 +53,6 @@ const SidebarClients = () => {
             {item.label}
           </Link>
         ))}
-        <button className="btn-sesion" onClick={handleLogout}>
-          cerrar sesion
-        </button>
       </div>
     </>
   );
