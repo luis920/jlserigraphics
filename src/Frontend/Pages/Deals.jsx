@@ -1,43 +1,36 @@
 import "../Styles/Deals.css";
-import playera from "../img/playera1.webp";
+import PlayeraAlgodon from "../img/PlayeraAlgodon.png";
+import PlayeraDryfit from "../img/PlayeraDryfit.png";
+import Gorras from "../img/Gorras.png";
+import Hoodies from "../img/Hoodies.png";
+import Camisas from "../img/Camisas.png";
 
 const Deals = () => {
   const ofertas = [
     {
-      titulo: "Playera algodon estampada a 1 tinta",
-      precio: 105,
-      imagen:
-        "https://i5.walmartimages.com/asr/78f3e13f-b452-45fb-a4af-9f578eb0ff0f.da696bdb2fc1e486023ee83b27385f4c.jpeg",
+      titulo: "Playera de algodon",
+      precio: "115 c/u",
+      imagen: PlayeraAlgodon,
     },
     {
-      titulo: "Playera algodon estampada a 1 tinta",
-      precio: 105,
-      imagen:
-        "https://i5.walmartimages.com/asr/78f3e13f-b452-45fb-a4af-9f578eb0ff0f.da696bdb2fc1e486023ee83b27385f4c.jpeg",
+      titulo: "Playera Dry-fit",
+      precio: "165 c/",
+      imagen: PlayeraDryfit,
     },
     {
-      titulo: "Playera algodon estampada a 1 tinta",
-      precio: 105,
-      imagen:
-        "https://i5.walmartimages.com/asr/78f3e13f-b452-45fb-a4af-9f578eb0ff0f.da696bdb2fc1e486023ee83b27385f4c.jpeg",
+      titulo: "Camisa de vestir manga larga con logo y nombre bordado",
+      precio: "430 c/u",
+      imagen: Camisas,
     },
     {
-      titulo: "Playera algodon estampada a 1 tinta",
-      precio: 105,
-      imagen:
-        "https://i5.walmartimages.com/asr/78f3e13f-b452-45fb-a4af-9f578eb0ff0f.da696bdb2fc1e486023ee83b27385f4c.jpeg",
+      titulo: "Sudadera con gorro y cangurera",
+      precio: "350 c/u",
+      imagen: Hoodies,
     },
     {
-      titulo: "Playera algodon estampada a 1 tinta",
-      precio: 105,
-      imagen:
-        "https://i5.walmartimages.com/asr/78f3e13f-b452-45fb-a4af-9f578eb0ff0f.da696bdb2fc1e486023ee83b27385f4c.jpeg",
-    },
-    {
-      titulo: "Playera algodon estampada a 1 tinta",
-      precio: 105,
-      imagen:
-        "https://i5.walmartimages.com/asr/78f3e13f-b452-45fb-a4af-9f578eb0ff0f.da696bdb2fc1e486023ee83b27385f4c.jpeg",
+      titulo: "Gorra de malla con bordado de 1 a 2 colores",
+      precio: "135 c/u",
+      imagen: Gorras,
     },
   ];
   return (
