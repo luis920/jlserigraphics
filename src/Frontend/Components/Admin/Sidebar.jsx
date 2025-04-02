@@ -68,8 +68,6 @@ const Sidebar = () => {
   return (
     <>
       <div className="container-sidebar mx-1 d-flex flex-column">
-        <img src={logotipo} alt="" />
-
         <h1 className="text-light fs-bold">Admin</h1>
         {/* Contenedor único */}
         {menuItems.map((item, index) => (

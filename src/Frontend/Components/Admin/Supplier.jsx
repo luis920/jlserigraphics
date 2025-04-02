@@ -1,4 +1,5 @@
 import Sidebar from "./Sidebar";
+import Navbar from "../Navbar.jsx";
 import "../../Styles/Supplier.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -164,152 +165,161 @@ const Supplier = () => {
   };
 
   return (
-    <div className="d-flex">
-      <Sidebar />
-      <div className="container mt-5 mx-4">
-        <div className="mb-4">
-          <button className="btn btn-primary" onClick={() => handleOpenModal()}>
-            <FontAwesomeIcon
-              className="icon-sidebar text-light"
-              icon={faPlus}
-            />
-            Agregar nuevo Proveedor
-          </button>
-        </div>
-
-        {/* Tabla de pedidos */}
-        <div className="table-responsive">
-          <h1 className="text-light">Proveedores disponibles</h1>
-          <table className="table table-bordered bg-light">
-            <thead className="table-dark">
-              <tr>
-                <th>ID</th>
-                <th>Proveedor</th>
-                <th>Telefono</th>
-                <th>Correo</th>
-                <th>Productos que suministra</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {store.proveedores.map((proveedor) => (
-                <tr key={proveedor.id}>
-                  <td>{proveedor.id}</td>
-                  <td>{proveedor.nombre_del_proveedor}</td>
-                  <td>{proveedor.telefono}</td>
-                  <td>{proveedor.correo_electronico}</td>
-                  <td>{proveedor.suministros_otorgados}</td>
-
-                  <td>
-                    <button
-                      className="Btn"
-                      onClick={() => handleEditarProveedor(proveedor)}
-                    >
-                      <FontAwesomeIcon
-                        className="icon-actions-pen"
-                        icon={faPencil}
-                      />
-                    </button>
-                    <button
-                      className="Btn"
-                      onClick={() => handleEliminarProveedor(proveedor.id)}
-                    >
-                      <FontAwesomeIcon
-                        className="icon-actions-trash"
-                        icon={faTrash}
-                      />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div>
-        {showModal && (
-          <div className={`modal-container ${showModal ? "show" : ""}`}>
-            <div className="modal-content">
-              <h2 className="">Nuevo Proveedor</h2>
-              <form className="contacto-formulario " onSubmit={handleProveedor}>
-                <div className="d-flex">
-                  <div className="d-flex column ">
-                    <label htmlFor="nombre_del_proveedor">
-                      nombre del proveedor
-                    </label>
-                    <input
-                      onChange={handleInputChange}
-                      type="text"
-                      id="nombre_del_proveedor"
-                      name="nombre_del_proveedor"
-                      value={nuevoProveedor.nombre_del_proveedor}
-                      required
-                    />
-                  </div>
-                  <div className="d-flex column ">
-                    <label className="mx-2" htmlFor="telefono ">
-                      Telefono
-                    </label>
-                    <input
-                      onChange={handleInputChange}
-                      className="mx-2"
-                      type="text"
-                      id="telefono"
-                      name="telefono"
-                      value={nuevoProveedor.telefono}
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="d-flex">
-                  <div className="d-flex column ">
-                    <label htmlFor="correo_electronico">Correo</label>
-                    <input
-                      onChange={handleInputChange}
-                      type="mail"
-                      id="correo_electronico"
-                      name="correo_electronico"
-                      value={nuevoProveedor.correo_electronico}
-                      required
-                    />
-                  </div>
-                  <div className="d-flex column ">
-                    <label className="mx-2" htmlFor="suministros_otorgados ">
-                      Producto suministrado
-                    </label>
-                    <input
-                      onChange={handleInputChange}
-                      className="mx-2"
-                      type="text"
-                      id="suministros_otorgados"
-                      name="suministros_otorgados"
-                      value={nuevoProveedor.suministros_otorgados}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="d-flex">
-                  <button
-                    type="submit"
-                    className="button-form btn btn-primary w-50 "
-                  >
-                    {editarProveedor ? "Actualizar" : "Agregar"}
-                  </button>
-                  <button
-                    type="button"
-                    className="button-form btn btn-secondary w-50 "
-                    onClick={handleCloseModal}
-                  >
-                    Cancelar
-                  </button>
-                </div>
-              </form>
-            </div>
+    <>
+      <Navbar />
+      <div className="d-flex">
+        <Sidebar />
+        <div className="container mt-5 mx-4">
+          <div className="mb-4">
+            <button
+              className="btn btn-primary"
+              onClick={() => handleOpenModal()}
+            >
+              <FontAwesomeIcon
+                className="icon-sidebar text-light"
+                icon={faPlus}
+              />
+              Agregar nuevo Proveedor
+            </button>
           </div>
-        )}
+
+          {/* Tabla de pedidos */}
+          <div className="table-responsive">
+            <h1 className="text-light">Proveedores disponibles</h1>
+            <table className="table table-bordered bg-light">
+              <thead className="table-dark">
+                <tr>
+                  <th>ID</th>
+                  <th>Proveedor</th>
+                  <th>Telefono</th>
+                  <th>Correo</th>
+                  <th>Productos que suministra</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {store.proveedores.map((proveedor) => (
+                  <tr key={proveedor.id}>
+                    <td>{proveedor.id}</td>
+                    <td>{proveedor.nombre_del_proveedor}</td>
+                    <td>{proveedor.telefono}</td>
+                    <td>{proveedor.correo_electronico}</td>
+                    <td>{proveedor.suministros_otorgados}</td>
+
+                    <td>
+                      <button
+                        className="Btn"
+                        onClick={() => handleEditarProveedor(proveedor)}
+                      >
+                        <FontAwesomeIcon
+                          className="icon-actions-pen"
+                          icon={faPencil}
+                        />
+                      </button>
+                      <button
+                        className="Btn"
+                        onClick={() => handleEliminarProveedor(proveedor.id)}
+                      >
+                        <FontAwesomeIcon
+                          className="icon-actions-trash"
+                          icon={faTrash}
+                        />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          {showModal && (
+            <div className={`modal-container ${showModal ? "show" : ""}`}>
+              <div className="modal-content">
+                <h2 className="">Nuevo Proveedor</h2>
+                <form
+                  className="contacto-formulario "
+                  onSubmit={handleProveedor}
+                >
+                  <div className="d-flex">
+                    <div className="d-flex column ">
+                      <label htmlFor="nombre_del_proveedor">
+                        nombre del proveedor
+                      </label>
+                      <input
+                        onChange={handleInputChange}
+                        type="text"
+                        id="nombre_del_proveedor"
+                        name="nombre_del_proveedor"
+                        value={nuevoProveedor.nombre_del_proveedor}
+                        required
+                      />
+                    </div>
+                    <div className="d-flex column ">
+                      <label className="mx-2" htmlFor="telefono ">
+                        Telefono
+                      </label>
+                      <input
+                        onChange={handleInputChange}
+                        className="mx-2"
+                        type="text"
+                        id="telefono"
+                        name="telefono"
+                        value={nuevoProveedor.telefono}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="d-flex">
+                    <div className="d-flex column ">
+                      <label htmlFor="correo_electronico">Correo</label>
+                      <input
+                        onChange={handleInputChange}
+                        type="mail"
+                        id="correo_electronico"
+                        name="correo_electronico"
+                        value={nuevoProveedor.correo_electronico}
+                        required
+                      />
+                    </div>
+                    <div className="d-flex column ">
+                      <label className="mx-2" htmlFor="suministros_otorgados ">
+                        Producto suministrado
+                      </label>
+                      <input
+                        onChange={handleInputChange}
+                        className="mx-2"
+                        type="text"
+                        id="suministros_otorgados"
+                        name="suministros_otorgados"
+                        value={nuevoProveedor.suministros_otorgados}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="d-flex">
+                    <button
+                      type="submit"
+                      className="button-form btn btn-primary w-50 "
+                    >
+                      {editarProveedor ? "Actualizar" : "Agregar"}
+                    </button>
+                    <button
+                      type="button"
+                      className="button-form btn btn-secondary w-50 "
+                      onClick={handleCloseModal}
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

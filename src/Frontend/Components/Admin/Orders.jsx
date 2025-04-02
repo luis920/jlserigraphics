@@ -1,4 +1,5 @@
 import Sidebar from "./Sidebar";
+import Navbar from "../Navbar.jsx";
 import "../../Styles/Orders.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -115,212 +116,202 @@ const Orders = () => {
       ? "Pedidos entregados"
       : "Historial de pedidos";
 
-  const handleLogout = () => {
-    actions.cerrarSesion();
-    navigate("/");
-  };
-
   return (
-    <div className="d-flex">
-      <Sidebar />
-      <div className="container mt-5 mx-4">
-        <div className="d-flex justify-content-between align-items-center mb-4">
-          <h1 className="text-light">{titulo}</h1>
-          <div className="d-flex align-items-center gap-3">
-            <span className="text-light fw-bold">
-              Bienvenido, {store.usuario.nombre_completo || "Usuario"}
-            </span>
-            <button className="btn btn-danger" onClick={handleLogout}>
-              Cerrar sesión
+    <>
+      <Navbar />
+      <div className="d-flex">
+        <Sidebar />
+        <div className="container mt-5 mx-4">
+          <div className="d-flex  gap-2 mb-4">
+            <button
+              className="order-btn w-50"
+              onClick={() => setFiltro("pendientes")}
+            >
+              <span className="order-shadow"></span>
+              <span className="order-edge"></span>
+              <span className="order-front order-text">Pedidos pendientes</span>
+            </button>
+            <button
+              className="order-btn w-50"
+              onClick={() => setFiltro("entregados")}
+            >
+              <span className="order-shadow"></span>
+              <span className="order-edge"></span>
+              <span className="order-front order-text">Pedidos entregados</span>
             </button>
           </div>
-        </div>
-        <div className="d-flex  gap-2 mb-4">
-          <button
-            className="order-btn w-50"
-            onClick={() => setFiltro("pendientes")}
-          >
-            <span className="order-shadow"></span>
-            <span className="order-edge"></span>
-            <span className="order-front order-text">Pedidos pendientes</span>
-          </button>
-          <button
-            className="order-btn w-50"
-            onClick={() => setFiltro("entregados")}
-          >
-            <span className="order-shadow"></span>
-            <span className="order-edge"></span>
-            <span className="order-front order-text">Pedidos entregados</span>
-          </button>
-        </div>
 
-        <div className="mb-4">
-          <button className="btn btn-primary" onClick={() => handleOpenModal()}>
-            <FontAwesomeIcon
-              className="icon-sidebar text-light"
-              icon={faPlus}
-            />
-            Agregar nuevo pedido
-          </button>
-        </div>
-
-        {/* Tabla de pedidos */}
-        <div className="table-responsive">
-          <h1 className="text-light">{titulo}</h1>
-          <table className="table table-bordered bg-light">
-            <thead className="table-dark">
-              <tr>
-                <th>ID</th>
-                <th>Nombre del Cliente</th>
-                <th>Tipo de Prenda</th>
-                <th>Cantidad</th>
-                <th>Fecha de Entrega</th>
-                <th>Precio Unitario</th>
-                <th>Total</th>
-                <th>Estado del Pedido</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pedidosFiltrados.map((pedido) => (
-                <tr key={pedido.id}>
-                  <td>{pedido.id}</td>
-                  <td>{pedido.cliente}</td>
-                  <td>{pedido.tipo_prenda}</td>
-                  <td>{pedido.cantidad}</td>
-                  <td>{pedido.fecha_entrega}</td>
-                  <td>${pedido.precio}</td>
-                  <td>${pedido.total}</td>
-                  <td
-                    className={
-                      pedido.estado_pedido === "en proceso"
-                        ? "text-danger fw-bold"
-                        : "text-success fw-bold"
-                    }
-                  >
-                    {pedido.estado_pedido}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        {(filtro === "pendientes" || filtro === "entregados") && (
-          <button
-            className="btn btn-secondary mt-3"
-            onClick={() => setFiltro("")}
-          >
-            Mostrar todos los pedidos
-          </button>
-        )}
-      </div>
-      <div>
-        {showModal && (
-          <div className={`modal-container ${showModal ? "show" : ""}`}>
-            <div className="modal-content">
-              <h2 className="">Nuevo Pedido</h2>
-              <form className="contacto-formulario ">
-                <div className="d-flex">
-                  <div className="d-flex column ">
-                    <label htmlFor="cliente">Nombre del cliente</label>
-                    <input
-                      onChange={handleInputChange}
-                      type="text"
-                      id="cliente"
-                      name="cliente"
-                      value={nuevoPedido.cliente}
-                      required
-                    />
-                  </div>
-                  <div className="d-flex column ">
-                    <label className="mx-2" htmlFor="tipo_prenda ">
-                      Tipo de prenda
-                    </label>
-                    <input
-                      onChange={handleInputChange}
-                      className="mx-2"
-                      type="text"
-                      id="tipo_prenda"
-                      name="tipo_prenda"
-                      value={nuevoPedido.tipo_prenda}
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="d-flex">
-                  <div className="d-flex column ">
-                    <label htmlFor="cantidad">Cantidad</label>
-                    <input
-                      onChange={handleInputChange}
-                      type="number"
-                      id="cantidad"
-                      name="cantidad"
-                      value={nuevoPedido.cantidad}
-                      required
-                    />
-                  </div>
-                  <div className="d-flex column ">
-                    <label className="mx-2" htmlFor="fecha_entrega ">
-                      Fecha de entrega
-                    </label>
-                    <input
-                      onChange={handleInputChange}
-                      className="mx-2"
-                      type="date"
-                      id="fecha_entrega"
-                      name="fecha_entrega"
-                      value={nuevoPedido.fecha_entrega}
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="d-flex">
-                  <div className="d-flex column ">
-                    <label htmlFor="precio">Precio</label>
-                    <input
-                      onChange={handleInputChange}
-                      type="number"
-                      id="precio"
-                      name="precio"
-                      value={nuevoPedido.precio}
-                      required
-                    />
-                  </div>
-                  <div className="d-flex column ">
-                    <label className="mx-2" htmlFor="estado_pedido ">
-                      Estado del pedido
-                    </label>
-                    <select
-                      onChange={handleInputChange}
-                      className="mx-2"
-                      type="text"
-                      id="estado_pedido"
-                      name="estado_pedido"
-                      value={nuevoPedido.estado_pedido}
-                      required
-                    >
-                      <option value="entregado">entregado</option>
-                      <option value="en proceso">en proceso</option>
-                    </select>
-                  </div>
-                </div>
-              </form>
-              <button
-                onClick={() => handleAddOrder()}
-                className="button-form btn btn-primary mt-5"
-              >
-                Enviar
-              </button>
-              <button
-                className=" button-form btn btn-secondary mt-2"
-                onClick={() => handleCloseModal()}
-              >
-                Cancelar
-              </button>
-            </div>
+          <div className="mb-4">
+            <button
+              className="btn btn-primary"
+              onClick={() => handleOpenModal()}
+            >
+              <FontAwesomeIcon
+                className="icon-sidebar text-light"
+                icon={faPlus}
+              />
+              Agregar nuevo pedido
+            </button>
           </div>
-        )}
+
+          {/* Tabla de pedidos */}
+          <div className="table-responsive">
+            <h1 className="text-light">{titulo}</h1>
+            <table className="table table-bordered bg-light">
+              <thead className="table-dark">
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre del Cliente</th>
+                  <th>Tipo de Prenda</th>
+                  <th>Cantidad</th>
+                  <th>Fecha de Entrega</th>
+                  <th>Precio Unitario</th>
+                  <th>Total</th>
+                  <th>Estado del Pedido</th>
+                </tr>
+              </thead>
+              <tbody>
+                {pedidosFiltrados.map((pedido) => (
+                  <tr key={pedido.id}>
+                    <td>{pedido.id}</td>
+                    <td>{pedido.cliente}</td>
+                    <td>{pedido.tipo_prenda}</td>
+                    <td>{pedido.cantidad}</td>
+                    <td>{pedido.fecha_entrega}</td>
+                    <td>${pedido.precio}</td>
+                    <td>${pedido.total}</td>
+                    <td
+                      className={
+                        pedido.estado_pedido === "en proceso"
+                          ? "text-danger fw-bold"
+                          : "text-success fw-bold"
+                      }
+                    >
+                      {pedido.estado_pedido}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {(filtro === "pendientes" || filtro === "entregados") && (
+            <button
+              className="btn btn-secondary mt-3"
+              onClick={() => setFiltro("")}
+            >
+              Mostrar todos los pedidos
+            </button>
+          )}
+        </div>
+        <div>
+          {showModal && (
+            <div className={`modal-container ${showModal ? "show" : ""}`}>
+              <div className="modal-content">
+                <h2 className="">Nuevo Pedido</h2>
+                <form className="contacto-formulario ">
+                  <div className="d-flex">
+                    <div className="d-flex column ">
+                      <label htmlFor="cliente">Nombre del cliente</label>
+                      <input
+                        onChange={handleInputChange}
+                        type="text"
+                        id="cliente"
+                        name="cliente"
+                        value={nuevoPedido.cliente}
+                        required
+                      />
+                    </div>
+                    <div className="d-flex column ">
+                      <label className="mx-2" htmlFor="tipo_prenda ">
+                        Tipo de prenda
+                      </label>
+                      <input
+                        onChange={handleInputChange}
+                        className="mx-2"
+                        type="text"
+                        id="tipo_prenda"
+                        name="tipo_prenda"
+                        value={nuevoPedido.tipo_prenda}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="d-flex">
+                    <div className="d-flex column ">
+                      <label htmlFor="cantidad">Cantidad</label>
+                      <input
+                        onChange={handleInputChange}
+                        type="number"
+                        id="cantidad"
+                        name="cantidad"
+                        value={nuevoPedido.cantidad}
+                        required
+                      />
+                    </div>
+                    <div className="d-flex column ">
+                      <label className="mx-2" htmlFor="fecha_entrega ">
+                        Fecha de entrega
+                      </label>
+                      <input
+                        onChange={handleInputChange}
+                        className="mx-2"
+                        type="date"
+                        id="fecha_entrega"
+                        name="fecha_entrega"
+                        value={nuevoPedido.fecha_entrega}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="d-flex">
+                    <div className="d-flex column ">
+                      <label htmlFor="precio">Precio</label>
+                      <input
+                        onChange={handleInputChange}
+                        type="number"
+                        id="precio"
+                        name="precio"
+                        value={nuevoPedido.precio}
+                        required
+                      />
+                    </div>
+                    <div className="d-flex column ">
+                      <label className="mx-2" htmlFor="estado_pedido ">
+                        Estado del pedido
+                      </label>
+                      <select
+                        onChange={handleInputChange}
+                        className="mx-2"
+                        type="text"
+                        id="estado_pedido"
+                        name="estado_pedido"
+                        value={nuevoPedido.estado_pedido}
+                        required
+                      >
+                        <option value="entregado">entregado</option>
+                        <option value="en proceso">en proceso</option>
+                      </select>
+                    </div>
+                  </div>
+                </form>
+                <button
+                  onClick={() => handleAddOrder()}
+                  className="button-form btn btn-primary mt-5"
+                >
+                  Enviar
+                </button>
+                <button
+                  className=" button-form btn btn-secondary mt-2"
+                  onClick={() => handleCloseModal()}
+                >
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
