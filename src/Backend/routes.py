@@ -35,6 +35,25 @@ def crear_pedido():
 
     return jsonify(pedido_schema.dump(nuevo_pedido)), 201
 
+@routes.route('/pedido/<int:id>', methods=['PUT'])
+def cambiar_estado(id):
+    estado = Pedidos.query.get(id) 
+    if not estado:
+        return jsonify({"error": "Pedido no encontrado"}), 404
+
+    data = request.json
+
+    if "estado_pedido" not in data:
+        return jsonify({"error": "Falta el campo 'estado_pedido'"}), 400
+
+    estado.estado_pedido = data["estado_pedido"]
+
+    db.session.commit()
+
+    return jsonify({"mensaje": "Estado del pedido actualizado exitosamente"}), 200
+
+
+
 # Crear cliente
 @routes.route('/cliente', methods=['POST'])
 def crear_cliente():

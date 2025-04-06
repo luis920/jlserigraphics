@@ -117,6 +117,34 @@ const Orders = () => {
       ? "Pedidos entregados"
       : "Historial de pedidos";
 
+  const toggleEstadoPedido = async (pedido) => {
+    const nuevoEstado =
+      pedido.estado_pedido === "entregado" ? "en proceso" : "entregado";
+
+    const actualizado = { ...pedido, estado_pedido: nuevoEstado };
+
+    try {
+      const result = await actions.actualizarPedidoEstado(actualizado);
+
+      if (result) {
+        Swal.fire({
+          icon: "success",
+          title: "Estado actualizado",
+          text: `El pedido de ${pedido.cliente} ha sido marcado como ${nuevoEstado}`,
+        });
+        actions.obtenerPedidos(); // para refrescar la lista
+      } else {
+        throw new Error("Error al actualizar");
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo actualizar el estado del pedido",
+      });
+    }
+  };
+
   return (
     <>
       <Navbar />
