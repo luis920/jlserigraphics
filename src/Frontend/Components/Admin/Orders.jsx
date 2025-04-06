@@ -13,7 +13,8 @@ const Orders = () => {
   const navigate = useNavigate();
   const [filtro, setFiltro] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [pedidos, setPedidos] = useState([]);
+  // const [pedidos, setPedidos] = useState([]);
+  const [orderState, setOrderState] = useState(true);
   const [nuevoPedido, setNuevoPedido] = useState({
     cliente: "",
     tipo_prenda: "",
@@ -190,7 +191,11 @@ const Orders = () => {
                       {pedido.estado_pedido}
 
                       <label className="switch">
-                        <input type="checkbox" />
+                        <input
+                          type="checkbox"
+                          checked={pedido.estado_pedido === "entregado"}
+                          onChange={() => toggleEstadoPedido(pedido)}
+                        />
                         <div className="slider"></div>
                         <div className="slider-card">
                           <div className="slider-card-face slider-card-front"></div>
