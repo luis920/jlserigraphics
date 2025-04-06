@@ -13,7 +13,8 @@ const Orders = () => {
   const navigate = useNavigate();
   const [filtro, setFiltro] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [pedidos, setPedidos] = useState([]);
+  // const [pedidos, setPedidos] = useState([]);
+  const [orderState, setOrderState] = useState(true);
   const [nuevoPedido, setNuevoPedido] = useState({
     cliente: "",
     tipo_prenda: "",
@@ -116,6 +117,21 @@ const Orders = () => {
       ? "Pedidos entregados"
       : "Historial de pedidos";
 
+  const handleEstadoToggle = async (pedido) => {
+    const nuevoEstado =
+      pedido.estado_pedido === "entregado" ? "en proceso" : "entregado";
+
+    const result = await actions.actualizarPedidoEstado(pedido.id, {
+      estado_pedido: nuevoEstado,
+    });
+    actions.obtenerPedidos();
+    if (!result.error) {
+      Swal.fire("Éxito", "El estado del pedido ha sido actualizado", "success");
+    } else {
+      Swal.fire("Error", result.error, "error");
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -188,6 +204,19 @@ const Orders = () => {
                       }
                     >
                       {pedido.estado_pedido}
+
+                      <label className="switch">
+                        <input
+                          type="checkbox"
+                          checked={pedido.estado_pedido === "entregado"}
+                          onChange={() => handleEstadoToggle(pedido)}
+                        />
+                        <div className="slider"></div>
+                        <div className="slider-card">
+                          <div className="slider-card-face slider-card-front"></div>
+                          <div className="slider-card-face slider-card-back"></div>
+                        </div>
+                      </label>
                     </td>
                   </tr>
                 ))}

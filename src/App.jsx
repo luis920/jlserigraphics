@@ -18,6 +18,7 @@ import Reports from "./Frontend/Components/Admin/Reports";
 import Messages from "./Frontend/Components/Admin/Messages";
 import MyBuys from "./Frontend/Components/Clients/MyBuys";
 import ClientMessage from "./Frontend/Components/Clients/ClientsMessage";
+import ProtectedRoute from "./Frontend/Components/ProtectedRoute";
 
 function App() {
   const location = useLocation();
@@ -47,16 +48,72 @@ function App() {
         <Route path="/registro" element={<Register />} />
 
         {/* ADMIN DASHBOARD */}
-        <Route path="/dashboard-admin/pedidos" element={<Orders />} />
-        <Route path="/dashboard-admin/clientes" element={<Clients />} />
-        <Route path="/dashboard-admin/compras" element={<Buys />} />
-        <Route path="/dashboard-admin/proveedores" element={<Supplier />} />
-        <Route path="/dashboard-admin/reportes" element={<Reports />} />
-        <Route path="/dashboard-admin/mensajes" element={<Messages />} />
+        <Route
+          path="/dashboard-admin/pedidos"
+          element={
+            <ProtectedRoute requiredRole="admin">
+              <Orders />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-admin/clientes"
+          element={
+            <ProtectedRoute requiredRole="admin">
+              <Clients />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-admin/compras"
+          element={
+            <ProtectedRoute requiredRole="admin">
+              <Buys />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-admin/proveedores"
+          element={
+            <ProtectedRoute requiredRole="admin">
+              <Supplier />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-admin/reportes"
+          element={
+            <ProtectedRoute requiredRole="admin">
+              <Reports />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-admin/mensajes"
+          element={
+            <ProtectedRoute requiredRole="admin">
+              <Messages />
+            </ProtectedRoute>
+          }
+        />
 
         {/* CLIENTE DASHBOARD */}
-        <Route path="/dashboard-cliente/pedidos" element={<MyBuys />} />
-        <Route path="/dashboard-cliente/mensajes" element={<ClientMessage />} />
+        <Route
+          path="/dashboard-cliente/pedidos"
+          element={
+            <ProtectedRoute requiredRole="cliente">
+              <MyBuys />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-cliente/mensajes"
+          element={
+            <ProtectedRoute requiredRole="cliente">
+              <ClientMessage />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
 
       <Footer />
