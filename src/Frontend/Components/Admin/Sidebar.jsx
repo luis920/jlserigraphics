@@ -42,11 +42,11 @@ const Sidebar = () => {
       label: "Proveedores",
       path: "/dashboard-admin/proveedores",
     },
-    // {
-    //   icon: <FontAwesomeIcon className="icon-sidebar" icon={faCartFlatbed} />,
-    //   label: "Cotizaciones",
-    //   path: "/dashboard-admin/cotizaciones",
-    // },
+    {
+      icon: <FontAwesomeIcon className="icon-sidebar" icon={faCartFlatbed} />,
+      label: "Cotizaciones",
+      path: "/dashboard-admin/cotizaciones",
+    },
     {
       icon: <FontAwesomeIcon className="icon-sidebar" icon={faFileLines} />,
       label: "Reportes",
