@@ -1,300 +1,193 @@
-// import Sidebar from "./Sidebar.jsx";
-// import "../../Styles/QuoteAdmin.css";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faPlus, faBell } from "@fortawesome/free-solid-svg-icons";
-// import React, { useState, useEffect, useContext, useRef } from "react";
-// import Swal from "sweetalert2";
-// import { Context } from "../../Store/appContext.jsx";
-// import html2pdf from "html2pdf.js";
+import Sidebar from "./Sidebar";
+import Navbar from "../Navbar.jsx";
+import "../../Styles/Orders.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { Context } from "../../Store/appContext.jsx";
 
-// const Quote = () => {
-//   const { store, actions } = useContext(Context);
-//   const [showModal, setShowModal] = useState(false);
-//   const [nuevaCotizacion, setNuevaCotizacion] = useState({
-//     nombre_del_cliente: "",
-//     direccion_cliente: "",
-//     telefono_cliente: "",
-//     tipo_de_prenda: "",
-//     cantidad_piezas: "",
-//     precio: "",
-//   });
-//   const pdfRef = useRef();
+const Quote = () => {
+  return (
+    <>
+      <div className="d-flex">
+        <Sidebar />
+        <div className="container mt-5 mx-4">
+          <div className="mb-4">
+            <button className="btn btn-primary">
+              <FontAwesomeIcon
+                className="icon-sidebar text-light"
+                icon={faPlus}
+              />
+              Generar nueva cotizacion
+            </button>
+          </div>
 
-//   useEffect(() => {
-//     actions.obtenerCotizaciones();
-//   }, []);
+          {/* Tabla de pedidos */}
+          <div className="table-responsive">
+            <h1 className="text-light">Cotizaciones</h1>
+            <table className="table table-bordered bg-light">
+              <thead className="table-dark">
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre del Cliente</th>
+                  <th>Tipo de Prenda</th>
+                  <th>Cantidad</th>
+                  <th>Fecha de Entrega</th>
+                  <th>Precio Unitario</th>
+                  <th>Total</th>
+                  <th>Estado del Pedido</th>
+                </tr>
+              </thead>
+              {/* <tbody>
+                {pedidosFiltrados.map((pedido) => (
+                  <tr key={pedido.id}>
+                    <td>{pedido.id}</td>
+                    <td>{pedido.cliente}</td>
+                    <td>{pedido.tipo_prenda}</td>
+                    <td>{pedido.cantidad}</td>
+                    <td>{pedido.fecha_entrega}</td>
+                    <td>${pedido.precio}</td>
+                    <td>${pedido.total}</td>
+                    <td
+                      className={
+                        pedido.estado_pedido === "en proceso"
+                          ? "text-danger fw-bold"
+                          : "text-success fw-bold"
+                      }
+                    >
+                      {pedido.estado_pedido}
 
-//   const handleInputChange = (e) => {
-//     const { name, value } = e.target;
-//     setNuevaCotizacion({ ...nuevaCotizacion, [name]: value });
-//   };
+                      <label className="switch">
+                        <input
+                          type="checkbox"
+                          checked={pedido.estado_pedido === "entregado"}
+                          onChange={() => handleEstadoToggle(pedido)}
+                        />
+                        <div className="slider"></div>
+                        <div className="slider-card">
+                          <div className="slider-card-face slider-card-front"></div>
+                          <div className="slider-card-face slider-card-back"></div>
+                        </div>
+                      </label>
+                    </td>
+                  </tr>
+                ))}
+              </tbody> */}
+            </table>
+          </div>
+        </div>
+        <div>
+          {/* {showModal && (
+            <div className={`modal-container ${showModal ? "show" : ""}`}>
+              <div className="modal-content">
+                <h2 className="">Nuevo Pedido</h2>
+                <form className="contacto-formulario ">
+                  <div className="d-flex">
+                    <div className="d-flex column ">
+                      <label htmlFor="cliente">Nombre del cliente</label>
+                      <input
+                        onChange={handleInputChange}
+                        type="text"
+                        id="cliente"
+                        name="cliente"
+                        value={nuevoPedido.cliente}
+                        required
+                      />
+                    </div>
+                    <div className="d-flex column ">
+                      <label className="mx-2" htmlFor="tipo_prenda ">
+                        Tipo de prenda
+                      </label>
+                      <input
+                        onChange={handleInputChange}
+                        className="mx-2"
+                        type="text"
+                        id="tipo_prenda"
+                        name="tipo_prenda"
+                        value={nuevoPedido.tipo_prenda}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="d-flex">
+                    <div className="d-flex column ">
+                      <label htmlFor="cantidad">Cantidad</label>
+                      <input
+                        onChange={handleInputChange}
+                        type="number"
+                        id="cantidad"
+                        name="cantidad"
+                        value={nuevoPedido.cantidad}
+                        required
+                      />
+                    </div>
+                    <div className="d-flex column ">
+                      <label className="mx-2" htmlFor="fecha_entrega ">
+                        Fecha de entrega
+                      </label>
+                      <input
+                        onChange={handleInputChange}
+                        className="mx-2"
+                        type="date"
+                        id="fecha_entrega"
+                        name="fecha_entrega"
+                        value={nuevoPedido.fecha_entrega}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="d-flex">
+                    <div className="d-flex column ">
+                      <label htmlFor="precio">Precio</label>
+                      <input
+                        onChange={handleInputChange}
+                        type="number"
+                        id="precio"
+                        name="precio"
+                        value={nuevoPedido.precio}
+                        required
+                      />
+                    </div>
+                    <div className="d-flex column ">
+                      <label className="mx-2" htmlFor="estado_pedido ">
+                        Estado del pedido
+                      </label>
+                      <select
+                        onChange={handleInputChange}
+                        className="mx-2"
+                        type="text"
+                        id="estado_pedido"
+                        name="estado_pedido"
+                        value={nuevoPedido.estado_pedido}
+                        required
+                      >
+                        <option value="entregado">entregado</option>
+                        <option value="en proceso">en proceso</option>
+                      </select>
+                    </div>
+                  </div>
+                </form>
+                <button
+                  onClick={() => handleAddOrder()}
+                  className="button-form btn btn-primary mt-5"
+                >
+                  Enviar
+                </button>
+                <button
+                  className=" button-form btn btn-secondary mt-2"
+                  onClick={() => handleCloseModal()}
+                >
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          )} */}
+        </div>
+      </div>
+    </>
+  );
+};
 
-//   const handleGenerateQuote = async (e) => {
-//     if (
-//       !nuevaCotizacion.nombre_del_cliente ||
-//       !nuevaCotizacion.direccion_cliente ||
-//       !nuevaCotizacion.telefono_cliente ||
-//       !nuevaCotizacion.tipo_de_prenda ||
-//       !nuevaCotizacion.cantidad_piezas
-//     ) {
-//       Swal.fire("Error", "Por favor, completa todos los campos", "error");
-//       return;
-//     }
-
-//     const confirmSubmit = await Swal.fire({
-//       title: "¿Estás seguro?",
-//       text: "¿Quieres generar una nueva cotización?",
-//       icon: "question",
-//       showCancelButton: true,
-//       confirmButtonText: "Sí, generar!",
-//       cancelButtonText: "No, cancelar",
-//     });
-
-//     if (!confirmSubmit.isConfirmed) {
-//       return;
-//     }
-
-//     try {
-//       const result = await actions.agregarCotizacion(nuevaCotizacion);
-
-//       if (result) {
-//         Swal.fire({
-//           icon: "success",
-//           title: "Cotización Generada",
-//           text: "¡Una nueva cotización ha sido generada!",
-//         });
-//         actions.obtenerCotizaciones();
-//         setNuevaCotizacion({
-//           nombre_del_cliente: "",
-//           direccion_cliente: "",
-//           telefono_cliente: "",
-//           tipo_de_prenda: "",
-//           cantidad_piezas: "",
-//         });
-//         setShowModal(false);
-//       } else {
-//         Swal.fire({
-//           icon: "error",
-//           title: "Error",
-//           text: `Ha ocurrido un error: ${result.error}`,
-//         });
-//       }
-//     } catch (error) {
-//       console.error("Error en handleGenerateQuote:", error);
-//       Swal.fire({
-//         icon: "error",
-//         title: "Error de Envío",
-//         text: "Ha ocurrido un error al enviar el formulario. Intente de nuevo.",
-//       });
-//     }
-//   };
-
-//   const generatePDF = async (cotizacion) => {
-//     const content = pdfRef.current;
-
-//     const pdfBlob = await html2pdf()
-//       .set({
-//         margin: 10,
-//         filename: `Cotizacion-${cotizacion.nombre_del_cliente}.pdf`,
-//         image: { type: "jpeg", quality: 0.98 },
-//         html2canvas: { scale: 2 },
-//         jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-//       })
-//       .from(content)
-//       .outputPdf("blob");
-
-//     const formData = new FormData();
-//     formData.append(
-//       "pdf",
-//       pdfBlob,
-//       `Cotizacion-${cotizacion.nombre_del_cliente}.pdf`
-//     );
-//     formData.append("nombre_del_cliente", cotizacion.nombre_del_cliente);
-//     formData.append("direccion_cliente", cotizacion.direccion_cliente);
-//     formData.append("telefono_cliente", cotizacion.telefono_cliente);
-//     formData.append("tipo_de_prenda", cotizacion.tipo_de_prenda);
-//     formData.append("cantidad_piezas", cotizacion.cantidad_piezas);
-//     formData.append("precio", cotizacion.precio);
-
-//     try {
-//       const response = await fetch("http://localhost:5000/guardar_cotizacion", {
-//         method: "POST",
-//         body: formData, // No se necesita `Content-Type`, fetch lo maneja automáticamente
-//       });
-
-//       const data = await response.json();
-//       if (response.ok) {
-//         Swal.fire(
-//           "Éxito",
-//           "Cotización guardada y PDF subido correctamente",
-//           "success"
-//         );
-//       } else {
-//         Swal.fire(
-//           "Error",
-//           `No se pudo subir el archivo PDF: ${data.error}`,
-//           "error"
-//         );
-//       }
-//     } catch (error) {
-//       console.error("Error al subir el PDF:", error);
-//       Swal.fire("Error", "Hubo un problema al subir el PDF", "error");
-//     }
-//   };
-
-//   return (
-//     <div className="d-flex">
-//       <Sidebar />
-//       <div className="container mt-5 mx-4">
-//         <div className="mb-4">
-//           <button
-//             className="btn btn-primary"
-//             onClick={() => setShowModal(true)}
-//           >
-//             <FontAwesomeIcon
-//               className="icon-sidebar text-light"
-//               icon={faPlus}
-//             />
-//             Generar nueva cotización
-//           </button>
-//           <button
-//             className="btn btn-primary"
-//             onClick={() => setShowModal(true)}
-//           >
-//             <FontAwesomeIcon
-//               className="icon-sidebar text-light"
-//               icon={faBell}
-//             />
-//             Solicitudes de cotizacion
-//           </button>
-//         </div>
-
-//         {/* Tabla de clientes */}
-//         <div className="table-responsive">
-//           <h1 className="text-light">Historial de cotizaciones</h1>
-//           <table className="table table-bordered bg-light">
-//             <thead className="table-dark">
-//               <tr>
-//                 <th>ID</th>
-//                 <th>Nombre del Cliente</th>
-//                 <th>Descargar</th>
-//               </tr>
-//             </thead>
-//             <tbody>
-//               {store.cotizaciones.map((cotizacion) => (
-//                 <tr key={cotizacion.id}>
-//                   <td>{cotizacion.id}</td>
-//                   <td>{cotizacion.nombre_del_cliente}</td>
-//                   <td>
-//                     {cotizacion.pdfUrl ? (
-//                       <a
-//                         href={cotizacion.pdfUrl}
-//                         target="_blank"
-//                         className="Btn"
-//                       >
-//                         Descargar PDF
-//                       </a>
-//                     ) : (
-//                       <span>No disponible</span>
-//                     )}
-//                   </td>
-//                 </tr>
-//               ))}
-//             </tbody>
-//           </table>
-//         </div>
-//       </div>
-
-//       {/* Modal para crear nueva cotización */}
-//       {showModal && (
-//         <div className="modal-container show">
-//           <div className="modal-content">
-//             <h2>Nueva Cotización</h2>
-//             <form className="contacto-formulario">
-//               <label>Nombre del cliente</label>
-//               <input
-//                 type="text"
-//                 name="nombre_del_cliente"
-//                 value={nuevaCotizacion.nombre_del_cliente}
-//                 onChange={handleInputChange}
-//                 required
-//               />
-
-//               <label>Dirección</label>
-//               <input
-//                 type="text"
-//                 name="direccion_cliente"
-//                 value={nuevaCotizacion.direccion_cliente}
-//                 onChange={handleInputChange}
-//               />
-
-//               <label>Teléfono</label>
-//               <input
-//                 type="text"
-//                 name="telefono_cliente"
-//                 value={nuevaCotizacion.telefono_cliente}
-//                 onChange={handleInputChange}
-//                 required
-//               />
-
-//               <label>Tipo de prenda</label>
-//               <input
-//                 type="text"
-//                 name="tipo_de_prenda"
-//                 value={nuevaCotizacion.tipo_de_prenda}
-//                 onChange={handleInputChange}
-//                 required
-//               />
-
-//               <label>Cantidad de piezas</label>
-//               <input
-//                 type="number"
-//                 name="cantidad_piezas"
-//                 value={nuevaCotizacion.cantidad_piezas}
-//                 onChange={handleInputChange}
-//                 required
-//               />
-//               <label>Precio</label>
-//               <input
-//                 type="text"
-//                 name="precio"
-//                 value={nuevaCotizacion.precio}
-//                 onChange={handleInputChange}
-//                 required
-//               />
-//             </form>
-
-//             <button
-//               className="btn btn-primary mt-5"
-//               onClick={handleGenerateQuote}
-//             >
-//               Enviar
-//             </button>
-//             <button
-//               className="btn btn-secondary mt-2"
-//               onClick={() => setShowModal(false)}
-//             >
-//               Cancelar
-//             </button>
-//           </div>
-//         </div>
-//       )}
-
-//       <div style={{ display: "none" }}>
-//         <div ref={pdfRef}>
-//           <h2>Cotización</h2>
-//           <p>Nombre del Cliente: {store.nombre_del_cliente}</p>
-//           <p>Dirección: {store.direccion_cliente}</p>
-//           <p>Teléfono: {store.telefono_cliente}</p>
-//           <p>Tipo de Prenda: {store.tipo_de_prenda}</p>
-//           <p>Cantidad de Piezas: {store.cantidad_piezas}</p>
-//           <p>Precio: {store.precio}</p>
-//           <p>Subtotal: {store.subtotal}</p>
-//           <p>Total: {store.total}</p>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Quote;
+export default Quote;

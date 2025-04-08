@@ -19,6 +19,7 @@ import Messages from "./Frontend/Components/Admin/Messages";
 import MyBuys from "./Frontend/Components/Clients/MyBuys";
 import ClientMessage from "./Frontend/Components/Clients/ClientsMessage";
 import ProtectedRoute from "./Frontend/Components/ProtectedRoute";
+import Quote from "./Frontend/Components/Admin/QuoteAdmin";
 
 function App() {
   const location = useLocation();
@@ -93,6 +94,14 @@ function App() {
           element={
             <ProtectedRoute requiredRole="admin">
               <Messages />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-admin/cotizaciones"
+          element={
+            <ProtectedRoute requiredRole="admin">
+              <Quote />
             </ProtectedRoute>
           }
         />
