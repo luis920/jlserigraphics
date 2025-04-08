@@ -125,6 +125,7 @@ const Orders = () => {
       estado_pedido: nuevoEstado,
     });
     actions.obtenerPedidos();
+
     if (!result.error) {
       Swal.fire("Éxito", "El estado del pedido ha sido actualizado", "success");
     } else {
