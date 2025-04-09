@@ -11,58 +11,13 @@ const Messages = () => {
     actions.obtenerMensajes();
   }, []);
 
-  // const messages = [
-  //   {
-  //     id: 1,
-  //     nombre: "Juan Ramirez",
-  //     email: "prueba1@hotmail.com",
-  //     mensaje: "informes sobre impresion de playeras de algodon",
-  //     fecha: "21 / feb / 2025",
-  //   },
-  //   {
-  //     id: 2,
-  //     nombre: "Juan Ramirez",
-  //     email: "prueba2@hotmail.com",
-  //     mensaje: "informes sobre sobre bordado en camisa",
-  //     fecha: "21 / feb / 2025",
-  //   },
-  //   {
-  //     id: 3,
-  //     nombre: "Juan Ramirez",
-  //     email: "prueba3@hotmail.com",
-  //     mensaje: "me interesa bordar unas gorras con mi logo",
-  //     fecha: "21 / feb / 2025",
-  //   },
-  //   {
-  //     id: 1,
-  //     nombre: "Juan Ramirez",
-  //     email: "prueba1@hotmail.com",
-  //     mensaje: "informes sobre impresion de playeras de algodon",
-  //     fecha: "21 / feb / 2025",
-  //   },
-  //   {
-  //     id: 2,
-  //     nombre: "Juan Ramirez",
-  //     email: "prueba2@hotmail.com",
-  //     mensaje: "informes sobre sobre bordado en camisa ",
-  //     fecha: "21 / feb / 2025",
-  //   },
-  //   {
-  //     id: 3,
-  //     nombre: "Juan Ramirez",
-  //     email: "prueba3@hotmail.com",
-  //     mensaje: "me interesa bordar unas gorras con mi logo",
-  //     fecha: "21 / feb / 2025",
-  //   },
-  // ];
-
   return (
     <>
       <Navbar />
       <div className="d-flex">
         <Sidebar />
         <div className="container">
-          <h1 className="text-center text-light mx-5">Historial de mensajes</h1>
+          <h1 className="text-center text-light mx-5 ">Mensajes recibidos</h1>
           <div className="row">
             {store.mensajes.map((mensaje) => (
               <div className="col-md-4 mb-4 " key={mensaje.id}>

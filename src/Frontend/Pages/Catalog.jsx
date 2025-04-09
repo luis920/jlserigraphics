@@ -108,7 +108,7 @@ const Catalog = () => {
             <p className="descripcionDelProducto">{item.descripcion}</p>
             <div className="cover row">
               <img className="img-catalog" src={item.imagen} alt="playera" />
-              <h3 className="text-dark fs-6 tituloCartaCatalogo">
+              <h3 className="text-dark fs-6 tituloCartaCatalogo text-center">
                 {item.nombre}
               </h3>
             </div>
