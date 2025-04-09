@@ -7,7 +7,7 @@ import younggroup from "../img/younggroup.png";
 const Follow = () => {
   return (
     <div>
-      <h1 className="text-light mx-5  ">Siguenos en Instagram</h1>
+      <h1 className=" mx-5 title fs-3  ">SIGENOS EN INSTAGRAM</h1>
       <hr className="mb-5" />
       <div className="instaImgContainer flex">
         <div className="instaImg1 ">

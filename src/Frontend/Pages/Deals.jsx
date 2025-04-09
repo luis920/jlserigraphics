@@ -40,7 +40,7 @@ const Deals = () => {
   return (
     <div>
       <div className="text-center bg-dark p-2">
-        <h1 className="text-light fw-bold">¡TE AYUDAMOS A AHORRAR!</h1>
+        <h1 className=" fw-bold titulo-ofertas">¡TE AYUDAMOS A AHORRAR!</h1>
         <p className="text-light">
           <br />
           Estas ofertas son una excelente oportunidad para reducir costos en
