@@ -4,7 +4,6 @@ import PlayeraDryfit from "../img/PlayeraDryfit.png";
 import Gorras from "../img/Gorras.png";
 import Hoodies from "../img/Hoodies.png";
 import Camisas from "../img/Camisas.png";
-import { Link } from "react-router-dom";
 
 const Deals = () => {
   const ofertas = [
@@ -34,8 +33,12 @@ const Deals = () => {
       imagen: Gorras,
     },
   ];
+
+  const whatsappNumber = "528666427650";
+  const whatsappURL = `https://api.whatsapp.com/send?phone=${whatsappNumber}`;
+
   return (
-    <div className="">
+    <div>
       <div className="text-center bg-dark p-2">
         <h1 className="text-light fw-bold">¡TE AYUDAMOS A AHORRAR!</h1>
         <p className="text-light">
@@ -51,23 +54,28 @@ const Deals = () => {
         ¡Grandes descuentos te esperan! Mira nuestras ofertas.
       </h1>
 
-      <div className="row  justify-content-center mx-5">
+      <div className="row justify-content-center mx-5">
         {ofertas.map((item, index) => (
           <div key={index} className="col-md-4 mt-3">
-            <Link to={"/contactanos"}>
+            <a href={whatsappURL} target="_blank" rel="noopener noreferrer">
               <div className="card">
                 <div className="image">
-                  <img src={item.imagen} alt="" className="img-deals" />
+                  <img
+                    src={item.imagen}
+                    alt={item.titulo}
+                    className="img-deals"
+                  />
                 </div>
 
                 <span className="title">{item.titulo}</span>
                 <span className="price">${item.precio}</span>
               </div>
-            </Link>
+            </a>
           </div>
         ))}
       </div>
     </div>
   );
 };
+
 export default Deals;
