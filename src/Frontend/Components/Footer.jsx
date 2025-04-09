@@ -14,17 +14,15 @@ const Footer = () => {
         <div className="container">
           <div className="row col-md-12 mx-5">
             <div className="col-12 col-md-4 ">
-              <h5 className=" title-footer text-center presentacion-container ">
-                JL SERIGRAPHICS
-              </h5>
-              <p className="text-light text-center">
+              <h5 className=" title-footer text-center  ">JL SERIGRAPHICS</h5>
+              <p className="text-light text-center ">
                 Tu aliado en serigrafía y bordado de alta calidad. Con más de 5
                 años de experiencia, ofrecemos productos personalizados para
                 todo tipo de proyectos.
               </p>
             </div>
 
-            <div className="col-12 col-md-4 contacto-container">
+            <div className="col-12 col-md-4 ">
               <h5 className=" title-footer text-center ">CONTACTO</h5>
               <ul className="list-unstyled text-center text-light">
                 <li>
@@ -44,7 +42,7 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-            <div className="col-12 col-md-4 redes-container ">
+            <div className="col-12 col-md-4  ">
               <h5 className=" title-footer text-center mx-1 ">
                 REDES SOCIALES
               </h5>

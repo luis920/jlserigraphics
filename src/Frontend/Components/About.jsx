@@ -5,7 +5,7 @@ import "../Styles/About.css";
 const About = () => {
   return (
     <div>
-      <h1 className="text-light mx-5 mt-5">Sobre nosotros</h1>
+      <h1 className="fs-3 mx-5 mt-5 title ">SOBRE NOSOTROS</h1>
       <hr className="mb-5" />
       <div className="servicios-container row">
         <div className="col-12 col-md-6">
