@@ -117,11 +117,9 @@ class Contactanos(db.Model):
     nombre = db.Column(db.String(100))
     correo = db.Column(db.String(100))
     mensaje = db.Column(db.String(300))
+    fecha = db.Column(db.Date, default=date.today)
 
-    def __init__(self, nombre,correo,mensaje):
-        self.nombre= nombre
-        self.correo= correo
-        self.mensaje= mensaje
+    
 
 
 
