@@ -1,15 +1,43 @@
 import Sidebar from "./Sidebar";
 import Navbar from "../Navbar.jsx";
 import "../../Styles/Message.css";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../Store/appContext.jsx";
+import emailjs from "@emailjs/browser";
 
 const Messages = () => {
   const { store, actions } = useContext(Context);
+  const [showModal, setShowModal] = useState(false);
+  const [destinatario, setDestinatario] = useState("");
+  const [mensaje, setMensaje] = useState("");
 
   useEffect(() => {
     actions.obtenerMensajes();
   }, []);
+
+  const handleEnviarEmail = () => {
+    emailjs
+      .send(
+        "service_9mrx7p7",
+        "template_qhpzb5s",
+        {
+          to_email: destinatario,
+          message: mensaje,
+        },
+        "DXp2MF0wEeq9kKBK2"
+      )
+      .then(
+        (result) => {
+          alert("Mensaje enviado correctamente");
+          setShowModal(false);
+          setMensaje("");
+        },
+        (error) => {
+          alert("Error al enviar el mensaje");
+          console.log(error);
+        }
+      );
+  };
 
   return (
     <>
@@ -19,7 +47,7 @@ const Messages = () => {
         <div className="container">
           <h1 className="text-center text-light mx-5 ">Mensajes recibidos</h1>
           <div className="row">
-            {store.mensajes.map((mensaje) => (
+            {store.contactanos.map((mensaje) => (
               <div className="col-md-4 mb-4 " key={mensaje.id}>
                 <div className="card-message p-3">
                   <div className="header-message">
@@ -46,12 +74,20 @@ const Messages = () => {
                     </p>
                     <p className="fecha-mensaje">{mensaje.fecha}</p>
                   </div>
-                  <p className="message">{mensaje.email}</p>
+                  <p className="message">{mensaje.correo}</p>
                   <div className="actions-message">
                     <a className="read-message" href="">
                       {mensaje.mensaje}
                     </a>
-                    <a className="mark-as-read" href="">
+                    <a
+                      className="mark-as-read"
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setDestinatario(mensaje.email);
+                        setShowModal(true);
+                      }}
+                    >
                       responder
                     </a>
                   </div>
@@ -59,6 +95,37 @@ const Messages = () => {
               </div>
             ))}
           </div>
+          {showModal && (
+            <div className="modal-overlay">
+              <div className="modal-content p-4 bg-dark text-light rounded">
+                <h5>Responder mensaje</h5>
+                <p>
+                  <strong>Para:</strong> {destinatario}
+                </p>
+                <textarea
+                  className="form-control my-3"
+                  rows="5"
+                  placeholder="Escribe tu respuesta aquí..."
+                  value={mensaje}
+                  onChange={(e) => setMensaje(e.target.value)}
+                ></textarea>
+                <div className="d-flex justify-content-end">
+                  <button
+                    className="btn btn-secondary me-2"
+                    onClick={() => setShowModal(false)}
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    className="btn btn-primary"
+                    onClick={handleEnviarEmail}
+                  >
+                    Enviar
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>
