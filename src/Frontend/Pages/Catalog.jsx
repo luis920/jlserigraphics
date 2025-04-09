@@ -16,7 +16,7 @@ const Catalog = () => {
       <h1 className=" title text-center ">NUESTROS PRODUCTOS</h1>
       {productos.map((item) => (
         <div key={item.id} className="book">
-          <p>{item.descripcion}</p>
+          <p className="descripcionDelProducto">{item.descripcion}</p>
           <div className="cover">
             <img className="img-catalog" src={item.imagen} alt="playera" />
           </div>
