@@ -541,6 +541,21 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error al enviar mensaje:", error);
         }
       },
+      obtenerMensajesContactanos: async () => {
+        try {
+          const response = await fetch("http://127.0.0.1:5000/contactanos", {});
+          if (response.ok) {
+            const data = await response.json();
+
+            setStore({ contactanos: data });
+          } else {
+            console.error("Error al obtener mensajes:", response.status);
+          }
+        } catch (error) {
+          console.error("Error al obtener mensajes:", error);
+          return null;
+        }
+      },
       actualizarPedidoEstado: async (id, pedidoActualizado) => {
         try {
           const response = await fetch(`http://127.0.0.1:5000/pedido/${id}`, {
