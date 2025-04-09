@@ -14,7 +14,9 @@ const Footer = () => {
         <div className="container">
           <div className="row col-md-12 mx-5">
             <div className="col-12 col-md-4 ">
-              <h5 className=" title-footer text-center ">JL SERIGRAPHICS</h5>
+              <h5 className=" title-footer text-center presentacion-container ">
+                JL SERIGRAPHICS
+              </h5>
               <p className="text-light text-center">
                 Tu aliado en serigrafía y bordado de alta calidad. Con más de 5
                 años de experiencia, ofrecemos productos personalizados para
@@ -22,7 +24,7 @@ const Footer = () => {
               </p>
             </div>
 
-            <div className="col-12 col-md-4">
+            <div className="col-12 col-md-4 contacto-container">
               <h5 className=" title-footer text-center ">CONTACTO</h5>
               <ul className="list-unstyled text-center text-light">
                 <li>
@@ -42,10 +44,11 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-            <div className="col-12 col-md-4 ">
-              <li>
-                <h5 className=" title-footer text-center ">REDES SOCIALES</h5>
-              </li>
+            <div className="col-12 col-md-4 redes-container ">
+              <h5 className=" title-footer text-center mx-1 ">
+                REDES SOCIALES
+              </h5>
+
               <ul className="list-inline text-center">
                 <li className="list-inline-item">
                   <a
@@ -64,7 +67,7 @@ const Footer = () => {
                     className=" text-decoration-none"
                   >
                     <FontAwesomeIcon
-                      className="icon-sidebar text-light"
+                      className="icon-sidebar text-light "
                       icon={faSquareInstagram}
                     />
                   </a>
