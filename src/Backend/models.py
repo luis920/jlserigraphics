@@ -118,7 +118,13 @@ class Contactanos(db.Model):
     correo = db.Column(db.String(100))
     mensaje = db.Column(db.String(300))
     fecha = db.Column(db.Date, default=date.today)
-
+    
+    def __init__(self, nombre,correo,mensaje,fecha):
+        self.nombre= nombre
+        self.correo= correo
+        self.mensaje=mensaje
+        self.fecha=fecha
+       
     
 
 

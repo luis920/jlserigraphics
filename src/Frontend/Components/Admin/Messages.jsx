@@ -12,16 +12,23 @@ const Messages = () => {
   const [mensaje, setMensaje] = useState("");
 
   useEffect(() => {
-    actions.obtenerMensajes();
+    actions.obtenerMensajesContactanos();
   }, []);
 
   const handleEnviarEmail = () => {
+    console.log("Correo destinatario:", destinatario);
+
+    if (!destinatario || destinatario.trim() === "") {
+      alert("El correo destinatario está vacío.");
+      return;
+    }
+
     emailjs
       .send(
         "service_9mrx7p7",
         "template_qhpzb5s",
         {
-          to_email: destinatario,
+          user_email: destinatario,
           message: mensaje,
         },
         "DXp2MF0wEeq9kKBK2"
@@ -84,7 +91,11 @@ const Messages = () => {
                       href="#"
                       onClick={(e) => {
                         e.preventDefault();
-                        setDestinatario(mensaje.email);
+                        console.log(
+                          "Correo del destinatario al hacer clic:",
+                          mensaje.correo
+                        );
+                        setDestinatario(mensaje.correo);
                         setShowModal(true);
                       }}
                     >
@@ -118,7 +129,7 @@ const Messages = () => {
                   </button>
                   <button
                     className="btn btn-primary"
-                    onClick={handleEnviarEmail}
+                    onClick={() => handleEnviarEmail(destinatario)}
                   >
                     Enviar
                   </button>

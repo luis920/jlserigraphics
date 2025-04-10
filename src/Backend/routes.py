@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify ,send_from_directory,current_app
 from werkzeug.utils import secure_filename
 from Backend.models import db, Pedidos, Clientes,Cotizaciones,Compras,Proveedores,Usuarios,Mensajes,Contactanos
-from Backend.schemas import  pedido_schema, pedidos_schema, cliente_schema, clientes_schema,cotizacion_schema,cotizaciones_schema,compra_schema,compras_schema,proveedor_schema,proveedores_schema,usuario_schema,usuarios_schema,mensaje_schema,mensajes_schema
+from Backend.schemas import  pedido_schema, pedidos_schema, cliente_schema, clientes_schema,cotizacion_schema,cotizaciones_schema,compra_schema,compras_schema,proveedor_schema,proveedores_schema,usuario_schema,usuarios_schema,mensaje_schema,mensajes_schema,contactanos_schema
 import os
 from flask_jwt_extended import create_access_token
 from flask_bcrypt import Bcrypt
@@ -309,7 +309,7 @@ def obtener_mensajes_contactanos():
 
     obtener_mensajes_contacto= Contactanos.query.all()
 
-    return jsonify(mensajes_schema.dump(obtener_mensajes_contacto)),200
+    return jsonify(contactanos_schema.dump(obtener_mensajes_contacto)),200
 
 
 

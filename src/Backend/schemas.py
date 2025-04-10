@@ -45,7 +45,7 @@ class MensajesSchema(ma.SQLAlchemyAutoSchema):
 class ContactanosSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Contactanos
-        fields = ('id', 'nombre', 'correo','mensaje')       
+        fields = ('id', 'nombre', 'correo','fecha','mensaje')       
 
 # Crear instancias para usar en otros archivos
 
