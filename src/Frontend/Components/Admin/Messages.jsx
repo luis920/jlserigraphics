@@ -1,60 +1,50 @@
 import Sidebar from "./Sidebar";
 import Navbar from "../Navbar.jsx";
 import "../../Styles/Message.css";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../Store/appContext.jsx";
+import emailjs from "@emailjs/browser";
 
 const Messages = () => {
   const { store, actions } = useContext(Context);
+  const [showModal, setShowModal] = useState(false);
+  const [destinatario, setDestinatario] = useState("");
+  const [mensaje, setMensaje] = useState("");
 
   useEffect(() => {
-    actions.obtenerMensajes();
+    actions.obtenerMensajesContactanos();
   }, []);
 
-  // const messages = [
-  //   {
-  //     id: 1,
-  //     nombre: "Juan Ramirez",
-  //     email: "prueba1@hotmail.com",
-  //     mensaje: "informes sobre impresion de playeras de algodon",
-  //     fecha: "21 / feb / 2025",
-  //   },
-  //   {
-  //     id: 2,
-  //     nombre: "Juan Ramirez",
-  //     email: "prueba2@hotmail.com",
-  //     mensaje: "informes sobre sobre bordado en camisa",
-  //     fecha: "21 / feb / 2025",
-  //   },
-  //   {
-  //     id: 3,
-  //     nombre: "Juan Ramirez",
-  //     email: "prueba3@hotmail.com",
-  //     mensaje: "me interesa bordar unas gorras con mi logo",
-  //     fecha: "21 / feb / 2025",
-  //   },
-  //   {
-  //     id: 1,
-  //     nombre: "Juan Ramirez",
-  //     email: "prueba1@hotmail.com",
-  //     mensaje: "informes sobre impresion de playeras de algodon",
-  //     fecha: "21 / feb / 2025",
-  //   },
-  //   {
-  //     id: 2,
-  //     nombre: "Juan Ramirez",
-  //     email: "prueba2@hotmail.com",
-  //     mensaje: "informes sobre sobre bordado en camisa ",
-  //     fecha: "21 / feb / 2025",
-  //   },
-  //   {
-  //     id: 3,
-  //     nombre: "Juan Ramirez",
-  //     email: "prueba3@hotmail.com",
-  //     mensaje: "me interesa bordar unas gorras con mi logo",
-  //     fecha: "21 / feb / 2025",
-  //   },
-  // ];
+  const handleEnviarEmail = () => {
+    console.log("Correo destinatario:", destinatario);
+
+    if (!destinatario || destinatario.trim() === "") {
+      alert("El correo destinatario está vacío.");
+      return;
+    }
+
+    emailjs
+      .send(
+        "service_9mrx7p7",
+        "template_qhpzb5s",
+        {
+          user_email: destinatario,
+          message: mensaje,
+        },
+        "DXp2MF0wEeq9kKBK2"
+      )
+      .then(
+        (result) => {
+          alert("Mensaje enviado correctamente");
+          setShowModal(false);
+          setMensaje("");
+        },
+        (error) => {
+          alert("Error al enviar el mensaje");
+          console.log(error);
+        }
+      );
+  };
 
   return (
     <>
@@ -62,9 +52,9 @@ const Messages = () => {
       <div className="d-flex">
         <Sidebar />
         <div className="container">
-          <h1 className="text-center text-light mx-5">Historial de mensajes</h1>
+          <h1 className="text-center text-light mx-5 ">Mensajes recibidos</h1>
           <div className="row">
-            {store.mensajes.map((mensaje) => (
+            {store.contactanos.map((mensaje) => (
               <div className="col-md-4 mb-4 " key={mensaje.id}>
                 <div className="card-message p-3">
                   <div className="header-message">
@@ -91,12 +81,24 @@ const Messages = () => {
                     </p>
                     <p className="fecha-mensaje">{mensaje.fecha}</p>
                   </div>
-                  <p className="message">{mensaje.email}</p>
+                  <p className="message">{mensaje.correo}</p>
                   <div className="actions-message">
                     <a className="read-message" href="">
                       {mensaje.mensaje}
                     </a>
-                    <a className="mark-as-read" href="">
+                    <a
+                      className="mark-as-read"
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        console.log(
+                          "Correo del destinatario al hacer clic:",
+                          mensaje.correo
+                        );
+                        setDestinatario(mensaje.correo);
+                        setShowModal(true);
+                      }}
+                    >
                       responder
                     </a>
                   </div>
@@ -104,6 +106,37 @@ const Messages = () => {
               </div>
             ))}
           </div>
+          {showModal && (
+            <div className="modal-overlay">
+              <div className="modal-content p-4 bg-dark text-light rounded">
+                <h5>Responder mensaje</h5>
+                <p>
+                  <strong>Para:</strong> {destinatario}
+                </p>
+                <textarea
+                  className="form-control my-3"
+                  rows="5"
+                  placeholder="Escribe tu respuesta aquí..."
+                  value={mensaje}
+                  onChange={(e) => setMensaje(e.target.value)}
+                ></textarea>
+                <div className="d-flex justify-content-end">
+                  <button
+                    className="btn btn-secondary me-2"
+                    onClick={() => setShowModal(false)}
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => handleEnviarEmail(destinatario)}
+                  >
+                    Enviar
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>
